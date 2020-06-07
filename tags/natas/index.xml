@@ -1,21 +1,21 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>natas - Tag - z0x90</title>
-        <link>https://example.com/tags/natas/</link>
+        <link>https://z0x90.github.io/tags/natas/</link>
         <description>natas - Tag - z0x90</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 06 Jun 2020 18:26:53 &#43;0000</lastBuildDate><atom:link href="https://example.com/tags/natas/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 06 Jun 2020 18:26:53 &#43;0000</lastBuildDate><atom:link href="https://z0x90.github.io/tags/natas/" rel="self" type="application/rss+xml" /><item>
     <title>Natas Challenges (part 2)</title>
-    <link>https://example.com/natas_challenges_part2/</link>
+    <link>https://z0x90.github.io/natas_challenges_part2/</link>
     <pubDate>Sat, 06 Jun 2020 18:26:53 &#43;0000</pubDate>
     <author>Author</author>
-    <guid>https://example.com/natas_challenges_part2/</guid>
+    <guid>https://z0x90.github.io/natas_challenges_part2/</guid>
     <description><![CDATA[The second in a multi-part walkthrough for the OverTheWire natas levels.]]></description>
 </item><item>
     <title>Natas Challenges (part 1)</title>
-    <link>https://example.com/natas_challenges_part1/</link>
+    <link>https://z0x90.github.io/natas_challenges_part1/</link>
     <pubDate>Wed, 03 Jun 2020 18:26:53 &#43;0000</pubDate>
     <author>Author</author>
-    <guid>https://example.com/natas_challenges_part1/</guid>
+    <guid>https://z0x90.github.io/natas_challenges_part1/</guid>
     <description><![CDATA[The first in a multi-part walkthrough for the OverTheWire natas levels.]]></description>
 </item></channel>
 </rss>
