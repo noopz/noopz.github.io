@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Fixing AAC Playback with Amazon FireTV (Gen1) - z0x90</title><meta name="Description" content="A quick guide showing how to get Gen1 FireTVs going with media encoded with AAC."><meta property="og:title" content="Fixing AAC Playback with Amazon FireTV (Gen1)" />
+<meta property="og:description" content="A quick guide showing how to get Gen1 FireTVs going with media encoded with AAC." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://z0x90.github.io/plex_aac_atfv_fix/" />
+<meta property="og:image" content="https://z0x90.github.io/logo.png"/>
+<meta property="article:published_time" content="2020-06-08T08:26:53+00:00" />
+<meta property="article:modified_time" content="2020-06-08T22:06:41-07:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://z0x90.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Fixing AAC Playback with Amazon FireTV (Gen1)"/>
+<meta name="twitter:description" content="A quick guide showing how to get Gen1 FireTVs going with media encoded with AAC."/>
+<meta name="application-name" content="z0x90">
+<meta name="apple-mobile-web-app-title" content="z0x90"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://z0x90.github.io/plex_aac_atfv_fix/" /><link rel="prev" href="https://z0x90.github.io/natas_challenges_part2/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.c1380f5e1f7f3d04b48edd22c364da70ed19205a2e23d815183d44b0e70eb6d93101e95794b3b2e22eb84c60c2e534577b1a114426b13da4030d8d61beeb974b.css" integrity="sha512-wTgPXh9/PQS0jt0iw2TacO0ZIFouI9gVGD1EsOcOttkxAelXlLOy4i64TGDC5TRXexoRRCaxPaQDDY1hvuuXSw=="><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Fixing AAC Playback with Amazon FireTV (Gen1)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/z0x90.github.io\/plex_aac_atfv_fix\/"
+        },"image": ["https:\/\/z0x90.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "plex, aac, aftv, firetv","wordcount":  509 ,
+        "url": "https:\/\/z0x90.github.io\/plex_aac_atfv_fix\/","datePublished": "2020-06-08T08:26:53+00:00","dateModified": "2020-06-08T22:06:41-07:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "z0x90","logo": "https:\/\/z0x90.github.io\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "Zack"
+            },"description": "A quick guide showing how to get Gen1 FireTVs going with media encoded with AAC."
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="z0x90"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>z0x90</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="https://github.com/z0x90/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="z0x90"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>z0x90</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="https://github.com/z0x90/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Fixing AAC Playback with Amazon FireTV (Gen1)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Zack</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-06-08">2020-06-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;509 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-background">The Background</a></li>
+    <li><a href="#the-fix">The Fix</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>tl;dr: If you want to skip the background and want the fix: <a href="#the-fix" rel="">click here</a></p>
+<h2 id="the-background">The Background</h2>
+<p>I&rsquo;ve got a first generation <a href="https://developer.amazon.com/docs/fire-tv/device-specifications-fire-tv-pendant-box.html?v=ftvgen1" target="_blank" rel="noopener noreffer">Amazon FireTV</a> that I use as my media playback device. It&rsquo;s connected to a <a href="https://usa.yamaha.com/products/audio_visual/av_receivers_amps/rx-v675/downloads.html" target="_blank" rel="noopener noreffer">Yamaha RX-V675</a> via HDMI. It&rsquo;s served me well over the years and I rarely have to fiddle with it. So much so that recently I decided to take on the endeavour of updating the version of <a href="https://kodi.tv/" target="_blank" rel="noopener noreffer">Kodi</a> that was currently installed on it, which turned out to be a version 16.0 - from 2016.</p>
+<p>If it&rsquo;s not broken, why fix it? Because eventually you get that itch to break perfectly reasonable things to learn a bit and update old components. Also, updating Kodi has been on my weekend to-do list for quite sometime.</p>
+<p>Following the <a href="https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Fire_TV" target="_blank" rel="noopener noreffer">install directions</a> provided on the Kodi wiki went smooth without any sort of problems and upgraded me to 18.7.1 (armeabi-v7a). Once installed, I started up Kodi and went off to playback some Media. The first few files I attempted to play had no issues. All of these media files were encoded with Dolby Digital or Digital Theater Systems (DD/DTS). However, I noticed that there was some media that would not play any audio - the video was fine. I checked with other devices and the audio tracks were valid, so the problem must be something to do with with the way the AFTV and the A/V Receiver interacted.</p>
+<p>On closer inspection, the troublesome media all were encoded with AAC2.0:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../images/aftv/mediainfo.png"
+        data-srcset="../images/aftv/mediainfo.png, ../images/aftv/mediainfo.png 1.5x, ../images/aftv/mediainfo.png 2x"
+        data-sizes="auto"
+        alt="../images/aftv/mediainfo.png"
+        title="aac" /></p>
+<p>Digging through the spec sheets for the Gen1 AFTV shows that it supports various AAC codex:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">**AAC-LC Up to 96kHz, <span class="m">6</span> channels, 16-bit and 24-bit
+HE-AACv1 <span class="o">(</span>AAC+<span class="o">)</span>. Up to 96kHz, <span class="m">6</span> channels, 16-bit and 24-bit
+HE-AACv2 <span class="o">(</span>enhanced AAC+<span class="o">)</span>. Up to 96kHz, <span class="m">6</span> channels, 16-bit and 24-bit
+</code></pre></td></tr></table>
+</div>
+</div><p>The problem doesn&rsquo;t seem to be on the AFTV side. Next up was to look at the spec sheet for the RX-V675, which showed that it doesn&rsquo;t support AAC.</p>
+<p>This led to many Google searches, reading all over the place, and eventually some since-lost-hints that maybe I needed to rethink the configuration on number of channels in Kodi.</p>
+<h2 id="the-fix">The Fix</h2>
+<p>After a lot of reading, pondering the issue while I went about the rest of my weekend, and since the problem was only with AAC2.0 audio, it seems I needed a way to force transcoding of the audio. Here&rsquo;s how I managed to do it, and in doing so solve my audio issues.</p>
+<p>In Kodi&rsquo;s Settings -&gt; System -&gt; Audio it looked like the following for me:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../images/aftv/setorig.png"
+        data-srcset="../images/aftv/setorig.png, ../images/aftv/setorig.png 1.5x, ../images/aftv/setorig.png 2x"
+        data-sizes="auto"
+        alt="../images/aftv/setorig.png"
+        title="orig" /></p>
+<p>What I needed to do was match the number of speakers, 5.1, to the number of channels. In addition to that setting, I also needed to enable &ldquo;Stereo Upmix&rdquo;:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../images/aftv/setfix.png"
+        data-srcset="../images/aftv/setfix.png, ../images/aftv/setfix.png 1.5x, ../images/aftv/setfix.png 2x"
+        data-sizes="auto"
+        alt="../images/aftv/setfix.png"
+        title="fix" /></p>
+<p>And just for completeness this is what the rest of the settings on the Audio page look like:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../images/aftv/setbot.png"
+        data-srcset="../images/aftv/setbot.png, ../images/aftv/setbot.png 1.5x, ../images/aftv/setbot.png 2x"
+        data-sizes="auto"
+        alt="../images/aftv/setbot.png"
+        title="bot" /></p>
+<p>Once all of these were set, I went back to the troublesome media files and the audio started playing with no problems. Additionally all of the other content seems to play back without any issues as well.</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-06-08&nbsp;<i class="fas fa-hashtag fa-fw"></i>aaaf9b8</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://z0x90.github.io/plex_aac_atfv_fix/" data-title="Fixing AAC Playback with Amazon FireTV (Gen1)" data-hashtags="plex,aac,aftv,firetv"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://z0x90.github.io/plex_aac_atfv_fix/" data-hashtag="plex"><i class="fab fa-facebook-square fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/plex/">plex</a>,&nbsp;<a href="/tags/aac/">aac</a>,&nbsp;<a href="/tags/aftv/">aftv</a>,&nbsp;<a href="/tags/firetv/">firetv</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/natas_challenges_part2/" class="prev" rel="prev" title="Natas Challenges (part 2)"><i class="fas fa-angle-left fa-fw"></i>Natas Challenges (part 2)</a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Zack</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">cc by-nc 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":40},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"Hey, this site uses cookies."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"}};</script><script type="text/javascript" src="/js/theme.min.69ac882c686e101963f9cd3dc6167cee800004e4e9f40dae6f6fbeb3b03fb81ead782f98cc6e6eeec42b70a1b7047c7902e8f0ba3171660e2c2dc59d62965c7a.js" integrity="sha512-aayILGhuEBlj&#43;c09xhZ87oAABOTp9A2ub2&#43;&#43;s7A/uB6teC&#43;YzG5u7sQrcKG3BHx5AujwujFxZg4sLcWdYpZceg=="></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'UA-168052344-1');
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-168052344-1" async></script></body>
+</html>

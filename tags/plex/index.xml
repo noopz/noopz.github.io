@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>plex - Tag - z0x90</title>
+        <link>https://z0x90.github.io/tags/plex/</link>
+        <description>plex - Tag - z0x90</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 08 Jun 2020 08:26:53 &#43;0000</lastBuildDate><atom:link href="https://z0x90.github.io/tags/plex/" rel="self" type="application/rss+xml" /><item>
+    <title>Fixing AAC Playback with Amazon FireTV (Gen1)</title>
+    <link>https://z0x90.github.io/plex_aac_atfv_fix/</link>
+    <pubDate>Mon, 08 Jun 2020 08:26:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://z0x90.github.io/plex_aac_atfv_fix/</guid>
+    <description><![CDATA[A quick guide showing how to get Gen1 FireTVs going with media encoded with AAC.]]></description>
+</item></channel>
+</rss>
