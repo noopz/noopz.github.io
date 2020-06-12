@@ -61,4 +61,4 @@ Disallow: /
 User-agent: ZoominfoBot
 Disallow: /
 
-Sitemap: https://z0x90.github.io/sitemap.xml
+Sitemap: https://noopz.github.io/sitemap.xml
