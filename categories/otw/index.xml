@@ -3,7 +3,21 @@
         <title>OTW - Category - noopz</title>
         <link>https://noopz.github.io/categories/otw/</link>
         <description>OTW - Category - noopz</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 18 Jul 2020 08:26:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/categories/otw/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 01 Aug 2020 08:26:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/categories/otw/" rel="self" type="application/rss+xml" /><item>
+    <title>Narnia Challenges (part 5)</title>
+    <link>https://noopz.github.io/narnia_challenges_part5/</link>
+    <pubDate>Sat, 01 Aug 2020 08:26:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/narnia_challenges_part5/</guid>
+    <description><![CDATA[The fifth in a multi-part walkthrough for the OverTheWire narnia levels. These write up will focus on narnia 7 level and cover a more advanced case of a format string exploit.]]></description>
+</item><item>
+    <title>Narnia Challenges (part 4)</title>
+    <link>https://noopz.github.io/narnia_challenges_part4/</link>
+    <pubDate>Sat, 25 Jul 2020 08:26:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/narnia_challenges_part4/</guid>
+    <description><![CDATA[The fourth in a multi-part walkthrough for the OverTheWire narnia levels. These write up will focus on narnia 6 level and cover another scenario of buffer overflows.]]></description>
+</item><item>
     <title>Narnia Challenges (part 3)</title>
     <link>https://noopz.github.io/narnia_challenges_part3/</link>
     <pubDate>Sat, 18 Jul 2020 08:26:53 &#43;0000</pubDate>

