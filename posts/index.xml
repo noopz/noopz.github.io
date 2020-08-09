@@ -3,7 +3,14 @@
         <title>All Posts - noopz</title>
         <link>https://noopz.github.io/posts/</link>
         <description>All Posts | noopz</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 01 Aug 2020 08:26:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 08 Aug 2020 08:26:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Narnia Challenges (part 6)</title>
+    <link>https://noopz.github.io/narnia_challenges_part6/</link>
+    <pubDate>Sat, 08 Aug 2020 08:26:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/narnia_challenges_part6/</guid>
+    <description><![CDATA[The sixth and final in a multi-part walkthrough for the OverTheWire narnia levels. These write up will focus on narnia 7 level and cover a more advanced case of a format string exploit.]]></description>
+</item><item>
     <title>Narnia Challenges (part 5)</title>
     <link>https://noopz.github.io/narnia_challenges_part5/</link>
     <pubDate>Sat, 01 Aug 2020 08:26:53 &#43;0000</pubDate>
@@ -66,12 +73,5 @@
     <author>Author</author>
     <guid>https://noopz.github.io/plex_aac_atfv_fix/</guid>
     <description><![CDATA[A quick guide showing how to get Gen1 FireTVs going with media encoded with AAC.]]></description>
-</item><item>
-    <title>Natas Challenges (part 2)</title>
-    <link>https://noopz.github.io/natas_challenges_part2/</link>
-    <pubDate>Sat, 06 Jun 2020 18:26:53 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://noopz.github.io/natas_challenges_part2/</guid>
-    <description><![CDATA[The second in a multi-part walkthrough for the OverTheWire natas levels.]]></description>
 </item></channel>
 </rss>
