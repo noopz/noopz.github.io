@@ -3,7 +3,14 @@
         <title>All Posts - noopz</title>
         <link>https://noopz.github.io/posts/</link>
         <description>All Posts | noopz</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 08 Aug 2020 08:26:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 29 Aug 2020 08:26:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Try Hack Me - Gatekeeper Walkthrough</title>
+    <link>https://noopz.github.io/gatekeeper/</link>
+    <pubDate>Sat, 29 Aug 2020 08:26:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/gatekeeper/</guid>
+    <description><![CDATA[A write-up tackling the Gatekeeper box on TryHackMe (https://tryhackme.com/room/gatekeeper). This box focuses on identifying a bufferoverflow in a services that is running and exploiting it to gain a low privilege shell, and then escalating privileges.]]></description>
+</item><item>
     <title>Narnia Challenges (part 6)</title>
     <link>https://noopz.github.io/narnia_challenges_part6/</link>
     <pubDate>Sat, 08 Aug 2020 08:26:53 &#43;0000</pubDate>
@@ -66,12 +73,5 @@
     <author>Author</author>
     <guid>https://noopz.github.io/natas_challenges_part3/</guid>
     <description><![CDATA[The third in a multi-part walkthrough for the OverTheWire natas levels.]]></description>
-</item><item>
-    <title>Fixing AAC Playback with Amazon FireTV (Gen1)</title>
-    <link>https://noopz.github.io/plex_aac_atfv_fix/</link>
-    <pubDate>Mon, 08 Jun 2020 08:26:53 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://noopz.github.io/plex_aac_atfv_fix/</guid>
-    <description><![CDATA[A quick guide showing how to get Gen1 FireTVs going with media encoded with AAC.]]></description>
 </item></channel>
 </rss>

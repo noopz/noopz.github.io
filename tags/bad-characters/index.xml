@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>bad characters - Tag - noopz</title>
+        <link>https://noopz.github.io/tags/bad-characters/</link>
+        <description>bad characters - Tag - noopz</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 29 Aug 2020 08:26:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/tags/bad-characters/" rel="self" type="application/rss+xml" /><item>
+    <title>Try Hack Me - Gatekeeper Walkthrough</title>
+    <link>https://noopz.github.io/gatekeeper/</link>
+    <pubDate>Sat, 29 Aug 2020 08:26:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/gatekeeper/</guid>
+    <description><![CDATA[A write-up tackling the Gatekeeper box on TryHackMe (https://tryhackme.com/room/gatekeeper). This box focuses on identifying a bufferoverflow in a services that is running and exploiting it to gain a low privilege shell, and then escalating privileges.]]></description>
+</item></channel>
+</rss>
