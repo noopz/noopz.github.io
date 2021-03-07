@@ -3,7 +3,14 @@
         <title>All Posts - noopz</title>
         <link>https://noopz.github.io/posts/</link>
         <description>All Posts | noopz</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 29 Aug 2020 08:26:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 06 Mar 2021 10:23:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Duplicating a Schlage Smartlock Key with a Raspberry Pi.</title>
+    <link>https://noopz.github.io/mifareclasscracking/</link>
+    <pubDate>Sat, 06 Mar 2021 10:23:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/mifareclasscracking/</guid>
+    <description><![CDATA[Duplicating the key for a Schlage Smartlock for $20 using some off-the-shelf RFID parts, some writable keyfobs, and a Raspberry Pi.]]></description>
+</item><item>
     <title>Try Hack Me - Gatekeeper Walkthrough</title>
     <link>https://noopz.github.io/gatekeeper/</link>
     <pubDate>Sat, 29 Aug 2020 08:26:53 &#43;0000</pubDate>
@@ -66,12 +73,5 @@
     <author>Author</author>
     <guid>https://noopz.github.io/natas_challenges_part4/</guid>
     <description><![CDATA[The fourth in a multi-part walkthrough for the OverTheWire natas levels.]]></description>
-</item><item>
-    <title>Natas Challenges (part 3)</title>
-    <link>https://noopz.github.io/natas_challenges_part3/</link>
-    <pubDate>Sat, 13 Jun 2020 18:26:53 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://noopz.github.io/natas_challenges_part3/</guid>
-    <description><![CDATA[The third in a multi-part walkthrough for the OverTheWire natas levels.]]></description>
 </item></channel>
 </rss>

@@ -3,7 +3,56 @@
         <title>Tags - Tag - noopz</title>
         <link>https://noopz.github.io/tags/</link>
         <description>Tags - Tag - noopz</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 29 Aug 2020 08:26:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 06 Mar 2021 10:23:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>duplication</title>
+    <link>https://noopz.github.io/tags/duplication/</link>
+    <pubDate>Sat, 06 Mar 2021 10:23:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/tags/duplication/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>keyfob</title>
+    <link>https://noopz.github.io/tags/keyfob/</link>
+    <pubDate>Sat, 06 Mar 2021 10:23:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/tags/keyfob/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>mifare</title>
+    <link>https://noopz.github.io/tags/mifare/</link>
+    <pubDate>Sat, 06 Mar 2021 10:23:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/tags/mifare/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>pn532</title>
+    <link>https://noopz.github.io/tags/pn532/</link>
+    <pubDate>Sat, 06 Mar 2021 10:23:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/tags/pn532/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>raspberry pi</title>
+    <link>https://noopz.github.io/tags/raspberry-pi/</link>
+    <pubDate>Sat, 06 Mar 2021 10:23:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/tags/raspberry-pi/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>schlage</title>
+    <link>https://noopz.github.io/tags/schlage/</link>
+    <pubDate>Sat, 06 Mar 2021 10:23:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/tags/schlage/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>smartlock</title>
+    <link>https://noopz.github.io/tags/smartlock/</link>
+    <pubDate>Sat, 06 Mar 2021 10:23:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/tags/smartlock/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>bad characters</title>
     <link>https://noopz.github.io/tags/bad-characters/</link>
     <pubDate>Sat, 29 Aug 2020 08:26:53 &#43;0000</pubDate>
@@ -23,55 +72,6 @@
     <pubDate>Sat, 29 Aug 2020 08:26:53 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://noopz.github.io/tags/gatekeeper/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>hack</title>
-    <link>https://noopz.github.io/tags/hack/</link>
-    <pubDate>Sat, 29 Aug 2020 08:26:53 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://noopz.github.io/tags/hack/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>python</title>
-    <link>https://noopz.github.io/tags/python/</link>
-    <pubDate>Sat, 29 Aug 2020 08:26:53 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://noopz.github.io/tags/python/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>tryhackme</title>
-    <link>https://noopz.github.io/tags/tryhackme/</link>
-    <pubDate>Sat, 29 Aug 2020 08:26:53 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://noopz.github.io/tags/tryhackme/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>narnia</title>
-    <link>https://noopz.github.io/tags/narnia/</link>
-    <pubDate>Sat, 08 Aug 2020 08:26:53 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://noopz.github.io/tags/narnia/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>OTW</title>
-    <link>https://noopz.github.io/tags/otw/</link>
-    <pubDate>Sat, 08 Aug 2020 08:26:53 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://noopz.github.io/tags/otw/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>wargames</title>
-    <link>https://noopz.github.io/tags/wargames/</link>
-    <pubDate>Sat, 08 Aug 2020 08:26:53 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://noopz.github.io/tags/wargames/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>shellcode</title>
-    <link>https://noopz.github.io/tags/shellcode/</link>
-    <pubDate>Sat, 04 Jul 2020 08:26:53 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://noopz.github.io/tags/shellcode/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

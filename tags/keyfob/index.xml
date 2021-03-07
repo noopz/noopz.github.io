@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>keyfob - Tag - noopz</title>
+        <link>https://noopz.github.io/tags/keyfob/</link>
+        <description>keyfob - Tag - noopz</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 06 Mar 2021 10:23:53 &#43;0000</lastBuildDate><atom:link href="https://noopz.github.io/tags/keyfob/" rel="self" type="application/rss+xml" /><item>
+    <title>Duplicating a Schlage Smartlock Key with a Raspberry Pi.</title>
+    <link>https://noopz.github.io/mifareclasscracking/</link>
+    <pubDate>Sat, 06 Mar 2021 10:23:53 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://noopz.github.io/mifareclasscracking/</guid>
+    <description><![CDATA[Duplicating the key for a Schlage Smartlock for $20 using some off-the-shelf RFID parts, some writable keyfobs, and a Raspberry Pi.]]></description>
+</item></channel>
+</rss>

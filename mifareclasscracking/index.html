@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Duplicating a Schlage Smartlock Key with a Raspberry Pi. - noopz</title><meta name="Description" content="Duplicating the key for a Schlage Smartlock for $20 using some off-the-shelf RFID parts, some writable keyfobs, and a Raspberry Pi."><meta property="og:title" content="Duplicating a Schlage Smartlock Key with a Raspberry Pi." />
+<meta property="og:description" content="Duplicating the key for a Schlage Smartlock for $20 using some off-the-shelf RFID parts, some writable keyfobs, and a Raspberry Pi." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noopz.github.io/mifareclasscracking/" />
+<meta property="og:image" content="https://noopz.github.io/logo.png"/>
+<meta property="article:published_time" content="2021-03-06T10:23:53+00:00" />
+<meta property="article:modified_time" content="2021-03-06T10:23:53+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://noopz.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Duplicating a Schlage Smartlock Key with a Raspberry Pi."/>
+<meta name="twitter:description" content="Duplicating the key for a Schlage Smartlock for $20 using some off-the-shelf RFID parts, some writable keyfobs, and a Raspberry Pi."/>
+<meta name="application-name" content="noopz">
+<meta name="apple-mobile-web-app-title" content="noopz"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://noopz.github.io/mifareclasscracking/" /><link rel="prev" href="https://noopz.github.io/gatekeeper/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.c1380f5e1f7f3d04b48edd22c364da70ed19205a2e23d815183d44b0e70eb6d93101e95794b3b2e22eb84c60c2e534577b1a114426b13da4030d8d61beeb974b.css" integrity="sha512-wTgPXh9/PQS0jt0iw2TacO0ZIFouI9gVGD1EsOcOttkxAelXlLOy4i64TGDC5TRXexoRRCaxPaQDDY1hvuuXSw=="><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="qVeOJnUgOGM26P4YnScH1UZEDcMKWknHB7GATR21Ji0" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Duplicating a Schlage Smartlock Key with a Raspberry Pi.",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/noopz.github.io\/mifareclasscracking\/"
+        },"image": ["https:\/\/noopz.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "smartlock, schlage, mifare, raspberry pi, keyfob, pn532, duplication","wordcount":  2623 ,
+        "url": "https:\/\/noopz.github.io\/mifareclasscracking\/","datePublished": "2021-03-06T10:23:53+00:00","dateModified": "2021-03-06T10:23:53+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "noopz","logo": "https:\/\/noopz.github.io\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "Zack"
+            },"description": "Duplicating the key for a Schlage Smartlock for $20 using some off-the-shelf RFID parts, some writable keyfobs, and a Raspberry Pi."
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="noopz"><span class="header-title-pre"><i class='fas fa-hat-wizard fa-fw'></i></span>noopz</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="https://github.com/noopz/" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Duplicating a Schlage Smartlock Key with a Raspberry Pi.</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Zack</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-06">2021-03-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2623 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;13 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#outline">Outline</a>
+      <ul>
+        <li><a href="#information-gathering">Information Gathering</a></li>
+      </ul>
+    </li>
+    <li><a href="#duplicating-the-key">Duplicating the key</a>
+      <ul>
+        <li><a href="#additional-references">Additional references</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="outline">Outline</h2>
+<p>Growing up I had the pleasure of watching all sorts of spy, heist, and hacking movies - the 007 films, Sneakers, The Italian Job, Hackers, Swordfish, the Ocean&rsquo;s movies, the list goes on. A common occurrence in a lot of these movies is the need to copy a key or keycard to gain access to a location. This idea has always rattled around in the back of my mind, especially for the <code>cool factor</code> of pulling off the same sort of key duplication. Well, since I&rsquo;m not a red-teamer and not one for gaining access to locations I&rsquo;m not supposed to, I was left with only one real option to finally explore this idea: duplicate the keyfob to my residence. What follows is how I went out determine and successfully duplicating my keyfob with some off the shelf [budget] components.</p>
+<h3 id="information-gathering">Information Gathering</h3>
+<p>After looking at the brand of lock, a quick Google Image Search revealed it was a Schlage FE410. First the <a href="https://www.schlage.com/content/dam/sch-us/documents/pdf/Schlage-Control-Smart-Deadbolt-Sell-Sheet.pdf" target="_blank" rel="noopener noreffer">general specifications</a> about the lock, next up I found some <a href="https://us.allegion.com/content/dam/allegion-us-2/portal/secured/price-books/Allegion_MultiFamily_PB8_rev07_20_update_pages.pdf" target="_blank" rel="noopener noreffer">marketing material</a> that covered some of the features. The biggest take away from these documents is that there are a few different types of credentials supported: <code>Schlage MIFARE classic</code>, <code>Schlage MIFARE plus</code>, <code>Schlage Mobile Access Credential</code>, <code>Schlage DESFire EV1</code>. Looking over the keyfob, it had some text printed on it: <code>9691T</code>. A few more Google searches revealed that this is a multi-frequency keyfob that supports a High Frequency (<code>13.56 MHz</code>) and Low Frequency (<code>125 kHz</code>), which this <a href="https://us.allegion.com/content/dam/allegion-us-2/web-documents-2/DataSheet/Schlage_MultiFamily_Control_Credentials_Data_Sheet_111169.pdf" target="_blank" rel="noopener noreffer">data sheet</a> happily gives the details to. Looks like I&rsquo;ll be tackling a <code>MiFare Classic 1k byte/8k bit; 16 sectors keyfob</code>.</p>
+<p>Next up is to figure out what exactly this <code>MiFare Classic</code> is all about. A quick Google search for <code>MiFare Classic 1k datasheet</code>, and with the first link we&rsquo;ve struck gold: <a href="https://www.nxp.com/docs/en/data-sheet/MF1S50YYX_V1.pdf" target="_blank" rel="noopener noreffer">data sheet</a> and this <a href="https://www.mifare.net/wp-content/uploads/2015/03/MIFARE_Classic_EV1.pdf" target="_blank" rel="noopener noreffer">one</a>. One of the most important pieces of information here is that it says the operating frequency is <code>13.56 MHz</code>. Which means that any sort of scanner/duplicator needs to work with that.</p>
+<p>Now for the exciting part: finding any literature out there that talks about exploiting the <code>MiFare Classic</code> cards. I found two pretty good presentations on this, the first being <a href="https://www.blackhat.com/docs/sp-14/materials/arsenal/sp-14-Almeida-Hacking-MIFARE-Classic-Cards-Slides.pdf" target="_blank" rel="noopener noreffer">Hacking MiFare Classic cards</a> which covers more of the history as well as  and <a href="https://smartlockpicking.com/slides/Confidence_A_2018_Practical_Guide_To_Hacking_RFID_NFC.pdf" target="_blank" rel="noopener noreffer">A 2018 practical guide to hacking NFC/RFID</a>.</p>
+<p><a href="https://www.blackhat.com/docs/sp-14/materials/arsenal/sp-14-Almeida-Hacking-MIFARE-Classic-Cards-Slides.pdf" target="_blank" rel="noopener noreffer">Hacking MiFare Classic cards</a> provides a good background on the cards as well as a highlevel explanation of the exploit. <a href="https://smartlockpicking.com/slides/Confidence_A_2018_Practical_Guide_To_Hacking_RFID_NFC.pdf" target="_blank" rel="noopener noreffer">A 2018 practical guide to hacking NFC/RFID</a> covers what tools and hardware are available for actually preforming the exploit for duplication of cards.</p>
+<p>Some of the highlights from the background:</p>
+<ul>
+<li>NXP Semiconductors went with security by obscurity for the cryptography protocol implemented
+<ul>
+<li>This was named <a href="https://en.wikipedia.org/wiki/Crypto-1" target="_blank" rel="noopener noreffer">CRYPTO1</a></li>
+<li>This crypto protocol&rsquo;s &ldquo;security of this cipher is&hellip; close to zero.&rdquo;</li>
+</ul>
+</li>
+<li>In 2007m two German researchers (Nohl and Plötz) presented a partial reverse engineering of the protocol</li>
+<li>In 2008m Radboud University Nijmegen completely reversed the protocol and were going to publish the research
+<ul>
+<li>NXP attempted to block the research via legal means</li>
+</ul>
+</li>
+<li>The courts denied NXPs request and the research was published.</li>
+<li>Once published this led to the development of an Open Source implementation</li>
+<li>Not long after public exploits/tools surfaced
+<ul>
+<li>Making the cards some what unusable from a security perspective</li>
+</ul>
+</li>
+<li>Two means of attacks:
+<ul>
+<li>Man-in-the-Middle - where a sniffer sits between the card and the reader and then replaying the communication</li>
+<li>Card-Only Attacks - where there&rsquo;s only access to the keyfob at the time
+<ul>
+<li>This comes along with two different exploits [Hard]Nested Attack, and a Dark-Side Attack</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>After getting this far in the presentation, I had to admit I was a bit shocked that the locks used on my residence were using such weak security. Surely it wasn&rsquo;t that easy or cheap to make a crack and duplicate the key fob.</p>
+<p>This image shows how the data is stored in the Mifare Classic:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../images/mfcdatablocks.png"
+        data-srcset="../images/mfcdatablocks.png, ../images/mfcdatablocks.png 1.5x, ../images/mfcdatablocks.png 2x"
+        data-sizes="auto"
+        alt="../images/mfcdatablocks.png"
+        title="mifare classic data blocks" /></p>
+<p>The memory area of the MiFare Classic 1k is organized in <code>16 numbered sectors</code> from <code>0</code> to <code>15</code>. Each sector contains <code>4 blocks</code> (block <code>0</code> to <code>3</code>). <code>Block 3</code> of each sector is called <code>sector trailer</code> and contains information (called <code>access bits</code> - <code>4 bytes</code>) to handle the sector access conditions and the <code>secret keys</code> (<code>key A</code> and <code>key B</code> - both <code>6 bytes</code>). Depending on the setting of the access bits the Reader device has to perform an authentication with <code>key A</code> or <code>key B</code> to read or write the sector. It is also important to note that <code>Block 0</code> of <code>sector 0</code> is considered the Manufacturer Block (also called Manufacturer Data) which typically contains a hardcoded, un-changeable Unique Identifer (UID).</p>
+<p>What&rsquo;s interesting about the MiFare Classic is that each sector can potentially contain a different key to be able to access the data stored within it.</p>
+<p>Time for a brief explanation of the hardnested attack. A much better and much more in-depth explanation can be found in this <a href="http://www.cs.ru.nl/~rverdult/Ciphertext-only_Cryptanalysis_on_Hardened_Mifare_Classic_Cards-CCS_2015.pdf" target="_blank" rel="noopener noreffer">research paper</a>. It&rsquo;s important to note that <code>key A</code> and <code>key B</code> are each 6 bytes in length, and that the other <code>4 bytes</code> are used for determining access. Which means that each key is 48 bits (2^48 is the key space). Which is then fed into the Crypto-1 cipher:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../images/48bitcrypto1.png"
+        data-srcset="../images/48bitcrypto1.png, ../images/48bitcrypto1.png 1.5x, ../images/48bitcrypto1.png 2x"
+        data-sizes="auto"
+        alt="../images/48bitcrypto1.png"
+        title="mifare key layout" /></p>
+<p>Given that the key space is only 2^48, it is theoretically possible to just brute-force all possible keys, but that will take some time. That said, online attacks iterating through every single possible key would take upwards of forty-four thousand years due to the fact that each attempt with a real reader takes six milliseconds. That said, once the <code>Crypto1</code> algorithm became public, offline brute forcing becomes possible which eliminates any sort of delays.</p>
+<p>The hardnested attack&rsquo;s goal is to reduce the key space to something much more manageable, like 2^30 - allowing for brute-forcing to happening significantly faster. This is accomplished by exploiting the way the algorithm is implemented and can be boiled down to three steps:</p>
+<ol>
+<li>Collect several thousands nonces via a nested attack/authentication</li>
+<li>Use these nonces to probabilistically guess what the sum property may be and observing the filter flip roperty, which allows for a reduction in search space.</li>
+<li>Carry out a brute force attack on the reduce search space.</li>
+</ol>
+<p>So it sounds like there&rsquo;s certainly a way forward and that it won&rsquo;t take thousands of years to complete.</p>
+<h2 id="duplicating-the-key">Duplicating the key</h2>
+<p>With the theory out of the way it&rsquo;s time to look at duplicating these results for my self. Going back to <a href="https://smartlockpicking.com/slides/Confidence_A_2018_Practical_Guide_To_Hacking_RFID_NFC.pdf" target="_blank" rel="noopener noreffer">a 2018 practical guide to hacking NFC/RFID</a>. It looks like I need a few pieces, a write-able Keyfob and a PN532 based NFC Module. One of the things I wanted to do here was find a use for the Raspberry Pi laying around.</p>
+<p>The reader I purchased from Amazon for about $10 looked like this one:
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../images/nfcreader.png"
+        data-srcset="../images/nfcreader.png, ../images/nfcreader.png 1.5x, ../images/nfcreader.png 2x"
+        data-sizes="auto"
+        alt="../images/nfcreader.png"
+        title="pn532" /></p>
+<p>Additionally, since my goal was to entirely duplicate the keyfob I was concerned that not being able to change the UID would cause problems - if for example the lock was using a whitelist. Luckily (and a bit terrifying), this wouldn&rsquo;t be much of a problem as there are cheap Keyfobs that support writing any value to <code>block 0</code>, i.e.: changing the UID to whatever I&rsquo;d like. A search on Amazon for <code>13.56 UID changeable</code> has quite a few hits. I picked up more than I&rsquo;ll ever need in my life time for about $10.</p>
+<p>Once everything arrived. It was time to start wiring up the NFC reader to Raspberry Pi. After digging around online I decided that the best method for me was to go with <a href="https://en.wikipedia.org/wiki/I%C2%B2C" target="_blank" rel="noopener noreffer">i2c</a> as it used the fewest wires and I wasn&rsquo;t overly concerned with speed in my controlled environment. To accomplish this I needed to hook up the following:</p>
+<table>
+<thead>
+<tr>
+<th>PN532</th>
+<th></th>
+<th>RPi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5v</td>
+<td></td>
+<td>5V</td>
+</tr>
+<tr>
+<td>GND</td>
+<td></td>
+<td>GND</td>
+</tr>
+<tr>
+<td>SDA</td>
+<td></td>
+<td>GPIO 3</td>
+</tr>
+<tr>
+<td>SCL</td>
+<td></td>
+<td>GPIO 5</td>
+</tr>
+</tbody>
+</table>
+<p>Additionally I needed to set the <code>PN532</code> board into <code>i2c</code> mode. Which meant setting the dip switch <code>SET0</code> and <code>SET1</code> to <code>high</code> and <code>low</code> respectively.</p>
+<table>
+<thead>
+<tr>
+<th>SET0</th>
+<th></th>
+<th>SET1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HIGH</td>
+<td></td>
+<td>LOW</td>
+</tr>
+</tbody>
+</table>
+<p>Now that the wiring was complete, it was time to start up the Raspberry Pi test that the NFC reader is functional. To do that, we have to enable the <code>i2c</code> interface as it&rsquo;s not enabled by default. The easiest way to do this is with <code>raspi-config</code> and enable it under <code>Interface Options</code>. However I was using a Raspberry Pi with Kali installed on it, so it needed to be enabled manually:</p>
+<ol>
+<li>Add a line in /boot/config.txt for dtparam=i2c_arm=on</li>
+<li>Create/modify <code>/etc/modprobe.d/raspi-blacklist.conf</code>
+<ol>
+<li>If there&rsquo;s a <code>blacklist</code> entry for <code>i2c_*</code>, remove them.</li>
+</ol>
+</li>
+<li>Run <code>modprobe i2c-dev</code></li>
+</ol>
+<p>Library installation time:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># Install pre-reqs</span>
+sudo apt-get install libusb-dev libpcsclite-dev i2c-tools
+<span class="nb">cd</span> /tmp
+
+<span class="c1"># Download the library</span>
+wget http://dl.bintray.com/nfc-tools/sources/libnfc-1.7.1.tar.bz2
+tar -xf libnfc-1.7.1.tar.bz2
+<span class="nb">cd</span> libnfc-1.7.1
+
+<span class="c1"># Configure, compile, and install it</span>
+./configure --prefix<span class="o">=</span>/usr --sysconfdir<span class="o">=</span>/etc
+make
+sudo make install
+</code></pre></td></tr></table>
+</div>
+</div><p>And now configuration file for NFC:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="nb">cd</span> /etc
+sudo mkdir nfc
+sudo nano /etc/nfc/libnfc.conf
+</code></pre></td></tr></table>
+</div>
+</div><p>The <code>libnfc.conf</code> file should be populated with the following content:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-txt" data-lang="txt"># Allow device auto-detection (default: true)
+# Note: if this auto-detection is disabled, user has to set manually a device
+# configuration using file or environment variable
+allow_autoscan = true
+
+# Allow intrusive auto-detection (default: false)
+# Warning: intrusive auto-detection can seriously disturb other devices
+# This option is not recommended, user should prefer to add manually his device.
+allow_intrusive_scan = false
+
+# Set log level (default: error)
+# Valid log levels are (in order of verbosity): 0 (none), 1 (error), 2 (info), 3 (debug)
+# Note: if you compiled with --enable-debug option, the default log level is &#34;debug&#34;
+log_level = 1
+
+# Manually set default device (no default)
+# To set a default device, you must set both name and connstring for your device
+# Note: if autoscan is enabled, default device will be the first device available in device list.
+device.name = &#34;_PN532_I2c&#34;
+device.connstring = &#34;pn532_i2c:/dev/i2c-1&#34;
+</code></pre></td></tr></table>
+</div>
+</div><p>With everything up and running time to verify that the device is up and running with <code>i2cdetect -y 1</code> and <code>nfc-list</code>. Assuming we see some goodness here:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-txt" data-lang="txt">$ i2cdetect -y 1
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- --
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+20: -- -- -- -- 24 -- -- -- -- -- -- -- -- -- -- --
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+70: -- -- -- -- -- -- -- --
+
+$ nfc-list
+nfc-list uses libnfc 1.7.1
+NFC device: pn532_i2c:/dev/i2c-1 opened
+</code></pre></td></tr></table>
+</div>
+</div><p>Now that everything is working (the <code>24</code> from the pevious command shows things are happy) it&rsquo;s time for the much more exiting stuff. Determine what tools we&rsquo;re going to use to actually attempt to duplicate the <code>MiFare Classic</code>. The <code>Practical Guide</code> mentions <a href="https://github.com/nfc-tools/mfcuk" target="_blank" rel="noopener noreffer">mfcuk</a> (which preforms a dark-side attack) and <a href="https://github.com/nfc-tools/mfoc/" target="_blank" rel="noopener noreffer">mfoc</a> (nested attack). Lastly, and ultimately what we want to use is the <a href="https://github.com/nfc-tools/miLazyCracker" target="_blank" rel="noopener noreffer">miLazyCracker</a>, it automates quite a bit more of the tasks, including determining what the card type is, and then either running <code>mfoc</code> or the hardnested attack with <code>libnfc_crypto1_crack</code>.</p>
+<p>After cloning the repo and looking at the <code>miLazyCrackerFreshInstall.sh</code>, it&rsquo;s going to attempt to download <code>craptev1-v1.1.tar.xz</code> and <code>crapto1-v3.3.tar.xz</code>, these may fail, so they need to be changed to links that actually work. I&rsquo;ll leave it to the reader to find copies of these and update the download links as necessary (I&rsquo;d suggest starting with the pull requests or closed issues on the github repo page). Running the install script will also pull down <code>mfoc</code> and <code>libnfc_crypto1_crack</code> repos and build these.</p>
+<p>Once everything is built it&rsquo;s time to finally run, <code>miLazyCracker.sh</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-txt" data-lang="txt">$ ./miLazyCracker.sh
+Found Mifare Classic 1k tag
+ISO/IEC 14443A (106 kbps) target:
+    ATQA (SENS_RES): 00  04
+* UID size: single
+* bit frame anticollision supported
+       UID (NFCID1): 6c  83  81  02
+      SAK (SEL_RES): 08
+* Not compliant with ISO/IEC 14443-4
+* Not compliant with ISO/IEC 18092
+
+Fingerprinting based on MIFARE type Identification Procedure:
+* MIFARE Classic 1K
+* MIFARE Plus (4 Byte UID or 4 Byte RID) 2K, Security level 1
+* SmartMX with MIFARE 1K emulation
+Other possible matches based on ATQA &amp; SAK values:
+
+Try to authenticate to all sectors with default keys...
+Symbols: &#39;.&#39; no key found, &#39;/&#39; A key found, &#39;\&#39; B key found, &#39;x&#39; both keys found
+[Key: ffffffffffff] -&gt; [x...............]
+[Key: a0a1a2a3a4a5] -&gt; [x...............]
+[Key: d3f7d3f7d3f7] -&gt; [x...............]
+[Key: 000000000000] -&gt; [x...............]
+[Key: b0b1b2b3b4b5] -&gt; [x...............]
+[Key: 4d3a99c351dd] -&gt; [x...............]
+[Key: 1a982c7e459a] -&gt; [x...............]
+[Key: aabbccddeeff] -&gt; [x...............]
+[Key: 714c5c886e97] -&gt; [x...............]
+[Key: 587ee5f9350f] -&gt; [x...............]
+[Key: a0478cc39091] -&gt; [x...............]
+[Key: 533cb6c723f6] -&gt; [x...............]
+[Key: 8fd0a4f256e9] -&gt; [x...............]
+
+Sector 00 - Found   Key A: ffffffffffff Found   Key B: 1cbda6935465
+Sector 01 - Unknown Key A               Unknown Key B
+...other sectors omitted
+Sector 15 - Unknown Key A               Unknown Key B
+
+00  00  00  00
+Block 47, type A, key 57858476ccf2 :00  00  00  00  00  00  ff  07  80  69  1a  bd  a6  93  54  65
+...other blocks omitted
+Block 00, type A, key ffffffffffff :6c  83  81  02  6c  08  04  00  62  63  64  65  66  67  68  69
+
+
+Dump left in: mfc_6c838102_dump.mfd
+</code></pre></td></tr></table>
+</div>
+</div><p>Luckily it looks like the first block was using the default key, which makes the cracking process much easier. Had a default key not been used, it would have become quite a bit more challenging to get the key (and maybe impossible). In order to do so <code>mfcuk</code> would have to be used and attempt a <code>Darkside</code> attack.</p>
+<p>Since that wasn&rsquo;t hte case, letting it run for about 30 minutes or so, it was able to crack all of the keys and dump of the data blocks. With all the data dumped, I just needed to put the magic writable UID card on the scanner and have it copy the contents to it.</p>
+<p>Thinking this was far too easy, and having serious doubts that it would actually work with the SmartLock, I tried it anyway. Much to my amusement (and a bit of shock), the clone keyfob worked with no issues, no alarms, no weird flashing lights. For all intents and purposes this key was as good as the original. So while it wasn&rsquo;t quite like in the movies where it was cloned in a manner of seconds while the bad guy is looking the other way, it&rsquo;s still pretty cool to know that in about 30 minutes I could successful clone a keyfob. More importantly, I could do all of this for about $20 (excluding the cost of a Raspberry Pi).</p>
+<p>It is also worth noting that there are some purpose built devices out there to accomplish much of the same and more (like handling <code>125 kHz</code>). These devices just carry a much higher cost and outside of the price range for this weekend project.</p>
+<p>Some more sophisticated tools:</p>
+<p><a href="https://github.com/iceman1001/ChameleonMini-rebooted/" target="_blank" rel="noopener noreffer">ChameleonMini</a></p>
+<p><a href="https://proxmark.com/proxmark-3-hardware/proxmark-3-rdv4" target="_blank" rel="noopener noreffer">ProxMark3</a></p>
+<h3 id="additional-references">Additional references</h3>
+<p><a href="http://wiki.sunfounder.cc/index.php?title=PN532_NFC_Module_for_Raspberry_Pi" target="_blank" rel="noopener noreffer">Sunfounder PN532 documentation</a></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-03-06</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://noopz.github.io/mifareclasscracking/" data-title="Duplicating a Schlage Smartlock Key with a Raspberry Pi." data-hashtags="smartlock,schlage,mifare,raspberry pi,keyfob,pn532,duplication"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://noopz.github.io/mifareclasscracking/" data-hashtag="smartlock"><i class="fab fa-facebook-square fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/smartlock/">smartlock</a>,&nbsp;<a href="/tags/schlage/">schlage</a>,&nbsp;<a href="/tags/mifare/">mifare</a>,&nbsp;<a href="/tags/raspberry-pi/">raspberry pi</a>,&nbsp;<a href="/tags/keyfob/">keyfob</a>,&nbsp;<a href="/tags/pn532/">pn532</a>,&nbsp;<a href="/tags/duplication/">duplication</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/gatekeeper/" class="prev" rel="prev" title="Try Hack Me - Gatekeeper Walkthrough"><i class="fas fa-angle-left fa-fw"></i>Try Hack Me - Gatekeeper Walkthrough</a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Zack</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">cc by-nc 4.0</a></span><br><span class="asdf">&nbsp;<a href="/privacy" target="">Privacy Policy</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":300},"comment":{},"cookieconsent":{"content":{"allow":"Allow cookies","deny":"Decline","dismiss":"Allow cookies","link":"Learn more","message":"This website uses cookies to ensure you get the best experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"revokable":false,"theme":"edgeless","type":"info"},"gtagConfig":{"anonymize_ip":true,"enable":true,"tracking_id":"UA-168052344-1"}};</script><script type="text/javascript" src="/js/theme.min.cb3f77989212bebcd498d8b441c555574e00a1a1250508a430cf215c9f45bef736e721d5005ef144b47b2cd3997c2175c03977c50086fe4016eab32a8fe118b6.js" integrity="sha512-yz93mJISvrzUmNi0QcVVV04AoaElBQikMM8hXJ9Fvvc25yHVAF7xRLR7LNOZfCF1wDl3xQCG/kAW6rMqj&#43;EYtg=="></script>
+</body>
+</html>
